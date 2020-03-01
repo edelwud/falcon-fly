@@ -1,2 +1,2 @@
-# falcon-fly
+# Falcon-fly
 Simple Java game
