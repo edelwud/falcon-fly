@@ -72,7 +72,7 @@
     <property name="aspect.path.notification.shown" value="true" />
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+    <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.falconfly.Main" />
       <module name="falcon-fly" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
@@ -82,11 +82,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -106,6 +101,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="811" y="408" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583064442108" />
+    <state x="337" y="0" key="CommitChangelistDialog2" timestamp="1583064651849">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="337" y="0" key="CommitChangelistDialog2/0.0.1366.738@0.0.1366.738" timestamp="1583064651849" />
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom" timestamp="1583064746156">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1583064746156" />
+    <state width="1323" height="182" key="GridCell.Tab.0.center" timestamp="1583064746155">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1583064746155" />
+    <state width="1323" height="182" key="GridCell.Tab.0.left" timestamp="1583064746155">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1583064746155" />
+    <state width="1323" height="182" key="GridCell.Tab.0.right" timestamp="1583064746156">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1583064746156" />
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1583064751344">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1583064751344" />
     <state x="661" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1583064380586">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
