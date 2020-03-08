@@ -9,4 +9,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class MainMenu  {
+
+    public static void main(String[] arg) {
+
+        System.out.println("Hello, Java");
+    }
 }
