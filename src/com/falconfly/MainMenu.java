@@ -8,10 +8,28 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class MainMenu  {
+public class MainMenu extends Application {
 
-    public static void main(String[] arg) {
+    Button buttonPlay;
+    Button buttonSettings;
+    Button buttonExit;
 
-        System.out.println("Hello, Java");
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        primaryStage.setTitle("Falcon-Fly launcher");
+        buttonPlay = new Button();
+        buttonPlay.setText("Play");
+
+        buttonSettings = new Button();
+        buttonPlay.setText("Settings");
+
+        buttonExit = new Button();
+        buttonExit.setText("Exit");
+
     }
 }
