@@ -34,5 +34,8 @@ public class MainMenu extends Application {
         StackPane layout = new StackPane();
         layout.getChildren().addAll(buttonPlay,buttonSettings,buttonExit);
 
+        Scene sceneMain = new Scene(layout, 1366, 768);
+        primaryStage.setScene(sceneMain);
+        primaryStage.show();
     }
 }
