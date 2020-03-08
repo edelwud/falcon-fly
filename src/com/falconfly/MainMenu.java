@@ -17,11 +17,15 @@ import javafx.stage.Stage;
 
 public class MainMenu extends Application {
 
+    Stage windowMain;
+    Scene sceneSettings, sceneStatistics;
+
     Button buttonPlay;
     Button buttonSettings;
     Button buttonExit;
     Button buttonStatistics;
     Label labelName;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -30,7 +34,8 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("Falcon-Fly launcher");
+        windowMain = primaryStage;
+        windowMain.setTitle("Falcon-Fly launcher");
 
         labelName = new Label();
         labelName.setText("Falcon-Fly");
@@ -82,9 +87,9 @@ public class MainMenu extends Application {
         BorderPane.setMargin(verticalMenuBox, new Insets(40,20,0,0));
 
         Scene sceneMain = new Scene(layout);
-        primaryStage.setScene(sceneMain);
-        primaryStage.setMaximized(true);
-        primaryStage.show();
+        windowMain.setScene(sceneMain);
+        windowMain.setMaximized(true);
+        windowMain.show();
     }
 
      public void handle(ActionEvent eventMain) {
@@ -97,6 +102,42 @@ public class MainMenu extends Application {
         if(eventMain.getSource() == buttonExit) {
             System.exit(0); // exit
         }
+
+         if(eventMain.getSource() == buttonSettings) {
+             Label messageOne = new Label();
+             messageOne.setText("Settings");
+             messageOne.setPrefSize(700,100);
+             messageOne.setMaxSize(700,100);
+             messageOne.setMinSize(700,100);
+             messageOne.setFont(new Font("Alien Encounters",100));
+             messageOne.setAlignment(Pos.CENTER);
+             StackPane layoutSettings = new StackPane();
+             layoutSettings.getChildren().add(messageOne);
+             sceneSettings = new Scene(layoutSettings,1366,768);
+             windowMain.setScene(sceneSettings);
+             //windowMain.setMaximized(true);
+             windowMain.setTitle("Settings");
+             windowMain.show();
+         }
+
+         if(eventMain.getSource() == buttonStatistics) {
+             Label messageTwo = new Label();
+             messageTwo.setText("Statistics");
+             messageTwo.setPrefSize(700,100);
+             messageTwo.setMaxSize(700,100);
+             messageTwo.setMinSize(700,100);
+             messageTwo.setFont(new Font("Alien Encounters",100));
+             messageTwo.setAlignment(Pos.CENTER);
+             StackPane layoutStatistics = new StackPane();
+             layoutStatistics.getChildren().add(messageTwo);
+             sceneStatistics = new Scene(layoutStatistics,1366,768);
+             windowMain.setScene(sceneStatistics);
+             //windowMain.setMaximized(true);
+             windowMain.setTitle("Statistics");
+             windowMain.show();
+
+         }
+
 
     }
 }
