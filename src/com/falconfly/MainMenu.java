@@ -31,5 +31,8 @@ public class MainMenu extends Application {
         buttonExit = new Button();
         buttonExit.setText("Exit");
 
+        StackPane layout = new StackPane();
+        layout.getChildren().addAll(buttonPlay,buttonSettings,buttonExit);
+
     }
 }
