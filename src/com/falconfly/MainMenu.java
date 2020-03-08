@@ -41,6 +41,7 @@ public class MainMenu extends Application {
         labelName.setAlignment(Pos.CENTER);
 
         buttonPlay = new Button();
+        buttonPlay.setOnAction(this::handle);
         buttonPlay.setText("Play");
         buttonPlay.setPrefSize(500,100);
         buttonPlay.setMaxSize(500,100);
@@ -48,6 +49,7 @@ public class MainMenu extends Application {
         buttonPlay.setFont(new Font("BN Jinx",30));
 
         buttonSettings = new Button();
+        buttonSettings.setOnAction(this::handle);
         buttonSettings.setText("Settings");
         buttonSettings.setPrefSize(500,100);
         buttonSettings.setMaxSize(500,100);
@@ -55,6 +57,7 @@ public class MainMenu extends Application {
         buttonSettings.setFont(new Font("BN Jinx",30));
 
         buttonExit = new Button();
+        buttonExit.setOnAction(this::handle);
         buttonExit.setText("Exit");
         buttonExit.setPrefSize(500,100);
         buttonExit.setMaxSize(500,100);
@@ -62,6 +65,7 @@ public class MainMenu extends Application {
         buttonExit.setFont(new Font("BN Jinx",30));
 
         buttonStatistics = new Button();
+        buttonStatistics.setOnAction(this::handle);
         buttonStatistics.setText("Statistics");
         buttonStatistics.setPrefSize(500,100);
         buttonStatistics.setMaxSize(500,100);
@@ -81,5 +85,13 @@ public class MainMenu extends Application {
         primaryStage.setScene(sceneMain);
         primaryStage.setMaximized(true);
         primaryStage.show();
+    }
+
+     public void handle(ActionEvent eventMain) {
+
+        if(eventMain.getSource() == buttonPlay) {
+            System.out.println("Gameplay");
+            // Create new Scene of gameplay
+        }
     }
 }
