@@ -93,5 +93,10 @@ public class MainMenu extends Application {
             System.out.println("Gameplay");
             // Create new Scene of gameplay
         }
+
+        if(eventMain.getSource() == buttonExit) {
+            System.exit(0); // exit
+        }
+
     }
 }
