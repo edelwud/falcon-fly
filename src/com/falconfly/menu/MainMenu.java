@@ -1,6 +1,7 @@
 package com.falconfly.menu;
 
 import com.falconfly.config.MainFont;
+import com.falconfly.config.MainMusic;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -28,6 +29,8 @@ public class MainMenu extends Application {
     Media mediaFile;
 
     MainFont fonts;
+    MainMusic music;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -39,13 +42,20 @@ public class MainMenu extends Application {
         this.fonts.addFont("Alien Encounters", 60);
         this.fonts.addFont("BN Jinx", 30);
 
+        this.music = new MainMusic();
+        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/1.mp3");
+        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/2.mp3");
+        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/3.mp3");
+        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/4.mp3");
+        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/5.mp3");
+        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/6.mp3");
+
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
 
-        mediaFile = new Media("file:///D:/BSUIR/4cem/MyGame/Bet_On_it.mp3");
-        mediaPlayer = new MediaPlayer(mediaFile);
+        mediaPlayer = new MediaPlayer(music.getRandomMedia());
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setVolume(0.3);
+        mediaPlayer.setVolume(0.1);
 
         labelName = new Label();
         labelName.setText("Falcon-Fly");
