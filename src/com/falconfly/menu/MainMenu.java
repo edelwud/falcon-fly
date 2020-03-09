@@ -16,6 +16,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class MainMenu extends Application {
 
     private static final int MENU_BUTTON_WIDTH = 500;
@@ -32,10 +34,8 @@ public class MainMenu extends Application {
     MediaPlayer mediaPlayer;
     Media mediaFile;
 
-
     MainFont fonts;
     MainMusic music;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -43,17 +43,17 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        String basePath = new File("").getAbsolutePath();
+
         this.fonts = new MainFont();
         this.fonts.addFont("Alien Encounters", 60);
         this.fonts.addFont("BN Jinx", 30);
 
         this.music = new MainMusic();
-        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/1.mp3");
-        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/2.mp3");
-        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/3.mp3");
-        //this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/4.mp3");
-        //this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/5.mp3");
-       // this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/6.mp3");
+        MenuStorageLoader loader = new MenuStorageLoader();
+        for (String path:loader.Load("music")) {
+            this.music.addMedia(path);
+        }
 
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
