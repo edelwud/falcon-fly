@@ -1,4 +1,4 @@
-package com.falconfly;
+package com.falconfly.menu;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -12,6 +12,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -25,7 +27,8 @@ public class MainMenu extends Application {
     Button buttonExit;
     Button buttonStatistics;
     Label labelName;
-
+    MediaPlayer mediaPlayer;
+    Media mediaFile;
 
     public static void main(String[] args) {
         launch(args);
@@ -36,6 +39,11 @@ public class MainMenu extends Application {
 
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
+
+        mediaFile = new Media("file:///D:/BSUIR/4cem/MyGame/Bet_On_it.mp3");
+        mediaPlayer = new MediaPlayer(mediaFile);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setVolume(0.3);
 
         labelName = new Label();
         labelName.setText("Falcon-Fly");
@@ -104,37 +112,11 @@ public class MainMenu extends Application {
         }
 
          if(eventMain.getSource() == buttonSettings) {
-             Label messageOne = new Label();
-             messageOne.setText("Settings");
-             messageOne.setPrefSize(700,100);
-             messageOne.setMaxSize(700,100);
-             messageOne.setMinSize(700,100);
-             messageOne.setFont(new Font("Alien Encounters",100));
-             messageOne.setAlignment(Pos.CENTER);
-             StackPane layoutSettings = new StackPane();
-             layoutSettings.getChildren().add(messageOne);
-             sceneSettings = new Scene(layoutSettings,1366,768);
-             windowMain.setScene(sceneSettings);
-             //windowMain.setMaximized(true);
-             windowMain.setTitle("Settings");
-             windowMain.show();
+             (new Settings()).invoke(sceneSettings, windowMain);
          }
 
          if(eventMain.getSource() == buttonStatistics) {
-             Label messageTwo = new Label();
-             messageTwo.setText("Statistics");
-             messageTwo.setPrefSize(700,100);
-             messageTwo.setMaxSize(700,100);
-             messageTwo.setMinSize(700,100);
-             messageTwo.setFont(new Font("Alien Encounters",100));
-             messageTwo.setAlignment(Pos.CENTER);
-             StackPane layoutStatistics = new StackPane();
-             layoutStatistics.getChildren().add(messageTwo);
-             sceneStatistics = new Scene(layoutStatistics,1366,768);
-             windowMain.setScene(sceneStatistics);
-             //windowMain.setMaximized(true);
-             windowMain.setTitle("Statistics");
-             windowMain.show();
+             (new Statistics()).invoke(sceneSettings, windowMain);
 
          }
 
