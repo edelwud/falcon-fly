@@ -32,6 +32,7 @@ public class MainMenu extends Application {
     MediaPlayer mediaPlayer;
     Media mediaFile;
 
+
     MainFont fonts;
     MainMusic music;
 
