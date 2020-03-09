@@ -62,8 +62,9 @@ public class Statistics {
 
         sceneStatistics = new Scene(layout,MainGlobals.WIDTH,MainGlobals.HEIGHT);
         windowMain.setScene(sceneStatistics);
-        //windowMain.setMaximized(true);
+        windowMain.setMaximized(true);
         windowMain.setTitle("Statistics");
+        windowMain.setFullScreen(true);
         windowMain.show();
     }
 }

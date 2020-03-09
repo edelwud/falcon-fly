@@ -59,7 +59,7 @@ public class MainMenu extends Application {
         windowMain.setTitle("Falcon-Fly launcher");
 
         BackgroundImage myBI = new BackgroundImage(
-                new Image(loader.Load("images").get(0),700,700,false,true),
+                new Image(loader.Load("images").get(0),1366,768,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
 
@@ -118,6 +118,7 @@ public class MainMenu extends Application {
         Scene sceneMain = new Scene(layout);
         windowMain.setScene(sceneMain);
         windowMain.setMaximized(true);
+        windowMain.setFullScreen(true);
         windowMain.show();
     }
 

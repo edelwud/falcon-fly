@@ -62,8 +62,9 @@ public class Settings {
 
         sceneSettings = new Scene(layout,MainGlobals.WIDTH,MainGlobals.HEIGHT);
         windowMain.setScene(sceneSettings);
-        //windowMain.setMaximized(true);
+        windowMain.setMaximized(true);
         windowMain.setTitle("Settings");
+        windowMain.setFullScreen(true);
         windowMain.show();
     }
 }
