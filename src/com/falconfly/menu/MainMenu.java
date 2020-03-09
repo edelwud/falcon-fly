@@ -1,6 +1,7 @@
 package com.falconfly.menu;
 
 import com.falconfly.config.MainFont;
+import com.falconfly.config.MainGlobals;
 import com.falconfly.config.MainMusic;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -16,6 +17,9 @@ import javafx.scene.media.Media;
 import javafx.stage.Stage;
 
 public class MainMenu extends Application {
+
+    private static final int MENU_BUTTON_WIDTH = 500;
+    private static final int MENU_BUTTON_HEIGHT = 100;
 
     Stage windowMain;
     Scene sceneSettings, sceneStatistics;
@@ -46,55 +50,53 @@ public class MainMenu extends Application {
         this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/1.mp3");
         this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/2.mp3");
         this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/3.mp3");
-        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/4.mp3");
-        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/5.mp3");
-        this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/6.mp3");
+        //this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/4.mp3");
+        //this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/5.mp3");
+       // this.music.addMedia("file:///D:/BSUIR/4cem/MyGame/store/music/6.mp3");
 
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
 
-        mediaPlayer = new MediaPlayer(music.getRandomMedia());
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setVolume(0.1);
+        music.getRandomMediaPlayer();
 
         labelName = new Label();
         labelName.setText("Falcon-Fly");
-        labelName.setPrefSize(500,100);
-        labelName.setMaxSize(500,100);
-        labelName.setMinSize(500,100);
+        labelName.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        labelName.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        labelName.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         labelName.setFont(this.fonts.getFont("Alien Encounters"));
         labelName.setAlignment(Pos.CENTER);
 
         buttonPlay = new Button();
         buttonPlay.setOnAction(this::handle);
         buttonPlay.setText("Play");
-        buttonPlay.setPrefSize(500,100);
-        buttonPlay.setMaxSize(500,100);
-        buttonPlay.setMinSize(500,100);
+        buttonPlay.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonPlay.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonPlay.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonPlay.setFont(this.fonts.getFont("BN Jinx"));
 
         buttonSettings = new Button();
         buttonSettings.setOnAction(this::handle);
         buttonSettings.setText("Settings");
-        buttonSettings.setPrefSize(500,100);
-        buttonSettings.setMaxSize(500,100);
-        buttonSettings.setMinSize(500,100);
+        buttonSettings.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonSettings.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonSettings.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonSettings.setFont(this.fonts.getFont("BN Jinx"));
 
         buttonExit = new Button();
         buttonExit.setOnAction(this::handle);
         buttonExit.setText("Exit");
-        buttonExit.setPrefSize(500,100);
-        buttonExit.setMaxSize(500,100);
-        buttonExit.setMinSize(500,100);
+        buttonExit.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonExit.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonExit.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonExit.setFont(this.fonts.getFont("BN Jinx"));
 
         buttonStatistics = new Button();
         buttonStatistics.setOnAction(this::handle);
         buttonStatistics.setText("Statistics");
-        buttonStatistics.setPrefSize(500,100);
-        buttonStatistics.setMaxSize(500,100);
-        buttonStatistics.setMinSize(500,100);
+        buttonStatistics.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonStatistics.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+        buttonStatistics.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonStatistics.setFont(this.fonts.getFont("BN Jinx"));
 
         VBox verticalMenuBox = new VBox();

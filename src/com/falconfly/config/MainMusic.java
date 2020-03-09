@@ -1,6 +1,7 @@
 package com.falconfly.config;
 
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,5 +32,16 @@ public class MainMusic {
         int randomNumber = new Random().nextInt(musicPath.length);
         Object randomPath = musicPath[randomNumber];
         return music.get(randomPath);
+    }
+
+    public void getRandomMediaPlayer() {
+        Media musicMedia = this.getRandomMedia();
+
+        MediaPlayer mediaPlayer = new MediaPlayer(musicMedia);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+        mediaPlayer.setOnEndOfMedia(()-> {
+            this.getRandomMediaPlayer();
+        });
     }
 }
