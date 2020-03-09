@@ -1,5 +1,6 @@
 package com.falconfly.menu;
 
+import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,8 +10,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Settings {
+    MainFont fonts;
 
     public void invoke(Scene sceneSettings, Stage windowMain) {
+        this.fonts = MainFont.getInstance();
         Label messageOne = new Label();
         messageOne.setText("Settings");
         messageOne.setPrefSize(700,100);

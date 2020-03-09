@@ -4,10 +4,11 @@ package com.falconfly.config;
 import com.sun.tools.javac.Main;
 import javafx.scene.text.Font;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainFont {
-   private Map<String, Font> fonts;
+   private Map<String, Font> fonts = new HashMap<String, Font>();
    public static MainFont instance;
 
    public MainFont() {

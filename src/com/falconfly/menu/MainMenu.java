@@ -1,20 +1,17 @@
 package com.falconfly.menu;
 
+import com.falconfly.config.MainFont;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class MainMenu extends Application {
@@ -30,12 +27,17 @@ public class MainMenu extends Application {
     MediaPlayer mediaPlayer;
     Media mediaFile;
 
+    MainFont fonts;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.fonts = new MainFont();
+        this.fonts.addFont("Alien Encounters", 60);
+        this.fonts.addFont("BN Jinx", 30);
 
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
@@ -50,7 +52,7 @@ public class MainMenu extends Application {
         labelName.setPrefSize(500,100);
         labelName.setMaxSize(500,100);
         labelName.setMinSize(500,100);
-        labelName.setFont(new Font("Alien Encounters",60));
+        labelName.setFont(this.fonts.getFont("Alien Encounters"));
         labelName.setAlignment(Pos.CENTER);
 
         buttonPlay = new Button();
@@ -59,7 +61,7 @@ public class MainMenu extends Application {
         buttonPlay.setPrefSize(500,100);
         buttonPlay.setMaxSize(500,100);
         buttonPlay.setMinSize(500,100);
-        buttonPlay.setFont(new Font("BN Jinx",30));
+        buttonPlay.setFont(this.fonts.getFont("BN Jinx"));
 
         buttonSettings = new Button();
         buttonSettings.setOnAction(this::handle);
@@ -67,7 +69,7 @@ public class MainMenu extends Application {
         buttonSettings.setPrefSize(500,100);
         buttonSettings.setMaxSize(500,100);
         buttonSettings.setMinSize(500,100);
-        buttonSettings.setFont(new Font("BN Jinx",30));
+        buttonSettings.setFont(this.fonts.getFont("BN Jinx"));
 
         buttonExit = new Button();
         buttonExit.setOnAction(this::handle);
@@ -75,7 +77,7 @@ public class MainMenu extends Application {
         buttonExit.setPrefSize(500,100);
         buttonExit.setMaxSize(500,100);
         buttonExit.setMinSize(500,100);
-        buttonExit.setFont(new Font("BN Jinx",30));
+        buttonExit.setFont(this.fonts.getFont("BN Jinx"));
 
         buttonStatistics = new Button();
         buttonStatistics.setOnAction(this::handle);
@@ -83,7 +85,7 @@ public class MainMenu extends Application {
         buttonStatistics.setPrefSize(500,100);
         buttonStatistics.setMaxSize(500,100);
         buttonStatistics.setMinSize(500,100);
-        buttonStatistics.setFont(new Font("BN Jinx",30));
+        buttonStatistics.setFont(this.fonts.getFont("BN Jinx"));
 
         VBox verticalMenuBox = new VBox();
         verticalMenuBox.setSpacing(20);
