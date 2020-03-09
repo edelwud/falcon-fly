@@ -63,6 +63,11 @@ public class MainMenu extends Application {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
 
+        BackgroundImage rightBackground = new BackgroundImage(
+                new Image(loader.Load("images").get(1),500,768,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
         music.getRandomMediaPlayer();
 
         labelName = new Label();
@@ -108,11 +113,12 @@ public class MainMenu extends Application {
         VBox verticalMenuBox = new VBox();
         verticalMenuBox.setSpacing(20);
         verticalMenuBox.getChildren().addAll(labelName, buttonPlay, buttonSettings,buttonStatistics, buttonExit);
+        verticalMenuBox.setBackground(new Background(rightBackground));
 
         BorderPane layout = new BorderPane();
         layout.setRight(verticalMenuBox);
         BorderPane.setAlignment(verticalMenuBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(verticalMenuBox, new Insets(40,20,0,0));
+        BorderPane.setMargin(verticalMenuBox, new Insets(0,0,0,0));
         layout.setBackground(new Background(myBI));
 
         Scene sceneMain = new Scene(layout);
@@ -139,7 +145,6 @@ public class MainMenu extends Application {
 
          if(eventMain.getSource() == buttonStatistics) {
              (new Statistics()).invoke(sceneSettings, windowMain);
-
          }
 
 
