@@ -45,7 +45,7 @@ public class Statistics {
         buttonStatisticsBack.setFont(this.fonts.getFont("BN Jinx"));
 
         Label messageOne = new Label();
-        messageOne.setText("Settings");
+        messageOne.setText("Statistics");
         messageOne.setPrefSize(700,100);
         messageOne.setMaxSize(700,100);
         messageOne.setMinSize(700,100);

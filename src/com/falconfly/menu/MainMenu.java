@@ -10,8 +10,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
@@ -57,6 +57,11 @@ public class MainMenu extends Application {
 
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
+
+        BackgroundImage myBI = new BackgroundImage(
+                new Image(loader.Load("images").get(0),700,700,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
         music.getRandomMediaPlayer();
 
@@ -108,6 +113,7 @@ public class MainMenu extends Application {
         layout.setRight(verticalMenuBox);
         BorderPane.setAlignment(verticalMenuBox, Pos.BOTTOM_RIGHT);
         BorderPane.setMargin(verticalMenuBox, new Insets(40,20,0,0));
+        layout.setBackground(new Background(myBI));
 
         Scene sceneMain = new Scene(layout);
         windowMain.setScene(sceneMain);

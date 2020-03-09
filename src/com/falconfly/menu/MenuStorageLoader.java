@@ -1,6 +1,8 @@
 package com.falconfly.menu;
 
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MenuStorageLoader {
 
@@ -14,13 +16,13 @@ public class MenuStorageLoader {
         return "file:///" + new File(path).getAbsolutePath().replace("\\", "/");
     }
 
-    public String[] Load(String asset) {
+    public List<String> Load(String asset) {
         File[] files = new File(this.storeRelativePath  + "\\" + asset + "\\").listFiles();
         assert files != null;
 
-        String[] relativePath = new String[files.length];
-        for (int i = 0; i < files.length; i++) {
-            relativePath[i] = this.convertPath(files[i].getAbsolutePath());
+        List<String> relativePath = new LinkedList<>();
+        for (File file:files) {
+            relativePath.add(this.convertPath(file.getAbsolutePath()));
         }
         return relativePath;
     }
