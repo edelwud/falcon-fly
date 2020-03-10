@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -31,6 +32,8 @@ public class MainMenu extends Application {
     Button buttonExit;
     Button buttonStatistics;
     Label labelName;
+    MediaPlayer mediaPlayer;
+    Media mediaFile;
 
     MainFont fonts;
     MainMusic music;
@@ -60,7 +63,7 @@ public class MainMenu extends Application {
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
 
-        BackgroundImage myBI = new BackgroundImage(
+        BackgroundImage centerBackground = new BackgroundImage(
                 new Image(loader.Load("images").get(0),1366,768,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
@@ -72,6 +75,7 @@ public class MainMenu extends Application {
 
         labelName = new Label();
         labelName.setText("Falcon-Fly");
+        labelName.setTextFill(Color.web("#fad41b"));
         labelName.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         labelName.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         labelName.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
@@ -113,13 +117,13 @@ public class MainMenu extends Application {
         VBox verticalMenuBox = new VBox();
         verticalMenuBox.setSpacing(20);
         verticalMenuBox.getChildren().addAll(labelName, buttonPlay, buttonSettings,buttonStatistics, buttonExit);
-        verticalMenuBox.setBackground(new Background(rightBackground));
+        //verticalMenuBox.setBackground(new Background(rightBackground));
 
         BorderPane layout = new BorderPane();
         layout.setRight(verticalMenuBox);
         BorderPane.setAlignment(verticalMenuBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(verticalMenuBox, new Insets(0,0,0,0));
-        layout.setBackground(new Background(myBI));
+        BorderPane.setMargin(verticalMenuBox, new Insets(40,20,0,0));
+        layout.setBackground(new Background(centerBackground));
 
         Scene sceneMain = new Scene(layout);
         windowMain.setScene(sceneMain);
