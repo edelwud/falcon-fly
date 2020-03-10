@@ -22,6 +22,7 @@ public class Settings {
     Button buttonSettingsBack;
 
 
+
     public void invoke(Scene sceneSettings, Stage windowMain) {
         this.fonts = MainFont.getInstance();
 
