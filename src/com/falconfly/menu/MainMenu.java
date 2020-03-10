@@ -31,8 +31,6 @@ public class MainMenu extends Application {
     Button buttonExit;
     Button buttonStatistics;
     Label labelName;
-    MediaPlayer mediaPlayer;
-    Media mediaFile;
 
     MainFont fonts;
     MainMusic music;
@@ -54,6 +52,10 @@ public class MainMenu extends Application {
         for (String path:loader.Load("music")) {
             this.music.addMedia(path);
         }
+        if(!MainGlobals.musicPlaying) {
+        music.getRandomMediaPlayer();
+        MainGlobals.musicPlaying = true;
+        }
 
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
@@ -67,8 +69,6 @@ public class MainMenu extends Application {
                 new Image(loader.Load("images").get(1),500,768,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
-
-        music.getRandomMediaPlayer();
 
         labelName = new Label();
         labelName.setText("Falcon-Fly");

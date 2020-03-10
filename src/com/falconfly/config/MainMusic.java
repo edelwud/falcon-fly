@@ -41,6 +41,7 @@ public class MainMusic {
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         mediaPlayer.setOnEndOfMedia(()-> {
+            mediaPlayer.stop();
             this.getRandomMediaPlayer();
         });
     }
