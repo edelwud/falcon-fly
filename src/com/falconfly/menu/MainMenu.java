@@ -38,6 +38,7 @@ public class MainMenu extends Application {
     MainFont fonts;
     MainMusic music;
 
+
     public static void main(String[] args) {
         launch(args);
     }
