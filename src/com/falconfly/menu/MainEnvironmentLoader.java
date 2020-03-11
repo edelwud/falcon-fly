@@ -32,4 +32,15 @@ public class MainEnvironmentLoader {
         this.environmentFile.close();
         return screenSizes;
     }
+
+    public String getVolume() {
+
+        String volume = new String();
+        this.openEnvironment();
+        while(this.environmentFile.hasNext()) {
+            volume = this.environmentFile.next();
+        }
+        this.environmentFile.close();
+        return volume;
+    }
 }

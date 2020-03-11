@@ -51,19 +51,21 @@ public class Settings {
 
         buttonScreenSizeApply = new Button();
         buttonScreenSizeApply.setText("Apply");
+        buttonScreenSizeApply.setOnAction(this::handleApply);
         buttonScreenSizeApply.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonScreenSizeApply.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonScreenSizeApply.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonScreenSizeApply.setFont(this.fonts.getFont("BN Jinx"));
-        //buttonScreenSizeApply.setDisable(true);
+        buttonScreenSizeApply.setDisable(true);
 
         buttonScreenSizeCancel = new Button();
         buttonScreenSizeCancel.setText("Cancel");
+        buttonScreenSizeCancel.setOnAction(this::handleCancel);
         buttonScreenSizeCancel.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonScreenSizeCancel.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonScreenSizeCancel.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonScreenSizeCancel.setFont(this.fonts.getFont("BN Jinx"));
-        //buttonScreenSizeCancel.setDisable(true);
+        buttonScreenSizeCancel.setDisable(true);
 
         screenSizes = new ChoiceBox<>();
         environmentLoader = new MainEnvironmentLoader();
@@ -71,6 +73,10 @@ public class Settings {
         for(int i = 0; i < environmentLoader.getScreenSizes().size(); i++) {
             screenSizes.getItems().add(environmentLoader.getScreenSizes().get(i).getKey() + "x" + environmentLoader.getScreenSizes().get(i).getValue());
         }
+        screenSizes.setOnAction(this::getChoice);
+        screenSizes.setPrefSize(MENU_BUTTON_WIDTH*2 + 20, MENU_BUTTON_HEIGHT);
+        screenSizes.setMaxSize(MENU_BUTTON_WIDTH*2 + 20, MENU_BUTTON_HEIGHT);
+        screenSizes.setMinSize(MENU_BUTTON_WIDTH*2 + 20, MENU_BUTTON_HEIGHT);
 
         HBox horizontalTopMenuBox = new HBox();
         horizontalTopMenuBox.getChildren().add(screenSizes);
@@ -96,7 +102,7 @@ public class Settings {
         BorderPane.setAlignment(horizontalCenterMenuBox, Pos.BOTTOM_CENTER);
         BorderPane.setMargin(horizontalCenterMenuBox, new Insets(200,0,0,20));
 
-        sceneSettings = new Scene(layout,MainGlobals.WIDTH,MainGlobals.HEIGHT);
+        sceneSettings = new Scene(layout, MainGlobals.WIDTH, MainGlobals.HEIGHT);
         windowMain.setScene(sceneSettings);
         windowMain.setMaximized(true);
         windowMain.setTitle("Settings");
@@ -104,7 +110,22 @@ public class Settings {
         windowMain.show();
     }
 
-    private void getChoice(ChoiceBox<String> screenSizes) {
-        System.out.println(screenSizes.getValue());
+    private void getChoice(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == this.screenSizes) {
+            buttonScreenSizeApply.setDisable(false);
+            buttonScreenSizeCancel.setDisable(false);
+        }
+    }
+
+    private void handleApply(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == this.buttonScreenSizeApply) {
+            //MainGlobals.WIDTH = this.screenSizes.getValue()
+        }
+    }
+
+    private void handleCancel(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == this.buttonScreenSizeCancel) {
+           //
+        }
     }
 }
