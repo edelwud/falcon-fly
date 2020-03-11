@@ -1,6 +1,10 @@
 package com.falconfly.engine;
 
 import com.falconfly.config.MainGlobals;
+import com.falconfly.engine.input.Keyboard;
+import org.lwjgl.glfw.GLFW;
+
+import java.security.Key;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -27,7 +31,24 @@ public class Engine {
         glClearColor(1.0f, 0.0f, 0.5f, 0.0f);
 
         while (!window.isCloseRequest()) {
+            if (Keyboard.keyPressed(GLFW.GLFW_KEY_UP)) {
+                glClearColor(1.0f, 1.0f, 0.5f, 0.0f);
+            }
+            if (Keyboard.keyPressed(GLFW.GLFW_KEY_DOWN)) {
+                glClearColor(0.0f, 1.0f, 0.5f, 0.0f);
+            }
+            if (Keyboard.keyPressed(GLFW.GLFW_KEY_LEFT)) {
+                glClearColor(1.0f, 0.5f, 1.0f, 0.0f);
+            }
+            if (Keyboard.keyPressed(GLFW.GLFW_KEY_RIGHT)) {
+                glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
+            }
+            if (Keyboard.keyPressed(GLFW.GLFW_KEY_ESCAPE)) {
+                this.window.destroy();
+                break;
+            }
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+            Keyboard.handleKeyboardInput();
             this.window.update();
         }
 
