@@ -44,8 +44,7 @@ public class Engine {
                 glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
             }
             if (Keyboard.keyPressed(GLFW.GLFW_KEY_ESCAPE)) {
-                this.window.destroy();
-                break;
+                GLFW.glfwSetWindowShouldClose(this.window.id, true);
             }
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
             Keyboard.handleKeyboardInput();
