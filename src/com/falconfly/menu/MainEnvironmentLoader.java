@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 public class MainEnvironmentLoader {
 
-    private Scanner environmentFile;
-
-    public void openEnvironment() {
+    private static Scanner environmentFile;
+    private static String volume;
+    public static void openEnvironment() {
         MenuStorageLoader loader = new MenuStorageLoader();
         try {
             environmentFile = new Scanner(new File(loader.Load("").get(0).substring(7,loader.Load("").get(0).length())));
@@ -22,25 +22,22 @@ public class MainEnvironmentLoader {
         }
     }
 
-    public List<Pair<String, String>> getScreenSizes() {
+    public static List<Pair<String, String>> getScreenSizes() {
 
         List<Pair<String, String>> screenSizes = new LinkedList<>();
-        this.openEnvironment();
-        while(this.environmentFile.hasNext()) {
-            screenSizes.add(new Pair<>(this.environmentFile.next(), this.environmentFile.next()));
-        }
-        this.environmentFile.close();
+        MainEnvironmentLoader.openEnvironment();
+            screenSizes.add(new Pair<>(MainEnvironmentLoader.environmentFile.next(), MainEnvironmentLoader.environmentFile.next()));
+        MainEnvironmentLoader.environmentFile.close();
         return screenSizes;
     }
 
-    public String getVolume() {
+    public static String getVolume() {
 
-        String volume = new String();
-        this.openEnvironment();
-        while(this.environmentFile.hasNext()) {
-            volume = this.environmentFile.next();
+        MainEnvironmentLoader.openEnvironment();
+        while(MainEnvironmentLoader.environmentFile.hasNext()) {
+            volume = MainEnvironmentLoader.environmentFile.next();
         }
-        this.environmentFile.close();
+        MainEnvironmentLoader.environmentFile.close();
         return volume;
     }
 }
