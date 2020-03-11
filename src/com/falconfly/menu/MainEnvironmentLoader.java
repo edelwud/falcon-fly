@@ -21,12 +21,24 @@ public class MainEnvironmentLoader {
         }
     }
 
+    public void closeEnvironment() {
+        MenuStorageLoader loader = new MenuStorageLoader();
+        try {
+            environmentFile = new Scanner(loader.Load("").get(0));
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public List<Pair<String, String>> getScreenSizes() {
 
         List<Pair<String, String>> screenSizes = new LinkedList<>();
+        this.openEnvironment();
         while(this.environmentFile.hasNext()) {
             screenSizes.add(new Pair<>(this.environmentFile.next(),this.environmentFile.next()));
         }
+        this.environmentFile.close();
         return screenSizes;
     }
 }
