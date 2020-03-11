@@ -108,7 +108,7 @@ public class Settings {
         windowMain.setHeight(MainGlobals.HEIGHT);
         //windowMain.setMaximized(true);
         windowMain.setTitle("Settings");
-        //windowMain.setFullScreen(true);
+        windowMain.setFullScreen(true);
         windowMain.show();
     }
 

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
@@ -123,23 +124,30 @@ public class MainMenu extends Application {
         buttonStatistics.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonStatistics.setFont(this.fonts.getFont("BN Jinx"));
 
+        Image mainMenuBorder = new Image(loader.Load("images/Background").get(1));
+        Image backMenuBorder = new Image(loader.Load("images/Background").get(0));
+
         VBox verticalMenuBox = new VBox();
         verticalMenuBox.setSpacing(20);
         verticalMenuBox.getChildren().addAll(labelName, buttonPlay, buttonSettings,buttonStatistics, buttonExit);
         //verticalMenuBox.setBackground(new Background(rightBackground));
+
+        //VBox menuBorders = new VBox();
+        //menuBorders.getChildren().addAll(new ImageView(backMenuBorder), new ImageView(mainMenuBorder));
 
         BorderPane layout = new BorderPane();
         layout.setRight(verticalMenuBox);
         BorderPane.setAlignment(verticalMenuBox, Pos.BOTTOM_RIGHT);
         BorderPane.setMargin(verticalMenuBox, new Insets(40,20,0,0));
         layout.setBackground(new Background(centerBackground));
+        //layout.setCenter(menuBorders);
 
         Scene sceneMain = new Scene(layout);
         windowMain.setScene(sceneMain);
         //windowMain.setMaximized(true);
         windowMain.setWidth(MainGlobals.WIDTH);
         windowMain.setHeight(MainGlobals.HEIGHT);
-        //windowMain.setFullScreen(true);
+        windowMain.setFullScreen(true);
         windowMain.show();
     }
 
