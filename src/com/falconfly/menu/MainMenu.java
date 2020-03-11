@@ -3,6 +3,7 @@ package com.falconfly.menu;
 import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
 import com.falconfly.config.MainMusic;
+import com.falconfly.engine.Engine;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -154,8 +155,7 @@ public class MainMenu extends Application {
      public void handle(ActionEvent eventMain) {
 
         if(eventMain.getSource() == buttonPlay) {
-            System.out.println("Gameplay");
-            // Create new Scene of gameplay
+            new Engine().run();
         }
 
         if(eventMain.getSource() == buttonExit) {
