@@ -69,9 +69,9 @@ public class Settings {
 
         screenSizes = new ChoiceBox<>();
         environmentLoader = new MainEnvironmentLoader();
-        screenSizes.setValue(environmentLoader.getScreenSizes().get(0).getKey() + "x" + environmentLoader.getScreenSizes().get(0).getValue());
-        for(int i = 0; i < environmentLoader.getScreenSizes().size(); i++) {
-            screenSizes.getItems().add(environmentLoader.getScreenSizes().get(i).getKey() + "x" + environmentLoader.getScreenSizes().get(i).getValue());
+        screenSizes.setValue(MainGlobals.listSizes.get(0).getKey() + "x" + MainGlobals.listSizes.get(0).getValue());
+        for(int i = 0; i < MainGlobals.listSizes.size(); i++) {
+            screenSizes.getItems().add(MainGlobals.listSizes.get(i).getKey() + "x" + MainGlobals.listSizes.get(i).getValue());
         }
         screenSizes.setOnAction(this::getChoice);
         screenSizes.setPrefSize(MENU_BUTTON_WIDTH*2 + 20, MENU_BUTTON_HEIGHT);
@@ -104,9 +104,11 @@ public class Settings {
 
         sceneSettings = new Scene(layout, MainGlobals.WIDTH, MainGlobals.HEIGHT);
         windowMain.setScene(sceneSettings);
-        windowMain.setMaximized(true);
+        windowMain.setWidth(MainGlobals.WIDTH);
+        windowMain.setHeight(MainGlobals.HEIGHT);
+        //windowMain.setMaximized(true);
         windowMain.setTitle("Settings");
-        windowMain.setFullScreen(true);
+        //windowMain.setFullScreen(true);
         windowMain.show();
     }
 
@@ -119,7 +121,16 @@ public class Settings {
 
     private void handleApply(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.buttonScreenSizeApply) {
-            //MainGlobals.WIDTH = this.screenSizes.getValue()
+            for(int i = 0; i < MainGlobals.listSizes.size(); i++)
+            {
+                String tempStringOne = new String();
+                tempStringOne = MainGlobals.listSizes.get(i).getKey() + "x" + MainGlobals.listSizes.get(i).getValue();
+                if(tempStringOne.compareTo(this.screenSizes.getSelectionModel().toString()) == 0) {
+                    MainGlobals.WIDTH = Integer.parseInt(MainGlobals.listSizes.get(i).getKey());
+                    MainGlobals.HEIGHT = Integer.parseInt(MainGlobals.listSizes.get(i).getValue());
+                    break;
+                }
+            }
         }
     }
 

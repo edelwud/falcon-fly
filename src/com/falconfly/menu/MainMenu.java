@@ -47,6 +47,8 @@ public class MainMenu extends Application {
     public void start(Stage primaryStage) throws Exception {
         String basePath = new File("").getAbsolutePath();
 
+        MainGlobals.setListSizes();
+
         this.fonts = new MainFont();
         this.fonts.addFont("Alien Encounters", 60);
         this.fonts.addFont("BN Jinx", 30);
@@ -128,8 +130,10 @@ public class MainMenu extends Application {
 
         Scene sceneMain = new Scene(layout);
         windowMain.setScene(sceneMain);
-        windowMain.setMaximized(true);
-        windowMain.setFullScreen(true);
+        //windowMain.setMaximized(true);
+        windowMain.setWidth(MainGlobals.WIDTH);
+        windowMain.setHeight(MainGlobals.HEIGHT);
+        //windowMain.setFullScreen(true);
         windowMain.show();
     }
 
