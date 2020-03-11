@@ -16,7 +16,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.w3c.dom.ls.LSOutput;
 
+import java.awt.*;
 import java.io.File;
 
 public class MainMenu extends Application {
@@ -63,8 +65,12 @@ public class MainMenu extends Application {
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
 
+        Dimension screenSize = Toolkit.getDefaultToolkit ().getScreenSize ();
+        int resHeight = screenSize.height;
+        int resWidth  = screenSize.width;
+
         BackgroundImage centerBackground = new BackgroundImage(
-                new Image(loader.Load("images").get(0),1366,768,false,true),
+                new Image(loader.Load("images/Background").get(4), resWidth, resHeight,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
 
