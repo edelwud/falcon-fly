@@ -15,7 +15,7 @@ public class MainEnvironmentLoader {
     public void openEnvironment() {
         MenuStorageLoader loader = new MenuStorageLoader();
         try {
-            environmentFile = new Scanner(new File("D:\\projects\\4_sem\\falcon-fly\\store\\environment.cfg"));
+            environmentFile = new Scanner(new File(loader.Load("").get(0).substring(7,loader.Load("").get(0).length())));
         }
         catch(Exception ex) {
             ex.printStackTrace();
@@ -26,12 +26,8 @@ public class MainEnvironmentLoader {
 
         List<Pair<String, String>> screenSizes = new LinkedList<>();
         this.openEnvironment();
-        String widthVar, heightVar;
         while(this.environmentFile.hasNext()) {
-            //screenSizes.add(new Pair<>(this.environmentFile.next(), this.environmentFile.next()));
-            widthVar = this.environmentFile.next();
-            System.out.println(widthVar + "\n");
-            heightVar = this.environmentFile.next();
+            screenSizes.add(new Pair<>(this.environmentFile.next(), this.environmentFile.next()));
         }
         this.environmentFile.close();
         return screenSizes;
