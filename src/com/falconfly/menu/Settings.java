@@ -65,14 +65,15 @@ public class Settings {
         buttonScreenSizeCancel.setFont(this.fonts.getFont("BN Jinx"));
         //buttonScreenSizeCancel.setDisable(true);
 
-        //screenSizes = new ChoiceBox<>();
-        //screenSizes.setValue(environmentLoader.getScreenSizes().get(0).getKey() + "x" + environmentLoader.getScreenSizes().get(0).getValue());
-        //for(int i = 0; i < environmentLoader.getScreenSizes().size(); i++) {
-          //  screenSizes.getItems().add(environmentLoader.getScreenSizes().get(i).getKey() + "x" + environmentLoader.getScreenSizes().get(i).getValue());
-        //}
+        screenSizes = new ChoiceBox<>();
+        environmentLoader = new MainEnvironmentLoader();
+        screenSizes.setValue(environmentLoader.getScreenSizes().get(0).getKey() + "x" + environmentLoader.getScreenSizes().get(0).getValue());
+        for(int i = 0; i < environmentLoader.getScreenSizes().size(); i++) {
+            screenSizes.getItems().add(environmentLoader.getScreenSizes().get(i).getKey() + "x" + environmentLoader.getScreenSizes().get(i).getValue());
+        }
 
-        //HBox horizontalTopMenuBox = new HBox();
-       // horizontalTopMenuBox.getChildren().add(screenSizes);
+        HBox horizontalTopMenuBox = new HBox();
+        horizontalTopMenuBox.getChildren().add(screenSizes);
 
         HBox horizontalCenterMenuBox = new HBox();
         horizontalCenterMenuBox.setSpacing(20);
@@ -83,9 +84,9 @@ public class Settings {
 
         BorderPane layout = new BorderPane();
 
-        //layout.setTop(horizontalTopMenuBox);
-        //BorderPane.setAlignment(horizontalTopMenuBox, Pos.BOTTOM_CENTER);
-        //BorderPane.setMargin(horizontalTopMenuBox, new Insets(0,0,0,20));
+        layout.setTop(horizontalTopMenuBox);
+        BorderPane.setAlignment(horizontalTopMenuBox, Pos.BOTTOM_CENTER);
+        BorderPane.setMargin(horizontalTopMenuBox, new Insets(0,0,0,20));
 
         layout.setBottom(horizontalMenuBox);
         BorderPane.setAlignment(horizontalMenuBox, Pos.BOTTOM_RIGHT);
