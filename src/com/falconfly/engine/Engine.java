@@ -1,15 +1,19 @@
 package com.falconfly.engine;
 
+import com.falconfly.config.MainGlobals;
+
 import static org.lwjgl.opengl.GL11.*;
 
 public class Engine {
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 360;
+    public static int WIDTH = 640;
+    public static int HEIGHT = 360;
     public static final String TITLE = "Falcon Fly";
 
     private EngineWindow window;
 
     public void run() {
+        WIDTH = MainGlobals.WIDTH;
+        HEIGHT = MainGlobals.HEIGHT;
         this.init();
     }
 
