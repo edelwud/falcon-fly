@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -198,7 +199,8 @@ public class MainMenu extends Application {
         }
 
         if(eventMain.getSource() == buttonExit) {
-            System.exit(0); // exit
+            ExitAlert exitAlert = new ExitAlert();
+            exitAlert.display("You really want to exit?");
         }
 
          if(eventMain.getSource() == buttonSettings) {
