@@ -200,7 +200,9 @@ public class MainMenu extends Application {
 
         if(eventMain.getSource() == buttonExit) {
             ExitAlert exitAlert = new ExitAlert();
+            this.windowMain.setFullScreen(false);
             exitAlert.display("You really want to exit?");
+            windowMain.setFullScreen(true);
         }
 
          if(eventMain.getSource() == buttonSettings) {
