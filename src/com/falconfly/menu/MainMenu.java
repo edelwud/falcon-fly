@@ -25,8 +25,8 @@ import java.io.File;
 
 public class MainMenu extends Application {
 
-    private static final int MENU_BUTTON_WIDTH = 500;
-    private static final int MENU_BUTTON_HEIGHT = 100;
+    private static final int MENU_BUTTON_WIDTH = 600;
+    private static final int MENU_BUTTON_HEIGHT = 105;
 
     Stage windowMain;
     Scene sceneSettings, sceneStatistics;
@@ -80,74 +80,113 @@ public class MainMenu extends Application {
                 BackgroundSize.DEFAULT);
 
         BackgroundImage rightBackground = new BackgroundImage(
-                new Image(loader.Load("images").get(1),500,768,false,true),
+                new Image(loader.Load("images/Background").get(0),resWidth * 1.25,resHeight * 1.25,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
 
+        BackgroundImage mainBorderBackgroundImg = new BackgroundImage(
+                new Image(loader.Load("images/Background").get(1),resWidth * 1.25,resHeight * 1.25,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
+        BackgroundImage gameNameBackgroundImg = new BackgroundImage(
+                new Image(loader.Load("images/Background").get(2),resWidth * 0.35,resHeight * 0.35,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
+        BackgroundImage gameMenuBackgroundImg = new BackgroundImage(
+                new Image(loader.Load("images/Background").get(3),resWidth * 0.25,resHeight * 0.25,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
+        Label mainPicBackground = new Label();
+        mainPicBackground.setMaxSize(resWidth, resHeight);
+        mainPicBackground.setBackground(new Background(centerBackground));
+        Label transparentBorderBackground = new Label();
+        transparentBorderBackground.setMaxSize(resWidth, resHeight);
+        transparentBorderBackground.setBackground(new Background(rightBackground));
+        Label mainBorderBackground = new Label();
+        mainBorderBackground.setMaxSize(resWidth, resHeight);
+        mainBorderBackground.setBackground(new Background(mainBorderBackgroundImg));
+        Label gameMenuBackground = new Label();
+        gameMenuBackground.setMaxSize(resWidth, resHeight);
+        gameMenuBackground.setBackground(new Background(gameMenuBackgroundImg));
+
         labelName = new Label();
-        labelName.setText("Falcon-Fly");
-        labelName.setTextFill(Color.web("#fad41b"));
-        labelName.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
-        labelName.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
-        labelName.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
-        labelName.setFont(this.fonts.getFont("Alien Encounters"));
-        labelName.setAlignment(Pos.CENTER);
+        labelName.setMaxSize(resWidth * 0.35, resHeight * 0.35);
+        labelName.setBackground(new Background(gameNameBackgroundImg));
+
+        BackgroundImage playBackground = new BackgroundImage(
+                new Image(loader.Load("images/Buttons").get(3),resWidth * 0.45,resHeight * 0.45,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
         buttonPlay = new Button();
         buttonPlay.setOnAction(this::handle);
-        buttonPlay.setText("Play");
+        buttonPlay.setBackground(new Background(playBackground));
         buttonPlay.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonPlay.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonPlay.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
-        buttonPlay.setFont(this.fonts.getFont("BN Jinx"));
+
+        BackgroundImage settingsBackground = new BackgroundImage(
+                new Image(loader.Load("images/Buttons").get(5),resWidth * 0.5,resHeight * 0.5,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
         buttonSettings = new Button();
         buttonSettings.setOnAction(this::handle);
-        buttonSettings.setText("Settings");
+        buttonSettings.setBackground(new Background(settingsBackground));
         buttonSettings.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonSettings.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonSettings.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
-        buttonSettings.setFont(this.fonts.getFont("BN Jinx"));
+
+        BackgroundImage exitBackground = new BackgroundImage(
+                new Image(loader.Load("images/Buttons").get(1),resWidth * 0.5,resHeight * 0.5,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
         buttonExit = new Button();
         buttonExit.setOnAction(this::handle);
-        buttonExit.setText("Exit");
+        buttonExit.setBackground(new Background(exitBackground));
         buttonExit.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonExit.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonExit.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
-        buttonExit.setFont(this.fonts.getFont("BN Jinx"));
+
+        BackgroundImage statisticsBackground = new BackgroundImage(
+                new Image(loader.Load("images/Buttons").get(7),resWidth * 0.5,resHeight * 0.5,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
         buttonStatistics = new Button();
         buttonStatistics.setOnAction(this::handle);
-        buttonStatistics.setText("Statistics");
+        buttonStatistics.setBackground(new Background(statisticsBackground));
         buttonStatistics.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonStatistics.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonStatistics.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
-        buttonStatistics.setFont(this.fonts.getFont("BN Jinx"));
-
-        Image mainMenuBorder = new Image(loader.Load("images/Background").get(1));
-        Image backMenuBorder = new Image(loader.Load("images/Background").get(0));
 
         VBox verticalMenuBox = new VBox();
-        verticalMenuBox.setSpacing(20);
-        verticalMenuBox.getChildren().addAll(labelName, buttonPlay, buttonSettings,buttonStatistics, buttonExit);
-        //verticalMenuBox.setBackground(new Background(rightBackground));
-
-        //VBox menuBorders = new VBox();
-        //menuBorders.getChildren().addAll(new ImageView(backMenuBorder), new ImageView(mainMenuBorder));
+        verticalMenuBox.setSpacing(0);
+        verticalMenuBox.getChildren().addAll(buttonPlay,buttonStatistics, buttonSettings, buttonExit);
 
         BorderPane layout = new BorderPane();
         layout.setRight(verticalMenuBox);
         BorderPane.setAlignment(verticalMenuBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(verticalMenuBox, new Insets(40,20,0,0));
-        layout.setBackground(new Background(centerBackground));
-        //layout.setCenter(menuBorders);
+        BorderPane.setMargin(verticalMenuBox, new Insets(resHeight * 0.4,0,0,0));
 
-        Scene sceneMain = new Scene(layout);
+        StackPane root = new StackPane(mainPicBackground, transparentBorderBackground, mainBorderBackground);
+        StackPane.setAlignment(labelName, Pos.TOP_RIGHT);
+        StackPane.setMargin(labelName, new Insets(30, 75, 0, 0));
+        root.getChildren().add(labelName);
+        StackPane.setAlignment(gameMenuBackground, Pos.CENTER);
+        StackPane.setMargin(gameMenuBackground, new Insets(0, 0, resHeight * 0.35, resWidth * 0.75));
+        root.getChildren().add(gameMenuBackground);
+        root.getChildren().add(layout);
+
+        Scene sceneMain = new Scene(root);
         windowMain.setScene(sceneMain);
         //windowMain.setMaximized(true);
-        windowMain.setWidth(MainGlobals.WIDTH);
-        windowMain.setHeight(MainGlobals.HEIGHT);
+        windowMain.setWidth(resWidth);
+        windowMain.setHeight(resHeight);
         windowMain.setFullScreen(true);
         windowMain.show();
     }
