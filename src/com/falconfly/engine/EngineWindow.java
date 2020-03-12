@@ -9,6 +9,8 @@ import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
 
+import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+
 public class EngineWindow {
     // Window identification
     public long id;
@@ -41,7 +43,7 @@ public class EngineWindow {
             System.err.println("GLFW cannot initialize");
             System.exit(-1);
         }
-        this.id = GLFW.glfwCreateWindow(this.width, this.height, this.title, 0, 0);
+        this.id = GLFW.glfwCreateWindow(this.width, this.height, this.title, glfwGetPrimaryMonitor(), 0);
         if (this.id == 0) {
             System.err.println("GLFW cannot create window");
             System.exit(-1);
@@ -56,7 +58,7 @@ public class EngineWindow {
             System.exit(-1);
         }
         // Getting video mode of primary monitor
-        this.videomode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        this.videomode = GLFW.glfwGetVideoMode(glfwGetPrimaryMonitor());
 
         // Setting primitives
         GLFW.glfwSetWindowTitle(this.id, this.title);
