@@ -67,8 +67,8 @@ public class Settings {
         buttonScreenSizeCancel.setFont(this.fonts.getFont("BN Jinx"));
         buttonScreenSizeCancel.setDisable(true);
 
+
         screenSizes = new ChoiceBox<>();
-        environmentLoader = new MainEnvironmentLoader();
         screenSizes.setValue(MainGlobals.listSizes.get(0).getKey() + "x" + MainGlobals.listSizes.get(0).getValue());
         for(int i = 0; i < MainGlobals.listSizes.size(); i++) {
             screenSizes.getItems().add(MainGlobals.listSizes.get(i).getKey() + "x" + MainGlobals.listSizes.get(i).getValue());
@@ -108,7 +108,7 @@ public class Settings {
         windowMain.setHeight(MainGlobals.HEIGHT);
         //windowMain.setMaximized(true);
         windowMain.setTitle("Settings");
-        windowMain.setFullScreen(true);
+       // windowMain.setFullScreen(true);
         windowMain.show();
     }
 
@@ -123,9 +123,8 @@ public class Settings {
         if(actionEvent.getSource() == this.buttonScreenSizeApply) {
             for(int i = 0; i < MainGlobals.listSizes.size(); i++)
             {
-                String tempStringOne = new String();
-                tempStringOne = MainGlobals.listSizes.get(i).getKey() + "x" + MainGlobals.listSizes.get(i).getValue();
-                if(tempStringOne.compareTo(this.screenSizes.getSelectionModel().toString()) == 0) {
+
+                if(this.screenSizes.getSelectionModel().isSelected(i)) {
                     MainGlobals.WIDTH = Integer.parseInt(MainGlobals.listSizes.get(i).getKey());
                     MainGlobals.HEIGHT = Integer.parseInt(MainGlobals.listSizes.get(i).getValue());
                     break;
