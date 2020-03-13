@@ -4,6 +4,9 @@ import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
 import com.falconfly.config.MainMusic;
 import com.falconfly.engine.Engine;
+import javafx.animation.PathTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -17,7 +20,12 @@ import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.w3c.dom.ls.LSOutput;
 
 import java.awt.*;
@@ -105,9 +113,35 @@ public class MainMenu extends Application {
         Label transparentBorderBackground = new Label();
         transparentBorderBackground.setMaxSize(resWidth, resHeight);
         transparentBorderBackground.setBackground(new Background(rightBackground));
+
+        Path path = new Path();
+        path.getElements().add(new MoveTo(resWidth * 0.5,resHeight / 2));
+        path.getElements().add(new LineTo(resWidth * 0.54,resHeight / 2));
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(1800));
+        pathTransition.setPath(path);
+        pathTransition.setNode(transparentBorderBackground);
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setCycleCount(Timeline.INDEFINITE);
+        pathTransition.setAutoReverse(true);
+        pathTransition.play();
+
         Label mainBorderBackground = new Label();
         mainBorderBackground.setMaxSize(resWidth, resHeight);
         mainBorderBackground.setBackground(new Background(mainBorderBackgroundImg));
+
+        Path path2 = new Path();
+        path2.getElements().add(new MoveTo(resWidth * 0.5,resHeight / 2));
+        path2.getElements().add(new LineTo(resWidth * 0.54,resHeight / 2));
+        PathTransition pathTransition2 = new PathTransition();
+        pathTransition2.setDuration(Duration.millis(1500));
+        pathTransition2.setPath(path2);
+        pathTransition2.setNode(mainBorderBackground);
+        pathTransition2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition2.setCycleCount(Timeline.INDEFINITE);
+        pathTransition2.setAutoReverse(true);
+        pathTransition2.play();
+
         Label gameMenuBackground = new Label();
         gameMenuBackground.setMaxSize(resWidth, resHeight);
         gameMenuBackground.setBackground(new Background(gameMenuBackgroundImg));
@@ -128,6 +162,22 @@ public class MainMenu extends Application {
         buttonPlay.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonPlay.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
 
+        buttonPlay.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonPlay);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonPlay.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonPlay);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
+
         BackgroundImage settingsBackground = new BackgroundImage(
                 new Image(loader.Load("images/Buttons").get(5),resWidth * 0.5,resHeight * 0.5,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
@@ -139,6 +189,22 @@ public class MainMenu extends Application {
         buttonSettings.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonSettings.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonSettings.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+
+        buttonSettings.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonSettings);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonSettings.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonSettings);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
 
         BackgroundImage exitBackground = new BackgroundImage(
                 new Image(loader.Load("images/Buttons").get(1),resWidth * 0.5,resHeight * 0.5,false,true),
@@ -152,6 +218,22 @@ public class MainMenu extends Application {
         buttonExit.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonExit.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
 
+        buttonExit.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonExit);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonExit.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonExit);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
+
         BackgroundImage statisticsBackground = new BackgroundImage(
                 new Image(loader.Load("images/Buttons").get(7),resWidth * 0.5,resHeight * 0.5,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
@@ -163,6 +245,22 @@ public class MainMenu extends Application {
         buttonStatistics.setPrefSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonStatistics.setMaxSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
         buttonStatistics.setMinSize(MENU_BUTTON_WIDTH,MENU_BUTTON_HEIGHT);
+
+        buttonStatistics.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonStatistics);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonStatistics.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonStatistics);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
 
         VBox verticalMenuBox = new VBox();
         verticalMenuBox.setSpacing(0);
