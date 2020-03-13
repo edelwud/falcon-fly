@@ -3,9 +3,11 @@ package com.falconfly.engine;
 import com.falconfly.config.MainGlobals;
 import com.falconfly.engine.input.Keyboard;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
 
-import java.security.Key;
+import java.util.Random;
 
+import static java.lang.Thread.sleep;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Engine {
@@ -28,29 +30,40 @@ public class Engine {
     }
 
     public void update() {
-        glClearColor(1.0f, 0.0f, 0.5f, 0.0f);
+        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+
+        requestFrame(() -> {
+            if (Keyboard.keyDown(GLFW.GLFW_KEY_RIGHT) || Keyboard.keyPressed(GLFW.GLFW_KEY_LEFT)
+                    || Keyboard.keyPressed(GLFW.GLFW_KEY_UP) || Keyboard.keyPressed(GLFW.GLFW_KEY_DOWN)) {
+                glClearColor(new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat());
+            }
+
+            if (Keyboard.keyPressed(GLFW.GLFW_KEY_ESCAPE)) {
+                GLFW.glfwSetWindowShouldClose(window.id, true);
+            }
+
+            Keyboard.handleKeyboardInput();
+            GL11.glClear(GL_COLOR_BUFFER_BIT);
+        });
+    }
+
+    public void requestFrame(Frame frame) {
+        long secsPerFrame = 1000 / Frame.MAX_FRAME_RATE;
 
         while (!window.isCloseRequest()) {
-            if (Keyboard.keyPressed(GLFW.GLFW_KEY_UP)) {
-                glClearColor(1.0f, 1.0f, 0.5f, 0.0f);
+            long startTime = System.currentTimeMillis(); // start fps catching
+            long endLoopTime = System.currentTimeMillis();
+
+            frame.Render();
+
+            try {
+                sleep(secsPerFrame - endLoopTime + startTime);
+            } catch (Exception exc) {
+                exc.printStackTrace();
             }
-            if (Keyboard.keyPressed(GLFW.GLFW_KEY_DOWN)) {
-                glClearColor(0.0f, 1.0f, 0.5f, 0.0f);
-            }
-            if (Keyboard.keyPressed(GLFW.GLFW_KEY_LEFT)) {
-                glClearColor(1.0f, 0.5f, 1.0f, 0.0f);
-            }
-            if (Keyboard.keyPressed(GLFW.GLFW_KEY_RIGHT)) {
-                glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
-            }
-            if (Keyboard.keyPressed(GLFW.GLFW_KEY_ESCAPE)) {
-                GLFW.glfwSetWindowShouldClose(this.window.id, true);
-            }
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-            Keyboard.handleKeyboardInput();
+
             this.window.update();
         }
-
         this.window.destroy();
     }
 
