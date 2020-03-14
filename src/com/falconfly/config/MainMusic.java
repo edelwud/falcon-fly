@@ -11,6 +11,9 @@ import java.util.Set;
 public class MainMusic {
     private Map<String, Media> music = new HashMap<String, Media>();
     public static MainMusic instance;
+    private Media musicMedia;
+    public static MediaPlayer mediaPlayer;
+
 
     public MainMusic() {
         instance = this;
@@ -35,9 +38,9 @@ public class MainMusic {
     }
 
     public void getRandomMediaPlayer() {
-        Media musicMedia = this.getRandomMedia();
+        musicMedia = this.getRandomMedia();
 
-        MediaPlayer mediaPlayer = new MediaPlayer(musicMedia);
+        mediaPlayer = new MediaPlayer(musicMedia);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         mediaPlayer.setOnEndOfMedia(()-> {
@@ -45,4 +48,8 @@ public class MainMusic {
             this.getRandomMediaPlayer();
         });
     }
+    public static MainMusic getInstance() {
+        return instance;
+    }
+
 }

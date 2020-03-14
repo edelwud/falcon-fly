@@ -2,13 +2,14 @@ package com.falconfly.menu;
 
 import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
+import com.falconfly.config.MainMusic;
+import com.falconfly.engine.main.Main;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import java.io.PrintWriter;
 
 public class Settings {
 
+    private double tempMUSIC_VOLUME;
 
     private Scene scene;
     private Stage stage;
@@ -30,9 +32,17 @@ public class Settings {
     MenuStorageLoader storageLoader;
 
     MainFont fonts;
+    MainMusic music;
 
     Button buttonSettingsBack;
-    Button buttonScreenSizeApply;
+    Button buttonSettingsApply;
+
+    Button buttonMusicAction;
+    Button buttonVolumeUp;
+    Button buttonVolumeDown;
+    Slider musicVolume;
+    Label labelMusicSettings;
+    private static boolean musicFlag = true;
 
     ChoiceBox<String> screenSizes;
     Label labelScreen;
@@ -41,6 +51,7 @@ public class Settings {
 
     public void invoke(Scene sceneSettings, Stage windowMain) {
         this.fonts = MainFont.getInstance();
+        this.music = MainMusic.getInstance();
 
         scene = sceneSettings;
         stage = windowMain;
@@ -62,14 +73,14 @@ public class Settings {
         buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
         buttonSettingsBack.setFont(this.fonts.getFont("BN Jinx"));
 
-        buttonScreenSizeApply = new Button();
-        buttonScreenSizeApply.setText("Apply");
-        buttonScreenSizeApply.setOnAction(this::handleApply);
-        buttonScreenSizeApply.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonScreenSizeApply.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonScreenSizeApply.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonScreenSizeApply.setFont(this.fonts.getFont("BN Jinx"));
-        buttonScreenSizeApply.setDisable(true);
+        buttonSettingsApply = new Button();
+        buttonSettingsApply.setText("Apply");
+        buttonSettingsApply.setOnAction(this::handleApply);
+        buttonSettingsApply.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsApply.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsApply.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsApply.setFont(this.fonts.getFont("BN Jinx"));
+        buttonSettingsApply.setDisable(true);
 
         screenSizes = new ChoiceBox<>();
         screenSizes.setValue(Integer.toString(MainGlobals.WIDTH) + "x" + Integer.toString(MainGlobals.HEIGHT));
@@ -81,26 +92,73 @@ public class Settings {
         screenSizes.setMaxSize(MainGlobals.WIDTH * 0.6 + 50, MainGlobals.HEIGHT * 0.08);
         screenSizes.setMinSize(MainGlobals.WIDTH * 0.6 + 50, MainGlobals.HEIGHT * 0.08);
 
+        labelMusicSettings = new Label("Music Settings");
+        labelMusicSettings.setFont(this.fonts.getFont("BN Jinx"));
+
+        buttonMusicAction = new Button();
+        buttonMusicAction.setText("On/Off");
+        buttonMusicAction.setOnAction(this::handleMusicAction);
+        buttonMusicAction.setPrefSize(MainGlobals.WIDTH * 0.1, MainGlobals.HEIGHT * 0.08);
+        buttonMusicAction.setMaxSize(MainGlobals.WIDTH * 0.1, MainGlobals.HEIGHT * 0.08);
+        buttonMusicAction.setMinSize(MainGlobals.WIDTH * 0.1, MainGlobals.HEIGHT * 0.08);
+        buttonMusicAction.setFont(this.fonts.getFont("BN Jinx"));
+
+        buttonVolumeUp = new Button();
+        buttonVolumeUp.setText("Up");
+        buttonVolumeUp.setOnAction(this::handleMusicUp);
+        buttonVolumeUp.setPrefSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
+        buttonVolumeUp.setMaxSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
+        buttonVolumeUp.setMinSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
+        buttonVolumeUp.setFont(this.fonts.getFont("BN Jinx"));
+
+        buttonVolumeDown = new Button();
+        buttonVolumeDown.setText("Down");
+        buttonVolumeDown.setOnAction(this::handleMusicDown);
+        buttonVolumeDown.setPrefSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
+        buttonVolumeDown.setMaxSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
+        buttonVolumeDown.setMinSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
+        buttonVolumeDown.setFont(this.fonts.getFont("BN Jinx"));
+
+
+        musicVolume = new Slider();
+        musicVolume.valueProperty().addListener(event ->{
+            MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
+            this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+        });
+        musicVolume.setMin(0);
+        musicVolume.setMax(1);
+        musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+        musicVolume.setOrientation(Orientation.HORIZONTAL);
+        musicVolume.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+        musicVolume.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+        musicVolume.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+
+
+        HBox horizontalSettingsBox = new HBox();
+        horizontalSettingsBox.setSpacing(25);
+        horizontalSettingsBox.getChildren().addAll(buttonMusicAction, musicVolume, buttonVolumeDown, buttonVolumeUp);
+        horizontalSettingsBox.setAlignment(Pos.CENTER_LEFT);
+
         labelScreen = new Label("Screen resolution");
         labelScreen.setFont(this.fonts.getFont("BN Jinx"));
 
-        VBox verticalTopMenuBox = new VBox();
-        verticalTopMenuBox.setSpacing(25);
-        verticalTopMenuBox.getChildren().addAll(labelScreen, screenSizes);
+        VBox verticalSettingsBox = new VBox();
+        verticalSettingsBox.setSpacing(25);
+        verticalSettingsBox.getChildren().addAll(labelMusicSettings, horizontalSettingsBox, labelScreen, screenSizes);
 
-        VBox horizontalMenuBox = new VBox();
-        horizontalMenuBox.setSpacing(25);
-        horizontalMenuBox.getChildren().addAll(buttonScreenSizeApply, buttonSettingsBack);
+        VBox mainSettingsBox = new VBox();
+        mainSettingsBox.setSpacing(25);
+        mainSettingsBox.getChildren().addAll(buttonSettingsApply, buttonSettingsBack);
 
         BorderPane layout = new BorderPane();
 
-        layout.setCenter(verticalTopMenuBox);
-        BorderPane.setAlignment(verticalTopMenuBox, Pos.CENTER);
-        BorderPane.setMargin(verticalTopMenuBox, new Insets(MainGlobals.HEIGHT * 0.575,0, 0,MainGlobals.WIDTH * 0.15 + 50));
+        layout.setCenter(verticalSettingsBox);
+        BorderPane.setAlignment(verticalSettingsBox, Pos.CENTER);
+        BorderPane.setMargin(verticalSettingsBox, new Insets(MainGlobals.HEIGHT * 0.375,0, 0,MainGlobals.WIDTH * 0.15 + 50));
 
-        layout.setBottom(horizontalMenuBox);
-        BorderPane.setAlignment(horizontalMenuBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(horizontalMenuBox, new Insets(0,0,20,25));
+        layout.setBottom(mainSettingsBox);
+        BorderPane.setAlignment(mainSettingsBox, Pos.BOTTOM_RIGHT);
+        BorderPane.setMargin(mainSettingsBox, new Insets(0,0,20,25));
 
 
         sceneSettings = new Scene(layout, MainGlobals.WIDTH, MainGlobals.HEIGHT);
@@ -113,14 +171,63 @@ public class Settings {
         windowMain.show();
     }
 
+    private void handleMusicUp(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == this.buttonVolumeUp) {
+            this.buttonSettingsApply.setDisable(false);
+            if(MainGlobals.MUSIC_VOLUME <= 0.9) {
+                MainGlobals.MUSIC_VOLUME += 0.1;
+                musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+                this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+            }
+            else {
+                MainGlobals.MUSIC_VOLUME = 1;
+                musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+                this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+            }
+        }
+    }
+
+    private void handleMusicDown(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == this.buttonVolumeDown) {
+            this.buttonSettingsApply.setDisable(false);
+            if (MainGlobals.MUSIC_VOLUME >= 0.1) {
+                MainGlobals.MUSIC_VOLUME -= 0.1;
+                musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+                this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+            } else {
+                MainGlobals.MUSIC_VOLUME = 0;
+                musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+                this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+            }
+        }
+    }
+
     private void getChoice(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.screenSizes) {
-            buttonScreenSizeApply.setDisable(false);
+            buttonSettingsApply.setDisable(false);
+        }
+    }
+
+    private void handleMusicAction(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == this.buttonMusicAction) {
+            if(this.musicFlag) {
+                tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
+                musicVolume.setValue(0);
+                this.music.mediaPlayer.stop();
+                this.musicFlag = false;
+            }
+            else {
+                MainGlobals.MUSIC_VOLUME = tempMUSIC_VOLUME;
+                musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+                this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+                this.music.mediaPlayer.play();
+                this.musicFlag = true;
+            }
         }
     }
 
     private void handleApply(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == this.buttonScreenSizeApply) {
+        if(actionEvent.getSource() == this.buttonSettingsApply) {
             for(int i = 0; i < MainGlobals.listSizes.size(); i++)
             {
 
