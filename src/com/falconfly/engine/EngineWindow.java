@@ -5,19 +5,24 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLUtil;
 import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.Platform;
 
 import java.nio.IntBuffer;
 
-import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 
 public class EngineWindow {
     // Window identification
     public long id;
 
     // Maximal values
-    private int MAX_WIDTH = 1366;
-    private int MAX_HEIGHT = 768;
+    private int MAX_WIDTH = 600;
+    private int MAX_HEIGHT = 400;
 
     private int width;
     private int height;
@@ -38,11 +43,22 @@ public class EngineWindow {
         this.title = title;
     }
 
+    private void windowSizeChanged(long window, int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public void create() {
         if (!GLFW.glfwInit()) {
             System.err.println("GLFW cannot initialize");
             System.exit(-1);
         }
+
+        glfwDefaultWindowHints();
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+
         this.id = GLFW.glfwCreateWindow(this.width, this.height, this.title, glfwGetPrimaryMonitor(), 0);
         if (this.id == 0) {
             System.err.println("GLFW cannot create window");
@@ -60,28 +76,22 @@ public class EngineWindow {
         // Getting video mode of primary monitor
         this.videomode = GLFW.glfwGetVideoMode(glfwGetPrimaryMonitor());
 
+        glfwSetWindowSizeCallback(this.id, this::windowSizeChanged);
+
         // Setting primitives
         GLFW.glfwSetWindowTitle(this.id, this.title);
         GLFW.glfwSetWindowSize(this.id, this.width, this.height);
 
-        // width / height
-        GLFW.glfwSetWindowAspectRatio(this.id, this.width, this.height);
-
-        // Centering window
-        GLFW.glfwSetWindowPos(this.id,
-                (this.videomode.width() - this.bufferedWidth.get(0)) / 2,
-                (this.videomode.height() - this.bufferedHeight.get(0)) / 2);
-
-        // Maximal values appending
-        GLFW.glfwSetWindowSizeLimits(this.id, this.width, this.height, MAX_WIDTH, MAX_HEIGHT);
 
         // Creating context
-        GLFW.glfwMakeContextCurrent(this.id);
-
+        glfwMakeContextCurrent(this.id);
         GL.createCapabilities();
 
         // Creating window viewport: x, y - offset
-        GL11.glViewport(0, 0, this.bufferedWidth.get(0), this.bufferedHeight.get(0));
+//        GL11.glViewport(0, 0, this.bufferedWidth.get(0), this.bufferedHeight.get(0));
+
+        glfwSwapInterval(1);
+        glfwShowWindow(id);
     }
 
     public void update() {

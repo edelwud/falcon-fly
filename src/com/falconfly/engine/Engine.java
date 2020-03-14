@@ -2,24 +2,23 @@ package com.falconfly.engine;
 
 import com.falconfly.config.MainGlobals;
 import com.falconfly.engine.input.Keyboard;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11;
-
-import java.util.Random;
+import com.falconfly.menu.MenuStorageLoader;
 
 import static java.lang.Thread.sleep;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Engine {
-    public static int WIDTH = 640;
-    public static int HEIGHT = 360;
+    public static int WIDTH = 1366;
+    public static int HEIGHT = 768;
     public static final String TITLE = "Falcon Fly";
 
     private EngineWindow window;
+    private TextRenderer textRenderer;
 
     public void run() {
-        WIDTH = MainGlobals.WIDTH;
-        HEIGHT = MainGlobals.HEIGHT;
+    	textRenderer = new TextRenderer();
         this.init();
     }
 
@@ -30,21 +29,25 @@ public class Engine {
     }
 
     public void update() {
-        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
-        requestFrame(() -> {
-            if (Keyboard.keyDown(GLFW.GLFW_KEY_RIGHT) || Keyboard.keyPressed(GLFW.GLFW_KEY_LEFT)
-                    || Keyboard.keyPressed(GLFW.GLFW_KEY_UP) || Keyboard.keyPressed(GLFW.GLFW_KEY_DOWN)) {
-                glClearColor(new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat());
-            }
+		requestFrame(() -> {
+			glClear(GL_COLOR_BUFFER_BIT);
 
-            if (Keyboard.keyPressed(GLFW.GLFW_KEY_ESCAPE)) {
-                GLFW.glfwSetWindowShouldClose(window.id, true);
-            }
+			if (Keyboard.keyPressed(GLFW_KEY_ESCAPE)) {
+				glfwSetWindowShouldClose(window.id, true);
+			}
 
-            Keyboard.handleKeyboardInput();
-            GL11.glClear(GL_COLOR_BUFFER_BIT);
-        });
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(0.0, window.getWidth(), window.getHeight(), 0.0, -1.0, 1.0);
+			glMatrixMode(GL_MODELVIEW);
+
+			textRenderer.PrintString(10, 10, "Okey!");
+			textRenderer.Draw(4);
+			textRenderer.setTextColor(255, 0, 0);
+
+			Keyboard.handleKeyboardInput();
+		});
     }
 
     public void requestFrame(Frame frame) {
@@ -52,19 +55,22 @@ public class Engine {
 
         while (!window.isCloseRequest()) {
             long startTime = System.currentTimeMillis(); // start fps catching
-            long endLoopTime = System.currentTimeMillis();
 
-            frame.Render();
+			frame.Render();
 
-            try {
-                sleep(secsPerFrame - endLoopTime + startTime);
-            } catch (Exception exc) {
-                exc.printStackTrace();
-            }
+			long endLoopTime = System.currentTimeMillis();
+			try {
+				long duration = endLoopTime - startTime;
+				if (duration < secsPerFrame)
+					sleep(secsPerFrame - endLoopTime + startTime);
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			this.window.update();
 
-            this.window.update();
-        }
-        this.window.destroy();
+		}
+		glDisableClientState(GL_VERTEX_ARRAY);
+		this.window.destroy();
     }
 
     public EngineWindow getWindow() {
