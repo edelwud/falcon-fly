@@ -42,9 +42,15 @@ public class Engine {
 			glOrtho(0.0, window.getWidth(), window.getHeight(), 0.0, -1.0, 1.0);
 			glMatrixMode(GL_MODELVIEW);
 
-			textRenderer.PrintString(10, 10, Integer.toString(lastFrameRate) + " FPS");
-			textRenderer.Draw(10);
 			textRenderer.setTextColor(255, 0, 0);
+			textRenderer.PrintString(10, 10, Integer.toString(lastFrameRate) + " FPS");
+			textRenderer.Draw(5);
+
+			textRenderer.setTextColor(255, 0, 0);
+			int zoom = 1;
+			int ratio = window.getWidth() / window.getHeight();
+			textRenderer.PrintString(window.getWidth() / 2, window.getHeight() / 2, "Hey!!!");
+			textRenderer.Draw(zoom);
 
 			Keyboard.handleKeyboardInput();
 		});

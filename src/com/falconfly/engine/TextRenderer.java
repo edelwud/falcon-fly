@@ -11,7 +11,7 @@ import static org.lwjgl.stb.STBEasyFont.stb_easy_font_print;
 class TextRenderer {
 	private int quads;
 
-	public void PrintString(int x, int y, String text) {
+	public void PrintString(float x, float y, String text) {
 		text += " ";
 		ByteBuffer charBuffer = BufferUtils.createByteBuffer(text.length() * 270);
 
@@ -28,7 +28,7 @@ class TextRenderer {
 		float scaleFactor = 1.0f + zoom * 0.25f;
 		glPushMatrix();
 		glScalef(scaleFactor, scaleFactor, 1f);
-		glTranslatef(10.0f, 10.0f, 0f);
+		glTranslatef(4.0f, 4.0f, 0f);
 		glDrawArrays(GL_QUADS, 0, quads * 4);
 		glPopMatrix();
 	}
