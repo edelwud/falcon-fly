@@ -33,9 +33,9 @@ public class Settings {
 
     Button buttonSettingsBack;
     Button buttonScreenSizeApply;
-    Button buttonScreenSizeCancel;
 
     ChoiceBox<String> screenSizes;
+    Label labelScreen;
 
 
 
@@ -56,10 +56,10 @@ public class Settings {
                 ex.printStackTrace();
             }
         });
-        buttonSettingsBack.setText("Back to main menu");
-        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.33, MainGlobals.HEIGHT * 0.08);
-        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.33, MainGlobals.HEIGHT * 0.08);
-        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.33, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsBack.setText("Back");
+        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
         buttonSettingsBack.setFont(this.fonts.getFont("BN Jinx"));
 
         buttonScreenSizeApply = new Button();
@@ -71,16 +71,6 @@ public class Settings {
         buttonScreenSizeApply.setFont(this.fonts.getFont("BN Jinx"));
         buttonScreenSizeApply.setDisable(true);
 
-        buttonScreenSizeCancel = new Button();
-        buttonScreenSizeCancel.setText("Cancel");
-        buttonScreenSizeCancel.setOnAction(this::handleCancel);
-        buttonScreenSizeCancel.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonScreenSizeCancel.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonScreenSizeCancel.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonScreenSizeCancel.setFont(this.fonts.getFont("BN Jinx"));
-        buttonScreenSizeCancel.setDisable(true);
-
-
         screenSizes = new ChoiceBox<>();
         screenSizes.setValue(Integer.toString(MainGlobals.WIDTH) + "x" + Integer.toString(MainGlobals.HEIGHT));
         for(int i = 0; i < MainGlobals.listSizes.size(); i++) {
@@ -91,18 +81,22 @@ public class Settings {
         screenSizes.setMaxSize(MainGlobals.WIDTH * 0.6 + 50, MainGlobals.HEIGHT * 0.08);
         screenSizes.setMinSize(MainGlobals.WIDTH * 0.6 + 50, MainGlobals.HEIGHT * 0.08);
 
-        VBox verticalTopMenuBox = new VBox();
-        verticalTopMenuBox.getChildren().add(screenSizes);
+        labelScreen = new Label("Screen resolution");
+        labelScreen.setFont(this.fonts.getFont("BN Jinx"));
 
-        HBox horizontalMenuBox = new HBox();
+        VBox verticalTopMenuBox = new VBox();
+        verticalTopMenuBox.setSpacing(25);
+        verticalTopMenuBox.getChildren().addAll(labelScreen, screenSizes);
+
+        VBox horizontalMenuBox = new VBox();
         horizontalMenuBox.setSpacing(25);
-        horizontalMenuBox.getChildren().addAll(buttonSettingsBack,buttonScreenSizeApply, buttonScreenSizeCancel);
+        horizontalMenuBox.getChildren().addAll(buttonScreenSizeApply, buttonSettingsBack);
 
         BorderPane layout = new BorderPane();
 
         layout.setCenter(verticalTopMenuBox);
         BorderPane.setAlignment(verticalTopMenuBox, Pos.CENTER);
-        BorderPane.setMargin(verticalTopMenuBox, new Insets(MainGlobals.HEIGHT * 0.775,0, 0,MainGlobals.WIDTH * 0.15 + 50));
+        BorderPane.setMargin(verticalTopMenuBox, new Insets(MainGlobals.HEIGHT * 0.575,0, 0,MainGlobals.WIDTH * 0.15 + 50));
 
         layout.setBottom(horizontalMenuBox);
         BorderPane.setAlignment(horizontalMenuBox, Pos.BOTTOM_RIGHT);
@@ -122,7 +116,6 @@ public class Settings {
     private void getChoice(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.screenSizes) {
             buttonScreenSizeApply.setDisable(false);
-            buttonScreenSizeCancel.setDisable(false);
         }
     }
 
@@ -153,23 +146,4 @@ public class Settings {
         }
     }
 
-    private void handleCancel(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == this.buttonScreenSizeCancel) {
-            MainGlobals.WIDTH = this.restoreWIDTH;
-            MainGlobals.HEIGHT = this.restoreHEIGHT;
-            storageLoader = new MenuStorageLoader();
-            File environmentFile = new File(storageLoader.Load("").get(0).substring(7));
-            try {
-                PrintWriter writerEnvironment = new PrintWriter(environmentFile);
-                writerEnvironment.print(Integer.toString(this.restoreWIDTH) + ' ');
-                writerEnvironment.println(Integer.toString(this.restoreHEIGHT));
-                writerEnvironment.print(MainGlobals.MUSIC_VOLUME);
-                writerEnvironment.close();
-            }
-            catch (Exception ex) {
-                ex.fillInStackTrace();
-            }
-            screenSizes.setValue(Integer.toString(this.restoreWIDTH) + "x" + Integer.toString(this.restoreHEIGHT));
-        }
-    }
 }
