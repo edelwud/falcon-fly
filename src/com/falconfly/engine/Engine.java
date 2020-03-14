@@ -30,7 +30,7 @@ public class Engine {
 
     public void update() {
 
-		requestFrame(() -> {
+		requestFrame((int lastFrameRate) -> {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			if (Keyboard.keyPressed(GLFW_KEY_ESCAPE)) {
@@ -42,8 +42,8 @@ public class Engine {
 			glOrtho(0.0, window.getWidth(), window.getHeight(), 0.0, -1.0, 1.0);
 			glMatrixMode(GL_MODELVIEW);
 
-			textRenderer.PrintString(10, 10, "Okey!");
-			textRenderer.Draw(4);
+			textRenderer.PrintString(10, 10, Integer.toString(lastFrameRate) + " FPS");
+			textRenderer.Draw(10);
 			textRenderer.setTextColor(255, 0, 0);
 
 			Keyboard.handleKeyboardInput();
@@ -52,17 +52,27 @@ public class Engine {
 
     public void requestFrame(Frame frame) {
         long secsPerFrame = 1000 / Frame.MAX_FRAME_RATE;
+		int lastFrameRate = 60;
 
         while (!window.isCloseRequest()) {
             long startTime = System.currentTimeMillis(); // start fps catching
 
-			frame.Render();
+			frame.Render(lastFrameRate);
 
-			long endLoopTime = System.currentTimeMillis();
+			/*
+				FPS = sec / duration
+				duration = (end - start) = sec / FPS
+			 */
+
 			try {
+				long endLoopTime = System.currentTimeMillis();
 				long duration = endLoopTime - startTime;
+
 				if (duration < secsPerFrame)
-					sleep(secsPerFrame - endLoopTime + startTime);
+					sleep(secsPerFrame - duration);
+
+				long normalizedDelay = System.currentTimeMillis() - startTime;
+				lastFrameRate = (int) (1000 / normalizedDelay);
 			} catch (Exception exc) {
 				exc.printStackTrace();
 			}
