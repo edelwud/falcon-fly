@@ -10,6 +10,7 @@ import org.lwjgl.stb.STBTTBakedChar;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class FalconFly implements IGameLogic {
+	private int g = 10;
 
 	private int dx = 0;
 	private int dy = 0;
@@ -17,7 +18,7 @@ public class FalconFly implements IGameLogic {
 	private int x = 0;
 	private int y = 0;
 
-	private int step = 5;
+	private int step = 50;
 
 	private final Renderer renderer;
 
@@ -39,17 +40,19 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void input(EngineWindow window) {
 		if (Keyboard.keyDown(GLFW_KEY_UP)) {
-			dy = -step;
-		} else if (Keyboard.keyDown(GLFW_KEY_DOWN)) {
-			dy = step;
+			if (y > (window.getHeight() - 60)) dy = 0;
+			else dy = step - g;
 		} else {
-			dy = 0;
+			if (y > 0) dy = -g;
+			else dy = 0;
 		}
 
 		if (Keyboard.keyDown(GLFW_KEY_LEFT)) {
-			dx = -step;
+			if (y == 0) dx = -1;
+			else dx = 0;
 		} else if (Keyboard.keyDown(GLFW_KEY_RIGHT)) {
-			dx = step;
+			if (y == 0) dx = 1;
+			else dx = 0;
 		} else {
 			dx = 0;
 		}
@@ -68,9 +71,9 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void render(EngineWindow window) {
 		renderer.render(window);
-		textRenderer.setTextColor(255, 0, 0);
+		textRenderer.setTextColor(100, 100, 200);
 		float width = textRenderer.stringWidth("ZDAROVA", 0, 7);
-		textRenderer.DrawString((float) ((window.getWidth() - width) / 2 + x), (float) (window.getHeight() / 2 + y), "ZDAROVA", cdata);
+		textRenderer.DrawString(x, window.getHeight() - 60 - y, "ZDAROVA", cdata);
 	}
 
 	@Override
