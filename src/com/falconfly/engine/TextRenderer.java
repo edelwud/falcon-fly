@@ -14,17 +14,16 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.stb.STBEasyFont.stb_easy_font_print;
 import static org.lwjgl.stb.STBTruetype.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
 class TextRenderer {
-	private final ByteBuffer ttf;
-	private final STBTTFontinfo info;
+	private ByteBuffer ttf;
+	private STBTTFontinfo info;
 
-	private final int ascent;
-	private final int descent;
-	private final int lineGap;
+	private int ascent;
+	private int descent;
+	private int lineGap;
 
 	private static final int MAX_BUFFER_SIZE = 1024 * 512;
 	private static final int BITMAP_W = 512;
@@ -33,7 +32,12 @@ class TextRenderer {
 	private static int fontSize = 24;
 
 	TextRenderer() {
-		ttf = LoadFont(new MenuStorageLoader().Load("fonts").get(0).substring(8));
+		LoadFont(new MenuStorageLoader().Load("fonts").get(0).substring(8));
+	}
+
+	public void LoadFont(String resource) {
+		FileReader fr = new FileReader();
+		ttf = fr.getResource(resource, MAX_BUFFER_SIZE);
 		info = STBTTFontinfo.create();
 
 		if (!stbtt_InitFont(info, ttf)) {
@@ -51,11 +55,6 @@ class TextRenderer {
 			descent = pDescent.get(0);
 			lineGap = pLineGap.get(0);
 		}
-	}
-
-	public ByteBuffer LoadFont(String resource) {
-		FileReader fr = new FileReader();
-		return fr.getResource(resource, MAX_BUFFER_SIZE);
 	}
 
 	public STBTTBakedChar.Buffer Init() {
@@ -111,7 +110,7 @@ class TextRenderer {
 				int cp = pCodePoint.get(0);
 				if (cp == '\n') {
 					y.put(0, lineY = y.get(0) + (ascent - descent + lineGap) * scale);
-					x.put(0, 0.0f);
+					x.put(0, dx);
 
 					lineStart = i;
 					continue;
@@ -167,7 +166,6 @@ class TextRenderer {
 
 		glEnable(GL_TEXTURE_2D);
 		glPolygonMode(GL_FRONT, GL_FILL);
-		glColor3f(169f / 255f, 183f / 255f, 198f / 255f); // Text color
 	}
 
 	private float getStringWidth(STBTTFontinfo info, String text, int from, int to, int fontHeight) {

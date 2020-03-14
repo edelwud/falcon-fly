@@ -1,8 +1,6 @@
 package com.falconfly.engine;
 
-import com.falconfly.config.MainGlobals;
 import com.falconfly.engine.input.Keyboard;
-import com.falconfly.menu.MenuStorageLoader;
 import org.lwjgl.stb.STBTTBakedChar;
 
 import static java.lang.Thread.sleep;

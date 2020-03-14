@@ -305,7 +305,7 @@ public class MainMenu extends Application {
      public void handle(ActionEvent eventMain) {
 
         if(eventMain.getSource() == buttonPlay) {
-            new Engine().run();
+//            new Engine().run();
         }
 
         if(eventMain.getSource() == buttonExit) {
