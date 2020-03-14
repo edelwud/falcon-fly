@@ -4,6 +4,7 @@ import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
 import com.falconfly.config.MainMusic;
 import com.falconfly.engine.Engine;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -150,6 +151,17 @@ public class MainMenu extends Application {
         labelName = new Label();
         labelName.setMaxSize(resWidth * 0.35, resHeight * 0.35);
         labelName.setBackground(new Background(gameNameBackgroundImg));
+
+        ScaleTransition stLabel = new ScaleTransition(Duration.seconds(3), labelName);
+        stLabel.setFromX(1);
+        stLabel.setFromY(1);
+        stLabel.setToX(1.1);
+        stLabel.setToY(1.1);
+        stLabel.play();
+        ParallelTransition parallelTransition = new ParallelTransition(stLabel);
+        parallelTransition.setCycleCount(Timeline.INDEFINITE);
+        parallelTransition.setAutoReverse(true);
+        parallelTransition.play();
 
         BackgroundImage playBackground = new BackgroundImage(
                 new Image(loader.Load("images/Buttons").get(3),resWidth * 0.45,resHeight * 0.45,false,true),
@@ -298,19 +310,17 @@ public class MainMenu extends Application {
 
         if(eventMain.getSource() == buttonExit) {
             ExitAlert exitAlert = new ExitAlert();
-            this.windowMain.setFullScreen(false);
-            exitAlert.display("You really want to exit?");
-            windowMain.setFullScreen(true);
+            //this.windowMain.setFullScreen(false);
+            exitAlert.display("Do you really want to exit?");
+            //windowMain.setFullScreen(true);
         }
 
-         if(eventMain.getSource() == buttonSettings) {
-             (new Settings()).invoke(sceneSettings, windowMain);
-         }
+        if(eventMain.getSource() == buttonSettings) {
+            (new Settings()).invoke(sceneSettings, windowMain);
+        }
 
-         if(eventMain.getSource() == buttonStatistics) {
-             (new Statistics()).invoke(sceneSettings, windowMain);
-         }
-
-
+        if(eventMain.getSource() == buttonStatistics) {
+            (new Statistics()).invoke(sceneSettings, windowMain);
+        }
     }
 }

@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,6 +50,8 @@ public class ExitAlert {
         verticalBox.setSpacing(25);
         verticalBox.getChildren().addAll(this.messageLabel, horizontalBox);
         verticalBox.setAlignment(Pos.CENTER);
+
+        StackPane root = new StackPane();
 
         Scene alertScene = new Scene(verticalBox);
         this.alertWindow.setScene(alertScene);
