@@ -122,6 +122,9 @@ public class Settings {
 
         musicVolume = new Slider();
         musicVolume.valueProperty().addListener(event ->{
+            if(musicVolume.isValueChanging()) {
+                this.buttonSettingsApply.setDisable(false);
+            }
             MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
             this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         });
