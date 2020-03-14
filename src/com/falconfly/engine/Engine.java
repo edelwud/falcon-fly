@@ -45,18 +45,10 @@ public class Engine {
 			glMatrixMode(GL_MODELVIEW);
 
 			glClear(GL_COLOR_BUFFER_BIT);
+			glColor3f(255f / 255f, 0f / 255f, 0f / 255f);
 
-			float scaleFactor = 1.0f + 0 * 0.25f;
+			textRenderer.DrawString(0, 0, Integer.toString(lastFrameRate) + " FPS\nokey", cdata);
 
-			glPushMatrix();
-			// Zoom
-			glScalef(scaleFactor, scaleFactor, 1f);
-			// Scroll
-			glTranslatef(4.0f, 20.0f, 0f);
-
-			textRenderer.DrawString(WIDTH / 2, HEIGHT / 2, Integer.toString(lastFrameRate), cdata);
-
-			glPopMatrix();
 			Keyboard.handleKeyboardInput();
 		});
     }

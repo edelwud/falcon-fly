@@ -70,9 +70,6 @@ class TextRenderer {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-		glClearColor(43f / 255f, 43f / 255f, 43f / 255f, 0f); // BG color
-		glColor3f(169f / 255f, 183f / 255f, 198f / 255f); // Text color
-
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -85,6 +82,11 @@ class TextRenderer {
 	}
 
 	public void DrawString(float dx, float dy, String text, STBTTBakedChar.Buffer cdata) {
+		glPushMatrix();
+		float scaleFactor = 1.0f + 0 * 0.25f;
+		glScalef(scaleFactor, scaleFactor, 1f);
+		glTranslatef(4.0f, 20.0f, 0f);
+
 		float scale = stbtt_ScaleForPixelHeight(info, fontSize);
 
 		try (MemoryStack stack = stackPush()) {
@@ -107,10 +109,23 @@ class TextRenderer {
 				i += getCP(text, to, i, pCodePoint);
 
 				int cp = pCodePoint.get(0);
-				float cpX = x.get(0);
+				if (cp == '\n') {
+					y.put(0, lineY = y.get(0) + (ascent - descent + lineGap) * scale);
+					x.put(0, 0.0f);
 
+					lineStart = i;
+					continue;
+				} else if (cp < 32 || 128 <= cp) {
+					continue;
+				}
+
+				float cpX = x.get(0);
 				stbtt_GetBakedQuad(cdata, BITMAP_W, BITMAP_H, cp - 32, x, y, q, true);
 				x.put(0, scale(cpX, x.get(0), factorX));
+				if (i < to) {
+					getCP(text, to, i, pCodePoint);
+					x.put(0, x.get(0) + stbtt_GetCodepointKernAdvance(info, cp, pCodePoint.get(0)) * scale);
+				}
 
 				float
 						x0 = scale(cpX, q.x0(), factorX),
@@ -132,6 +147,53 @@ class TextRenderer {
 			}
 			glEnd();
 		}
+		glPopMatrix();
+	}
+
+	private void renderLineBB(int from, int to, float y, float scale, String text) {
+		glDisable(GL_TEXTURE_2D);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glColor3f(1.0f, 1.0f, 0.0f);
+
+		float width = getStringWidth(info, text, from, to, fontSize);
+		y -= descent * scale;
+
+		glBegin(GL_QUADS);
+		glVertex2f(0.0f, y);
+		glVertex2f(width, y);
+		glVertex2f(width, y - fontSize);
+		glVertex2f(0.0f, y - fontSize);
+		glEnd();
+
+		glEnable(GL_TEXTURE_2D);
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glColor3f(169f / 255f, 183f / 255f, 198f / 255f); // Text color
+	}
+
+	private float getStringWidth(STBTTFontinfo info, String text, int from, int to, int fontHeight) {
+		int width = 0;
+
+		try (MemoryStack stack = stackPush()) {
+			IntBuffer pCodePoint       = stack.mallocInt(1);
+			IntBuffer pAdvancedWidth   = stack.mallocInt(1);
+			IntBuffer pLeftSideBearing = stack.mallocInt(1);
+
+			int i = from;
+			while (i < to) {
+				i += getCP(text, to, i, pCodePoint);
+				int cp = pCodePoint.get(0);
+
+				stbtt_GetCodepointHMetrics(info, cp, pAdvancedWidth, pLeftSideBearing);
+				width += pAdvancedWidth.get(0);
+
+				if (i < to) {
+					getCP(text, to, i, pCodePoint);
+					width += stbtt_GetCodepointKernAdvance(info, cp, pCodePoint.get(0));
+				}
+			}
+		}
+
+		return width * stbtt_ScaleForPixelHeight(info, fontHeight);
 	}
 
 	private static int getCP(String text, int to, int i, IntBuffer cpOut) {
