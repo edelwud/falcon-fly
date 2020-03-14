@@ -12,6 +12,7 @@ class TextRenderer {
 	private int quads;
 
 	public void PrintString(int x, int y, String text) {
+		text += " ";
 		ByteBuffer charBuffer = BufferUtils.createByteBuffer(text.length() * 270);
 
 		quads = stb_easy_font_print(x, y, text, null, charBuffer);
