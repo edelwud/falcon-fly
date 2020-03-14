@@ -11,8 +11,8 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Engine {
-    public static int WIDTH = 1366;
-    public static int HEIGHT = 768;
+    public static int WIDTH = 1920;
+    public static int HEIGHT = 1080;
     public static final String TITLE = "Falcon Fly";
 
     private EngineWindow window;

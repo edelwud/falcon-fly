@@ -1,7 +1,6 @@
 package com.falconfly.menu;
 
 import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -12,16 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import com.falconfly.menu.MenuStorageLoader;
 import javafx.util.Duration;
 
 import java.awt.*;
-import java.beans.EventHandler;
 
 public class ExitAlert {
 
