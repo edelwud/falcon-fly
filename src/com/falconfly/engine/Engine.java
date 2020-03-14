@@ -8,81 +8,97 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.*;
 
-public class Engine {
-    public static int WIDTH = 1920;
-    public static int HEIGHT = 1080;
+public class Engine implements Runnable {
+    public static int WIDTH = 1366;
+    public static int HEIGHT = 768;
     public static final String TITLE = "Falcon Fly";
+
+	public static final int TARGET_FPS = 75;
+	public static final int TARGET_UPS = 30;
+
+	private final Timer timer;
 
     private EngineWindow window;
     private TextRenderer textRenderer;
+    private final IGameLogic gameLogic;
 
-    public void run() {
-    	textRenderer = new TextRenderer();
-        this.init();
-    }
+	public Engine(String windowTitle, int width, int height, boolean vsSync, IGameLogic gameLogic) throws Exception {
+		window = new EngineWindow(windowTitle, width, height, vsSync);
+		this.gameLogic = gameLogic;
+		timer = new Timer();
+	}
 
-    public void init() {
-        window = new EngineWindow(WIDTH, HEIGHT, TITLE);
-        window.create();
-        this.update();
-    }
-
-    public void update() {
-		STBTTBakedChar.Buffer cdata = textRenderer.Init();
-
-		requestFrame((int lastFrameRate) -> {
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			if (Keyboard.keyPressed(GLFW_KEY_ESCAPE)) {
-				glfwSetWindowShouldClose(window.id, true);
-			}
-
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(0.0, window.getWidth(), window.getHeight(), 0.0, -1.0, 1.0);
-			glMatrixMode(GL_MODELVIEW);
-
-			glClear(GL_COLOR_BUFFER_BIT);
-			glColor3f(255f / 255f, 0f / 255f, 0f / 255f);
-
-			textRenderer.DrawString(0, 0, Integer.toString(lastFrameRate) + " FPS\nokey", cdata);
-
-			Keyboard.handleKeyboardInput();
-		});
-    }
-
-    public void requestFrame(Frame frame) {
-        long secsPerFrame = 1000 / Frame.MAX_FRAME_RATE;
-		int lastFrameRate = Frame.MAX_FRAME_RATE;
-
-        while (!window.isCloseRequest()) {
-            long startTime = System.currentTimeMillis(); // start fps catching
-
-			frame.Render(lastFrameRate);
-
-			/*
-				FPS = sec / duration
-				duration = (end - start) = sec / FPS
-			 */
-
-			try {
-				long endLoopTime = System.currentTimeMillis();
-				long duration = endLoopTime - startTime;
-
-				if (duration < secsPerFrame)
-					sleep(secsPerFrame - duration);
-
-				long normalizedDelay = System.currentTimeMillis() - startTime;
-				lastFrameRate = (int) (1000 / normalizedDelay);
-			} catch (Exception exc) {
-				exc.printStackTrace();
-			}
-			this.window.update();
-
+	@Override
+	public void run() {
+		try {
+			init();
+			gameLoop();
+		} catch (Exception excp) {
+			excp.printStackTrace();
+		} finally {
+			cleanup();
 		}
-		glDisableClientState(GL_VERTEX_ARRAY);
-		this.window.destroy();
-    }
+	}
+
+	protected void init() throws Exception {
+		window.create();
+		timer.init();
+		gameLogic.init();
+	}
+
+	protected void gameLoop() {
+		float elapsedTime;
+		float accumulator = 0f;
+		float interval = 1f / TARGET_UPS;
+
+		boolean running = true;
+		while (running && !glfwWindowShouldClose(window.id)) {
+			elapsedTime = timer.getElapsedTime();
+			accumulator += elapsedTime;
+
+			input();
+
+			while (accumulator >= interval) {
+				update(interval);
+				accumulator -= interval;
+			}
+
+			render();
+
+			if ( !window.isvSync() ) {
+				sync();
+			}
+		}
+	}
+
+	protected void cleanup() {
+		gameLogic.cleanup();
+		window.destroy();
+	}
+
+	private void sync() {
+		float loopSlot = 1f / TARGET_FPS;
+		double endTime = timer.getLastLoopTime() + loopSlot;
+		while (timer.getTime() < endTime) {
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException ie) {
+			}
+		}
+	}
+
+	protected void input() {
+		gameLogic.input(window);
+	}
+
+	protected void update(float interval) {
+		gameLogic.update(interval);
+	}
+
+	protected void render() {
+		gameLogic.render(window);
+		window.update();
+	}
 
     public EngineWindow getWindow() {
         return window;

@@ -17,7 +17,7 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.stb.STBTruetype.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 
-class TextRenderer {
+public class TextRenderer {
 	private ByteBuffer ttf;
 	private STBTTFontinfo info;
 
@@ -31,7 +31,7 @@ class TextRenderer {
 
 	private static int fontSize = 24;
 
-	TextRenderer() {
+	public TextRenderer() {
 		LoadFont(new MenuStorageLoader().Load("fonts").get(0).substring(8));
 	}
 
