@@ -40,14 +40,10 @@ public class Renderer {
 
 	private int vaoId;
 
-	private STBTTBakedChar.Buffer cdata;
-
 	private ShaderProgram shaderProgram;
 
-	private TextRenderer textRenderer;
-
 	public Renderer() {
-		textRenderer = new TextRenderer();
+
 	}
 
 	public void init() throws Exception {
@@ -64,8 +60,6 @@ public class Renderer {
 		shaderProgram.createVertexShader(vertexContent);
 		shaderProgram.createFragmentShader(fragmentContent);
 		shaderProgram.link();
-
-		cdata = textRenderer.Init();
 
 		float[] vertices = new float[]{
 				0.0f, 0.5f, 0.0f,
@@ -122,8 +116,6 @@ public class Renderer {
 		glBindVertexArray(0);
 
 		shaderProgram.unbind();
-
-		textRenderer.DrawString(10, 10, "OKEY", cdata);
 	}
 
 	public void cleanup() {

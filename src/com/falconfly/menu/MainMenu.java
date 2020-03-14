@@ -3,7 +3,7 @@ package com.falconfly.menu;
 import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
 import com.falconfly.config.MainMusic;
-import com.falconfly.engine.Engine;
+import com.falconfly.engine.main.Main;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.ScaleTransition;
@@ -305,7 +305,7 @@ public class MainMenu extends Application {
      public void handle(ActionEvent eventMain) {
 
         if(eventMain.getSource() == buttonPlay) {
-//            new Engine().run();
+            new Main().main();
         }
 
         if(eventMain.getSource() == buttonExit) {

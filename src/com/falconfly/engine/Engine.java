@@ -65,7 +65,7 @@ public class Engine implements Runnable {
 
 			render();
 
-			if ( !window.isvSync() ) {
+			if (!window.isvSync()) {
 				sync();
 			}
 		}

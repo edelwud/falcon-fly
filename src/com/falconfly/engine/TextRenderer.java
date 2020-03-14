@@ -29,7 +29,7 @@ public class TextRenderer {
 	private static final int BITMAP_W = 512;
 	private static final int BITMAP_H = 512;
 
-	private static int fontSize = 24;
+	public static int fontSize = 24;
 
 	public TextRenderer() {
 		LoadFont(new MenuStorageLoader().Load("fonts").get(0).substring(8));
@@ -84,7 +84,7 @@ public class TextRenderer {
 		glPushMatrix();
 		float scaleFactor = 1.0f + 0 * 0.25f;
 		glScalef(scaleFactor, scaleFactor, 1f);
-		glTranslatef(4.0f, 20.0f, 0f);
+		glTranslatef(4.0f, 0.5f * fontSize, 0f);
 
 		float scale = stbtt_ScaleForPixelHeight(info, fontSize);
 
@@ -192,6 +192,32 @@ public class TextRenderer {
 		}
 
 		return width * stbtt_ScaleForPixelHeight(info, fontHeight);
+	}
+
+	public float stringWidth(String text, int from, int to) {
+		int width = 0;
+
+		try (MemoryStack stack = stackPush()) {
+			IntBuffer pCodePoint       = stack.mallocInt(1);
+			IntBuffer pAdvancedWidth   = stack.mallocInt(1);
+			IntBuffer pLeftSideBearing = stack.mallocInt(1);
+
+			int i = from;
+			while (i < to) {
+				i += getCP(text, to, i, pCodePoint);
+				int cp = pCodePoint.get(0);
+
+				stbtt_GetCodepointHMetrics(info, cp, pAdvancedWidth, pLeftSideBearing);
+				width += pAdvancedWidth.get(0);
+
+				if (i < to) {
+					getCP(text, to, i, pCodePoint);
+					width += stbtt_GetCodepointKernAdvance(info, cp, pCodePoint.get(0));
+				}
+			}
+		}
+
+		return width * stbtt_ScaleForPixelHeight(info, fontSize);
 	}
 
 	private static int getCP(String text, int to, int i, IntBuffer cpOut) {
