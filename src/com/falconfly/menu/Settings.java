@@ -82,7 +82,7 @@ public class Settings {
 
 
         screenSizes = new ChoiceBox<>();
-        screenSizes.setValue(MainGlobals.listSizes.get(0).getKey() + "x" + MainGlobals.listSizes.get(0).getValue());
+        screenSizes.setValue(Integer.toString(MainGlobals.WIDTH) + "x" + Integer.toString(MainGlobals.HEIGHT));
         for(int i = 0; i < MainGlobals.listSizes.size(); i++) {
             screenSizes.getItems().add(MainGlobals.listSizes.get(i).getKey() + "x" + MainGlobals.listSizes.get(i).getValue());
         }
