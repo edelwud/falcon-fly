@@ -77,6 +77,9 @@ public class Mesh {
 			if (indicesBuffer != null) {
 				MemoryUtil.memFree(indicesBuffer);
 			}
+			if (coloursBuffer != null) {
+				MemoryUtil.memFree(coloursBuffer);
+			}
 		}
 	}
 
@@ -94,6 +97,7 @@ public class Mesh {
 		// Delete the VBOs
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDeleteBuffers(posVboId);
+		glDeleteBuffers(coloursVboId);
 		glDeleteBuffers(idxVboId);
 
 		// Delete the VAO
