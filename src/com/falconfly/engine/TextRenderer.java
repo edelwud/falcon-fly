@@ -20,16 +20,17 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 public class TextRenderer {
 	private ByteBuffer ttf;
 	private STBTTFontinfo info;
+	private STBTTBakedChar.Buffer cdata;
 
 	private int ascent;
 	private int descent;
 	private int lineGap;
+	private int fontSize = 24;
 
+	private static final int CHAR_BUFFER_CAPACITY = 96;
 	private static final int MAX_BUFFER_SIZE = 1024 * 512;
 	private static final int BITMAP_W = 512;
 	private static final int BITMAP_H = 512;
-
-	public static int fontSize = 24;
 
 	public TextRenderer() {
 		LoadFont(new MenuStorageLoader().Load("fonts").get(0).substring(8));
@@ -57,9 +58,9 @@ public class TextRenderer {
 		}
 	}
 
-	public STBTTBakedChar.Buffer Init() {
+	public void Init() {
 		int texID = glGenTextures();
-		STBTTBakedChar.Buffer cdata = STBTTBakedChar.malloc(96);
+		cdata = STBTTBakedChar.malloc(CHAR_BUFFER_CAPACITY);
 
 		ByteBuffer bitmap = BufferUtils.createByteBuffer(BITMAP_W * BITMAP_H);
 		stbtt_BakeFontBitmap(ttf, fontSize, bitmap, BITMAP_W, BITMAP_H, 32, cdata);
@@ -72,15 +73,13 @@ public class TextRenderer {
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		return cdata;
 	}
 
 	public void setTextColor(int r, int g, int b) {
 		glColor3f(r / 255f, g / 255f, b / 255f);
 	}
 
-	public void DrawString(float dx, float dy, String text, STBTTBakedChar.Buffer cdata) {
+	public void DrawString(float dx, float dy, String text) {
 		glPushMatrix();
 		float scaleFactor = 1.0f + 0 * 0.25f;
 		glScalef(scaleFactor, scaleFactor, 1f);
@@ -235,5 +234,13 @@ public class TextRenderer {
 
 	private static float scale(float center, float offset, float factor) {
 		return (offset - center) * factor + center;
+	}
+
+	public int GetFontSize() {
+		return fontSize;
+	}
+
+	public void SetFontSize(int fz) {
+		fontSize = fz;
 	}
 }

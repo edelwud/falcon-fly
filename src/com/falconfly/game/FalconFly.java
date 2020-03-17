@@ -3,6 +3,7 @@ package com.falconfly.game;
 import com.falconfly.engine.GameItem;
 import com.falconfly.engine.IGameLogic;
 import com.falconfly.engine.EngineWindow;
+import com.falconfly.engine.TextRenderer;
 import com.falconfly.engine.graph.Mesh;
 import com.falconfly.engine.input.Keyboard;
 import org.joml.Vector3f;
@@ -21,15 +22,19 @@ public class FalconFly implements IGameLogic {
 	private GameItem[] gameItems;
 
 	private final Renderer renderer;
+	private final TextRenderer textRenderer;
 
 	private Mesh mesh;
 
 	public FalconFly() {
 		renderer = new Renderer();
+		textRenderer = new TextRenderer();
+		textRenderer.SetFontSize(50);
 	}
 
 	@Override
 	public void init() throws Exception {
+		textRenderer.Init();
 		renderer.init();
 
 		// Create the Mesh
@@ -93,21 +98,17 @@ public class FalconFly implements IGameLogic {
 			float posz = itemPos.z + displzInc * 0.01f;
 			gameItem.setPosition(posx, posy, posz);
 
-			System.out.println(posx);
-			System.out.println(posy);
-			System.out.println(posz);
-
 			// Update scale
 			float scale = gameItem.getScale();
 			scale += scaleInc * 0.05f;
-			if ( scale < 0 ) {
+			if (scale < 0) {
 				scale = 0;
 			}
 			gameItem.setScale(scale);
 
 			// Update rotation angle
 			float rotation = gameItem.getRotation().z + 1.5f;
-			if ( rotation > 360 ) {
+			if (rotation > 360) {
 				rotation = 0;
 			}
 			gameItem.setRotation(0, 0, rotation);
@@ -117,6 +118,7 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void render(EngineWindow window) {
 		renderer.render(window, gameItems);
+		textRenderer.DrawString(10, 10, "Neploho");
 	}
 
 	@Override
