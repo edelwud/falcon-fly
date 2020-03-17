@@ -3,6 +3,7 @@ package com.falconfly.game;
 import com.falconfly.engine.IGameLogic;
 import com.falconfly.engine.EngineWindow;
 import com.falconfly.engine.TextRenderer;
+import com.falconfly.engine.graph.Mesh;
 import com.falconfly.engine.input.Keyboard;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.stb.STBTTBakedChar;
@@ -22,6 +23,8 @@ public class FalconFly implements IGameLogic {
 
 	private final Renderer renderer;
 
+	private Mesh mesh;
+
 	private STBTTBakedChar.Buffer cdata;
 	private final TextRenderer textRenderer;
 
@@ -33,6 +36,27 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void init() throws Exception {
 		renderer.init();
+
+		float[] positions = new float[]{
+				-0.5f, 0.5f, 0.5f,
+				-0.5f, -0.5f, 0.5f,
+				0.5f, -0.5f, 0.5f,
+				0.5f, 0.5f, 0.5f,
+		};
+
+		float[] colours = new float[]{
+				0.5f, 0.5f, 0.0f,
+				0.0f, 0.5f, 0.5f,
+				0.5f, 0.0f, 0.5f,
+				0.5f, 0.5f, 0.0f,
+		};
+
+		int[] indices = new int[]{
+				0, 1, 3, 3, 1, 2,
+		};
+
+		mesh = new Mesh(positions, colours, indices);
+
 		textRenderer.fontSize = 120;
 		cdata = textRenderer.Init();
 	}
@@ -70,7 +94,7 @@ public class FalconFly implements IGameLogic {
 
 	@Override
 	public void render(EngineWindow window) {
-		renderer.render(window);
+		renderer.render(window, mesh);
 		textRenderer.setTextColor(100, 100, 200);
 		float width = textRenderer.stringWidth("ZDAROVA", 0, 7);
 		textRenderer.DrawString(x, window.getHeight() - 60 - y, "ZDAROVA", cdata);
