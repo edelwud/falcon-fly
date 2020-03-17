@@ -4,10 +4,7 @@ import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
 import com.falconfly.config.MainMusic;
 import com.falconfly.engine.main.Main;
-import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -35,8 +32,8 @@ import java.io.File;
 
 public class MainMenu extends Application {
 
-    private static final int MENU_BUTTON_WIDTH = 600;
-    private static final int MENU_BUTTON_HEIGHT = 105;
+    private static double MENU_BUTTON_WIDTH = 0;
+    private static double MENU_BUTTON_HEIGHT = 0;
 
     Stage windowMain;
     Scene sceneSettings, sceneStatistics;
@@ -73,8 +70,8 @@ public class MainMenu extends Application {
             this.music.addMedia(path);
         }
         if(!MainGlobals.musicPlaying) {
-        music.getRandomMediaPlayer();
-        MainGlobals.musicPlaying = true;
+            music.getRandomMediaPlayer();
+            MainGlobals.musicPlaying = true;
         }
 
         windowMain = primaryStage;
@@ -83,6 +80,9 @@ public class MainMenu extends Application {
         Dimension screenSize = Toolkit.getDefaultToolkit ().getScreenSize ();
         int resHeight = screenSize.height;
         int resWidth  = screenSize.width;
+
+        MENU_BUTTON_WIDTH = resWidth * 0.4;
+        MENU_BUTTON_HEIGHT = resHeight * 0.122;
 
         BackgroundImage centerBackground = new BackgroundImage(
                 new Image(loader.Load("images/Background").get(4), resWidth, resHeight,false,true),
@@ -181,14 +181,28 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonPlay);
+            tt.setFromX(0);
+            tt.setToX(-50);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         buttonPlay.setOnMouseExited(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonPlay);
             st.setToX(1);
             st.setToY(1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonPlay);
+            tt.setFromX(-50);
+            tt.setToX(0);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         BackgroundImage settingsBackground = new BackgroundImage(
@@ -209,14 +223,28 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonSettings);
+            tt.setFromX(0);
+            tt.setToX(-35);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         buttonSettings.setOnMouseExited(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonSettings);
             st.setToX(1);
             st.setToY(1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonSettings);
+            tt.setFromX(-35);
+            tt.setToX(0);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         BackgroundImage exitBackground = new BackgroundImage(
@@ -237,14 +265,28 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonExit);
+            tt.setFromX(0);
+            tt.setToX(-35);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         buttonExit.setOnMouseExited(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonExit);
             st.setToX(1);
             st.setToY(1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonExit);
+            tt.setFromX(-35);
+            tt.setToX(0);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         BackgroundImage statisticsBackground = new BackgroundImage(
@@ -265,14 +307,28 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonStatistics);
+            tt.setFromX(0);
+            tt.setToX(-35);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         buttonStatistics.setOnMouseExited(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonStatistics);
             st.setToX(1);
             st.setToY(1);
-            st.play();
+            //st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonStatistics);
+            tt.setFromX(-35);
+            tt.setToX(0);
+
+            ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
+            locParallelTransition.play();
         });
 
         VBox verticalMenuBox = new VBox();
@@ -282,7 +338,7 @@ public class MainMenu extends Application {
         BorderPane layout = new BorderPane();
         layout.setRight(verticalMenuBox);
         BorderPane.setAlignment(verticalMenuBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(verticalMenuBox, new Insets(resHeight * 0.4,0,0,0));
+        BorderPane.setMargin(verticalMenuBox, new Insets(resHeight * 0.4,-25,0,0));
 
         StackPane root = new StackPane(mainPicBackground, transparentBorderBackground, mainBorderBackground);
         StackPane.setAlignment(labelName, Pos.TOP_RIGHT);

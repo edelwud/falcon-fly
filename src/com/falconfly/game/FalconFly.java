@@ -56,7 +56,15 @@ public class FalconFly implements IGameLogic {
 		Mesh mesh = new Mesh(positions, colours, indices);
 		GameItem gameItem = new GameItem(mesh);
 		gameItem.setPosition(0, 0, -2);
-		gameItems = new GameItem[] { gameItem };
+
+		GameItem gameItem2 = new GameItem(mesh);
+		gameItem2.setPosition(-1, 0, -2);
+
+		GameItem gameItem3 = new GameItem(mesh);
+		gameItem3.setPosition(1, 0, -2);
+
+
+		gameItems = new GameItem[] { gameItem, gameItem2, gameItem3 };
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public class EngineWindow {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
-        this.id = GLFW.glfwCreateWindow(this.width, this.height, this.title, glfwGetPrimaryMonitor(), 0);
+        this.id = GLFW.glfwCreateWindow(this.width, this.height, this.title, 0, 0);
         if (this.id == 0) {
             System.err.println("GLFW cannot create window");
             System.exit(-1);
