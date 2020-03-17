@@ -5,7 +5,7 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
@@ -64,7 +64,7 @@ public class Mesh {
 			coloursBuffer.put(colours).flip();
 			glBindBuffer(GL_ARRAY_BUFFER, coloursVboId);
 			glBufferData(GL_ARRAY_BUFFER, coloursBuffer, GL_STATIC_DRAW);
-			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(1);
 			glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
 
 
@@ -81,6 +81,16 @@ public class Mesh {
 				MemoryUtil.memFree(coloursBuffer);
 			}
 		}
+	}
+
+	public void render() {
+		// Draw the mesh
+		glBindVertexArray(getVaoId());
+
+		glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+
+		// Restore state
+		glBindVertexArray(0);
 	}
 
 	public int getVaoId() {
