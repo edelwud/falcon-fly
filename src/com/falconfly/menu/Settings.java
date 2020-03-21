@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 
 public class Settings {
 
-    private double tempMUSIC_VOLUME;
+    private double tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
 
     private Scene scene;
     private Stage stage;
@@ -56,10 +56,30 @@ public class Settings {
         scene = sceneSettings;
         stage = windowMain;
 
+        musicVolume = new Slider();
+        musicVolume.valueProperty().addListener(event ->{
+            if(musicVolume.isValueChanging()) {
+                this.buttonSettingsApply.setDisable(false);
+            }
+            MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
+            this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+        });
+        musicVolume.setMin(0);
+        musicVolume.setMax(1);
+        musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+        musicVolume.setOrientation(Orientation.HORIZONTAL);
+        musicVolume.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+        musicVolume.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+        musicVolume.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
 
         buttonSettingsBack = new Button();
         buttonSettingsBack.setOnAction((e)->{
             try {
+
+                MainGlobals.MUSIC_VOLUME = this.tempMUSIC_VOLUME;
+                musicVolume.setValue(this.tempMUSIC_VOLUME);
+                this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+
                 Stage tempStage = new Stage();
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
@@ -118,24 +138,6 @@ public class Settings {
         buttonVolumeDown.setMaxSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
         buttonVolumeDown.setMinSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
         buttonVolumeDown.setFont(this.fonts.getFont("BN Jinx"));
-
-
-        musicVolume = new Slider();
-        musicVolume.valueProperty().addListener(event ->{
-            if(musicVolume.isValueChanging()) {
-                this.buttonSettingsApply.setDisable(false);
-            }
-            MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
-            this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
-        });
-        musicVolume.setMin(0);
-        musicVolume.setMax(1);
-        musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
-        musicVolume.setOrientation(Orientation.HORIZONTAL);
-        musicVolume.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
-        musicVolume.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
-        musicVolume.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
-
 
         HBox horizontalSettingsBox = new HBox();
         horizontalSettingsBox.setSpacing(25);

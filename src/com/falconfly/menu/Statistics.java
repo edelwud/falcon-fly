@@ -67,6 +67,7 @@ public class Statistics {
         //windowMain.setMaximized(true);
         windowMain.setTitle("Statistics");
         windowMain.setFullScreen(true);
+        windowMain.setFullScreenExitHint("");
         windowMain.show();
     }
 }
