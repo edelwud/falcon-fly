@@ -1,5 +1,6 @@
 package com.falconfly.config;
 
+import com.falconfly.menu.MainEnvironmentLoader;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -7,8 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class MainMusic {
+
+    private static final Logger LOGGER = Logger.getLogger(MainMusic.class.getSimpleName());
+
     private Map<String, Media> music = new HashMap<String, Media>();
     public static MainMusic instance;
     private Media musicMedia;
@@ -22,8 +27,8 @@ public class MainMusic {
         try {
             Media tempMusic = new Media(musicPath);
             music.put(musicPath, tempMusic);
-        } catch (Exception e) {
-            e.fillInStackTrace();
+        } catch (Exception ex) {
+            LOGGER.info(ex.toString());
         }
     }
     public Media getMedia(String musicPath) {

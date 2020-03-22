@@ -17,8 +17,11 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 public class Settings {
+
+    private static final Logger LOGGER = Logger.getLogger(Settings.class.getSimpleName());
 
     private double tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
 
@@ -95,7 +98,7 @@ public class Settings {
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
             } catch (Exception ex) {
-                ex.printStackTrace();
+                LOGGER.info(ex.toString());
             }
         });
         buttonSettingsBack.setText("Back");
