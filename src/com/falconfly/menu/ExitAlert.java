@@ -204,6 +204,7 @@ public class ExitAlert {
         Scene alertScene = new Scene(root);
         this.alertWindow.setScene(alertScene);
         this.alertWindow.setFullScreen(true);
+        this.alertWindow.setFullScreenExitHint("");
         this.alertWindow.showAndWait();
     }
 

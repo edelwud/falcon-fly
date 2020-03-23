@@ -15,8 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 public class Statistics {
 
+    private static final Logger LOGGER = Logger.getLogger(Statistics.class.getSimpleName());
     private static final int MENU_BUTTON_WIDTH = 500;
     private static final int MENU_BUTTON_HEIGHT = 100;
 
@@ -35,7 +38,7 @@ public class Statistics {
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
             } catch (Exception ex) {
-                ex.printStackTrace();
+                LOGGER.info(ex.toString());
             }
         });
         buttonStatisticsBack.setText("Back to main menu");
@@ -67,6 +70,7 @@ public class Statistics {
         //windowMain.setMaximized(true);
         windowMain.setTitle("Statistics");
         windowMain.setFullScreen(true);
+        windowMain.setFullScreenExitHint("");
         windowMain.show();
     }
 }

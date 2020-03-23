@@ -17,10 +17,13 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 public class Settings {
 
-    private double tempMUSIC_VOLUME;
+    private static final Logger LOGGER = Logger.getLogger(Settings.class.getSimpleName());
+
+    private double tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
 
     private Scene scene;
     private Stage stage;
@@ -43,6 +46,7 @@ public class Settings {
     Slider musicVolume;
     Label labelMusicSettings;
     private static boolean musicFlag = true;
+    private boolean applyFlag = true;
 
     ChoiceBox<String> screenSizes;
     Label labelScreen;
@@ -56,22 +60,21 @@ public class Settings {
         scene = sceneSettings;
         stage = windowMain;
 
-
-        buttonSettingsBack = new Button();
-        buttonSettingsBack.setOnAction((e)->{
-            try {
-                Stage tempStage = new Stage();
-                (new MainMenu()).start(tempStage);
-                windowMain.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        musicVolume = new Slider();
+        musicVolume.valueProperty().addListener(event ->{
+            if(musicVolume.isValueChanging()) {
+                this.buttonSettingsApply.setDisable(false);
             }
+            MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
+            this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         });
-        buttonSettingsBack.setText("Back");
-        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonSettingsBack.setFont(this.fonts.getFont("BN Jinx"));
+        musicVolume.setMin(0);
+        musicVolume.setMax(1);
+        musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+        musicVolume.setOrientation(Orientation.HORIZONTAL);
+        musicVolume.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+        musicVolume.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+        musicVolume.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
 
         buttonSettingsApply = new Button();
         buttonSettingsApply.setText("Apply");
@@ -81,6 +84,28 @@ public class Settings {
         buttonSettingsApply.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
         buttonSettingsApply.setFont(this.fonts.getFont("BN Jinx"));
         buttonSettingsApply.setDisable(true);
+
+        buttonSettingsBack = new Button();
+        buttonSettingsBack.setOnAction((e)->{
+            try {
+                if(this.applyFlag) {
+                    MainGlobals.MUSIC_VOLUME = this.tempMUSIC_VOLUME;
+                    musicVolume.setValue(this.tempMUSIC_VOLUME);
+                    this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+                    this.applyFlag = true;
+                }
+                Stage tempStage = new Stage();
+                (new MainMenu()).start(tempStage);
+                windowMain.close();
+            } catch (Exception ex) {
+                LOGGER.info(ex.toString());
+            }
+        });
+        buttonSettingsBack.setText("Back");
+        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonSettingsBack.setFont(this.fonts.getFont("BN Jinx"));
 
         screenSizes = new ChoiceBox<>();
         screenSizes.setValue(Integer.toString(MainGlobals.WIDTH) + "x" + Integer.toString(MainGlobals.HEIGHT));
@@ -118,24 +143,6 @@ public class Settings {
         buttonVolumeDown.setMaxSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
         buttonVolumeDown.setMinSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
         buttonVolumeDown.setFont(this.fonts.getFont("BN Jinx"));
-
-
-        musicVolume = new Slider();
-        musicVolume.valueProperty().addListener(event ->{
-            if(musicVolume.isValueChanging()) {
-                this.buttonSettingsApply.setDisable(false);
-            }
-            MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
-            this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
-        });
-        musicVolume.setMin(0);
-        musicVolume.setMax(1);
-        musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
-        musicVolume.setOrientation(Orientation.HORIZONTAL);
-        musicVolume.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
-        musicVolume.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
-        musicVolume.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
-
 
         HBox horizontalSettingsBox = new HBox();
         horizontalSettingsBox.setSpacing(25);
@@ -231,6 +238,7 @@ public class Settings {
 
     private void handleApply(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.buttonSettingsApply) {
+            this.applyFlag = false;
             for(int i = 0; i < MainGlobals.listSizes.size(); i++)
             {
 

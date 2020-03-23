@@ -351,10 +351,11 @@ public class MainMenu extends Application {
 
         Scene sceneMain = new Scene(root);
         windowMain.setScene(sceneMain);
-        //windowMain.setMaximized(true);
+        windowMain.setMaximized(true);
         windowMain.setWidth(resWidth);
         windowMain.setHeight(resHeight);
         windowMain.setFullScreen(true);
+        windowMain.setFullScreenExitHint("");
         windowMain.show();
     }
 
