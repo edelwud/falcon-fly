@@ -94,6 +94,9 @@ public class EngineWindow {
         glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
         glMatrixMode(GL_MODELVIEW);
 
+        // Enables depth
+        glEnable(GL_DEPTH_TEST);
+
         if (this.vSync)
             glfwSwapInterval(1);
         glfwShowWindow(id);
