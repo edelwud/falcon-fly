@@ -2,6 +2,7 @@ package com.falconfly.menu;
 
 import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
+import com.falconfly.config.MainLogger;
 import com.falconfly.config.MainMusic;
 import com.falconfly.engine.main.Main;
 import javafx.animation.*;
@@ -29,6 +30,7 @@ import org.w3c.dom.ls.LSOutput;
 
 import java.awt.*;
 import java.io.File;
+import java.util.logging.*;
 
 public class MainMenu extends Application {
 
@@ -43,19 +45,19 @@ public class MainMenu extends Application {
     Button buttonExit;
     Button buttonStatistics;
     Label labelName;
-    MediaPlayer mediaPlayer;
-    Media mediaFile;
 
     MainFont fonts;
     MainMusic music;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        MenuStorageLoader loader = new MenuStorageLoader();
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         MainGlobals.setScreenSize(screenSize.width, screenSize.height);
@@ -67,7 +69,7 @@ public class MainMenu extends Application {
         this.fonts.addFont("BN Jinx", 30);
 
         this.music = new MainMusic();
-        MenuStorageLoader loader = new MenuStorageLoader();
+
         for (String path:loader.Load("music")) {
             this.music.addMedia(path);
         }
