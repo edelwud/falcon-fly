@@ -3,14 +3,18 @@ package com.falconfly.config;
 import com.falconfly.menu.MainEnvironmentLoader;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class MainGlobals {
+
+    public static MainLogger LOGGER;
+
     public static int WIDTH = 0;
     public static int HEIGHT = 0;
-    public static double MUSIC_VOLUME = Double.parseDouble(MainEnvironmentLoader.getVolume());;
+    public static double MUSIC_VOLUME = 0;;
     public static boolean musicPlaying = false;
 
-    public static void setVolume(double tempMUSIC_VOLUME) {
+    public static void setVolume(double tempMUSIC_VOLUME) throws Exception {
         MUSIC_VOLUME = tempMUSIC_VOLUME;
     }
 

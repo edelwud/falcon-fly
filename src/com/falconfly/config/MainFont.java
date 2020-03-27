@@ -14,21 +14,19 @@ import java.util.logging.Logger;
 
 public class MainFont {
 
-   MenuStorageLoader loader;
-
    private Map<String, Font> fonts = new HashMap<String, Font>();
    public static MainFont instance;
 
    public MainFont() {
        instance = this;
    }
-   public void addFont(String fontName, double size) throws IOException {
+   public void addFont(String fontName, double size) {
        try {
            Font tempFont = new Font(fontName, size);
            fonts.put(fontName, tempFont);
        } catch (Exception ex) {
-           MainLogger logger = new MainLogger( loader.Load("").get(3).substring(8) + "/LogMainFont.txt", MainMenu.class.getSimpleName());
-           logger.logger.info(ex.toString());
+           MainGlobals.LOGGER.logger = Logger.getLogger(MainFont.class.getSimpleName());
+           MainGlobals.LOGGER.logger.info(ex.toString());
        }
    }
    public Font getFont(String fontName) {

@@ -2,6 +2,7 @@ package com.falconfly.menu;
 
 import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
+import com.falconfly.config.MainLogger;
 import com.falconfly.config.MainMusic;
 import com.falconfly.engine.main.Main;
 import javafx.animation.ParallelTransition;
@@ -25,18 +26,18 @@ import javafx.util.Duration;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 public class Settings {
-    private static final Logger LOGGER = Logger.getLogger(Settings.class.getSimpleName());
 
     private double tempMUSIC_VOLUME;
 
     private Scene scene;
     private Stage stage;
 
-    MenuStorageLoader storageLoader = new MenuStorageLoader();
+    MenuStorageLoader storageLoader;
 
     MainFont fonts;
     MainMusic music;
@@ -61,6 +62,8 @@ public class Settings {
 
         int resHeight = MainGlobals.HEIGHT;
         int resWidth  = MainGlobals.WIDTH;
+
+        storageLoader = new MenuStorageLoader();
 
         BackgroundImage centerBackground = new BackgroundImage(
                 new Image(storageLoader.Load("images/Settings").get(10), resWidth, resHeight,false,true),
@@ -182,8 +185,9 @@ public class Settings {
                 Stage tempStage = new Stage();
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch(Exception ex) {
+                MainGlobals.LOGGER.logger = Logger.getLogger(Settings.class.getSimpleName());
+                MainGlobals.LOGGER.logger.info(ex.toString());
             }
         });
         buttonSettingsBack.setBackground(new Background(backButtonBackground));
@@ -377,7 +381,8 @@ public class Settings {
                 writerEnvironment.close();
             }
             catch (Exception ex) {
-                LOGGER.info(ex.toString());
+                MainGlobals.LOGGER.logger = Logger.getLogger(Settings.class.getSimpleName());
+                MainGlobals.LOGGER.logger.info(ex.toString());
             }
             this.invoke(this.scene, this.stage);
         }

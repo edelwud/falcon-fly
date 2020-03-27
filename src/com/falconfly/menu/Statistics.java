@@ -2,6 +2,8 @@ package com.falconfly.menu;
 
 import com.falconfly.config.MainFont;
 import com.falconfly.config.MainGlobals;
+import com.falconfly.config.MainLogger;
+import com.falconfly.config.MainMusic;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +21,6 @@ import java.util.logging.Logger;
 
 public class Statistics {
 
-    private static final Logger LOGGER = Logger.getLogger(Statistics.class.getSimpleName());
     private static final int MENU_BUTTON_WIDTH = 500;
     private static final int MENU_BUTTON_HEIGHT = 100;
 
@@ -38,7 +39,8 @@ public class Statistics {
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
             } catch (Exception ex) {
-                LOGGER.info(ex.toString());
+                MainGlobals.LOGGER.logger = Logger.getLogger(Statistics.class.getSimpleName());
+                MainGlobals.LOGGER.logger.info(ex.toString());
             }
         });
         buttonStatisticsBack.setText("Back to main menu");

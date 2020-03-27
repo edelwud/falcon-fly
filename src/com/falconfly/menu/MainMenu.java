@@ -30,6 +30,7 @@ import org.w3c.dom.ls.LSOutput;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.*;
 
 public class MainMenu extends Application {
@@ -49,8 +50,9 @@ public class MainMenu extends Application {
     MainFont fonts;
     MainMusic music;
 
-
     public static void main(String[] args) throws Exception {
+
+        MainGlobals.LOGGER = new MainLogger("./store/logs/application_log.txt", MainMenu.class.getSimpleName());
         launch(args);
     }
 
@@ -61,6 +63,7 @@ public class MainMenu extends Application {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         MainGlobals.setScreenSize(screenSize.width, screenSize.height);
+        MainGlobals.setVolume(Double.parseDouble(MainEnvironmentLoader.getVolume()));
 
         String basePath = new File("").getAbsolutePath();
 
@@ -370,7 +373,6 @@ public class MainMenu extends Application {
 
         if(eventMain.getSource() == buttonExit) {
             ExitAlert exitAlert = new ExitAlert();
-            //this.windowMain.setFullScreen(false);
             exitAlert.display();
             windowMain.setFullScreen(true);
         }
