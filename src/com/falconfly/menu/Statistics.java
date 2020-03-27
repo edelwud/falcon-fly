@@ -63,11 +63,10 @@ public class Statistics {
         BorderPane.setAlignment(horizontalMenuBox, Pos.BOTTOM_RIGHT);
         BorderPane.setMargin(horizontalMenuBox, new Insets(540,20,0,0));
 
-        sceneStatistics = new Scene(layout,MainGlobals.WIDTH,MainGlobals.HEIGHT);
+        sceneStatistics = new Scene(layout, MainGlobals.WIDTH, MainGlobals.HEIGHT);
         windowMain.setScene(sceneStatistics);
         windowMain.setWidth(MainGlobals.WIDTH);
         windowMain.setHeight(MainGlobals.HEIGHT);
-        //windowMain.setMaximized(true);
         windowMain.setTitle("Statistics");
         windowMain.setFullScreen(true);
         windowMain.setFullScreenExitHint("");

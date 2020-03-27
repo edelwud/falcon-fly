@@ -25,15 +25,6 @@ public class MainEnvironmentLoader {
         }
     }
 
-    public static List<Pair<String, String>> getScreenSizes() {
-
-        List<Pair<String, String>> screenSizes = new LinkedList<>();
-        MainEnvironmentLoader.openEnvironment();
-            screenSizes.add(new Pair<>(MainEnvironmentLoader.environmentFile.next(), MainEnvironmentLoader.environmentFile.next()));
-        MainEnvironmentLoader.environmentFile.close();
-        return screenSizes;
-    }
-
     public static String getVolume() {
 
         MainEnvironmentLoader.openEnvironment();

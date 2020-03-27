@@ -26,18 +26,16 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 public class Settings {
+    private static final Logger LOGGER = Logger.getLogger(Settings.class.getSimpleName());
 
     private double tempMUSIC_VOLUME;
 
     private Scene scene;
     private Stage stage;
 
-    private int restoreWIDTH = MainGlobals.WIDTH;
-    private int restoreHEIGHT = MainGlobals.HEIGHT;
-
-    MainEnvironmentLoader environmentLoader;
     MenuStorageLoader storageLoader = new MenuStorageLoader();
 
     MainFont fonts;
@@ -53,10 +51,6 @@ public class Settings {
     Label labelMusicSettings;
     private static boolean musicFlag = true;
 
-    ChoiceBox<String> screenSizes;
-    Label labelScreen;
-
-
 
     public void invoke(Scene sceneSettings, Stage windowMain) {
         this.fonts = MainFont.getInstance();
@@ -65,9 +59,8 @@ public class Settings {
         scene = sceneSettings;
         stage = windowMain;
 
-        Dimension screenSize = Toolkit.getDefaultToolkit ().getScreenSize ();
-        int resHeight = screenSize.height;
-        int resWidth  = screenSize.width;
+        int resHeight = MainGlobals.HEIGHT;
+        int resWidth  = MainGlobals.WIDTH;
 
         BackgroundImage centerBackground = new BackgroundImage(
                 new Image(storageLoader.Load("images/Settings").get(10), resWidth, resHeight,false,true),
@@ -243,16 +236,6 @@ public class Settings {
             st.play();
         });
 
-        screenSizes = new ChoiceBox<>();
-        screenSizes.setValue(Integer.toString(MainGlobals.WIDTH) + "x" + Integer.toString(MainGlobals.HEIGHT));
-        for(int i = 0; i < MainGlobals.listSizes.size(); i++) {
-            screenSizes.getItems().add(MainGlobals.listSizes.get(i).getKey() + "x" + MainGlobals.listSizes.get(i).getValue());
-        }
-        screenSizes.setOnAction(this::getChoice);
-        screenSizes.setPrefSize(MainGlobals.WIDTH * 0.6 + 50, MainGlobals.HEIGHT * 0.08);
-        screenSizes.setMaxSize(MainGlobals.WIDTH * 0.6 + 50, MainGlobals.HEIGHT * 0.08);
-        screenSizes.setMinSize(MainGlobals.WIDTH * 0.6 + 50, MainGlobals.HEIGHT * 0.08);
-
         labelMusicSettings = new Label("Music Settings");
         labelMusicSettings.setFont(this.fonts.getFont("BN Jinx"));
 
@@ -303,12 +286,9 @@ public class Settings {
         horizontalSettingsBox.getChildren().addAll(buttonMusicAction, musicVolume, buttonVolumeDown, buttonVolumeUp);
         horizontalSettingsBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelScreen = new Label("Screen resolution");
-        labelScreen.setFont(this.fonts.getFont("BN Jinx"));
-
         VBox verticalSettingsBox = new VBox();
         verticalSettingsBox.setSpacing(25);
-        verticalSettingsBox.getChildren().addAll(labelMusicSettings, horizontalSettingsBox, labelScreen, screenSizes);
+        verticalSettingsBox.getChildren().addAll(labelMusicSettings, horizontalSettingsBox);
 
         VBox mainSettingsBox = new VBox();
         mainSettingsBox.setSpacing(0);
@@ -333,7 +313,6 @@ public class Settings {
         windowMain.setScene(sceneSettings);
         windowMain.setWidth(MainGlobals.WIDTH);
         windowMain.setHeight(MainGlobals.HEIGHT);
-        //windowMain.setMaximized(true);
         windowMain.setTitle("Settings");
         windowMain.setFullScreen(true);
         windowMain.show();
@@ -370,12 +349,6 @@ public class Settings {
         }
     }
 
-    private void getChoice(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == this.screenSizes) {
-            buttonSettingsApply.setDisable(false);
-        }
-    }
-
     private void handleMusicAction(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.buttonMusicAction) {
             if(this.musicFlag) {
@@ -396,29 +369,17 @@ public class Settings {
 
     private void handleApply(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.buttonSettingsApply) {
-            for(int i = 0; i < MainGlobals.listSizes.size(); i++)
-            {
-
-                if(this.screenSizes.getSelectionModel().isSelected(i)) {
-                    MainGlobals.WIDTH = Integer.parseInt(MainGlobals.listSizes.get(i).getKey());
-                    MainGlobals.HEIGHT = Integer.parseInt(MainGlobals.listSizes.get(i).getValue());
-                    storageLoader = new MenuStorageLoader();
-                    File environmentFile = new File(storageLoader.Load("").get(0).substring(7));
-                    try {
-                        PrintWriter writerEnvironment = new PrintWriter(environmentFile);
-                        writerEnvironment.print(MainGlobals.listSizes.get(i).getKey() + ' ');
-                        writerEnvironment.println(MainGlobals.listSizes.get(i).getValue() + ' ');
-                        writerEnvironment.print(MainGlobals.MUSIC_VOLUME);
-                        writerEnvironment.close();
-                    }
-                    catch (Exception ex) {
-                        ex.fillInStackTrace();
-                    }
-                    this.invoke(this.scene, this.stage);
-                    break;
-                }
+            storageLoader = new MenuStorageLoader();
+            File environmentFile = new File(storageLoader.Load("").get(0).substring(7));
+            try {
+                PrintWriter writerEnvironment = new PrintWriter(environmentFile);
+                writerEnvironment.print(MainGlobals.MUSIC_VOLUME);
+                writerEnvironment.close();
             }
+            catch (Exception ex) {
+                LOGGER.info(ex.toString());
+            }
+            this.invoke(this.scene, this.stage);
         }
     }
-
 }

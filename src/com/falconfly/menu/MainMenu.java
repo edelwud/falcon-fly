@@ -56,9 +56,11 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        String basePath = new File("").getAbsolutePath();
 
-        MainGlobals.setListSizes();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        MainGlobals.setScreenSize(screenSize.width, screenSize.height);
+
+        String basePath = new File("").getAbsolutePath();
 
         this.fonts = new MainFont();
         this.fonts.addFont("Alien Encounters", 60);
@@ -77,9 +79,8 @@ public class MainMenu extends Application {
         windowMain = primaryStage;
         windowMain.setTitle("Falcon-Fly launcher");
 
-        Dimension screenSize = Toolkit.getDefaultToolkit ().getScreenSize ();
-        int resHeight = screenSize.height;
-        int resWidth  = screenSize.width;
+        int resHeight = MainGlobals.HEIGHT;
+        int resWidth  = MainGlobals.WIDTH;
 
         MENU_BUTTON_WIDTH = resWidth * 0.4;
         MENU_BUTTON_HEIGHT = resHeight * 0.122;
