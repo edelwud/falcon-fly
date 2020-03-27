@@ -7,8 +7,11 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class MainEnvironmentLoader {
+
+    private static final Logger LOGGER = Logger.getLogger(MainEnvironmentLoader.class.getSimpleName());
 
     private static Scanner environmentFile;
     private static String volume;
@@ -18,7 +21,7 @@ public class MainEnvironmentLoader {
             environmentFile = new Scanner(new File(loader.Load("").get(0).substring(7,loader.Load("").get(0).length())));
         }
         catch(Exception ex) {
-            ex.printStackTrace();
+            LOGGER.info(ex.toString());
         }
     }
 
