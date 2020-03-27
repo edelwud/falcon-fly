@@ -39,7 +39,6 @@ public class Statistics {
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
             } catch (Exception ex) {
-                MainGlobals.LOGGER.logger = Logger.getLogger(Statistics.class.getSimpleName());
                 MainGlobals.LOGGER.logger.info(ex.toString());
             }
         });

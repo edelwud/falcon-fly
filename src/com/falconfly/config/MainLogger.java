@@ -8,8 +8,9 @@ import java.util.logging.SimpleFormatter;
 
 public class MainLogger {
 
-    public Logger logger;
+    public static Logger logger;
     FileHandler fileHandler;
+
 
     public MainLogger(String filePath, String className) throws SecurityException, IOException {
 

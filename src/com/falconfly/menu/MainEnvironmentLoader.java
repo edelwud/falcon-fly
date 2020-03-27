@@ -22,8 +22,7 @@ public class MainEnvironmentLoader {
             environmentFile = new Scanner(new File(loader.Load("").get(0).substring(7,loader.Load("").get(0).length())));
         }
         catch(Exception ex) {
-            MainGlobals.LOGGER.logger = Logger.getLogger(MainEnvironmentLoader.class.getSimpleName());
-            MainGlobals.LOGGER.logger.info(ex.toString());
+           MainGlobals.LOGGER.logger.info(ex.toString());
         }
     }
 

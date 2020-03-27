@@ -17,6 +17,8 @@ public class MainFont {
    private Map<String, Font> fonts = new HashMap<String, Font>();
    public static MainFont instance;
 
+
+
    public MainFont() {
        instance = this;
    }
@@ -25,7 +27,7 @@ public class MainFont {
            Font tempFont = new Font(fontName, size);
            fonts.put(fontName, tempFont);
        } catch (Exception ex) {
-           MainGlobals.LOGGER.logger = Logger.getLogger(MainFont.class.getSimpleName());
+
            MainGlobals.LOGGER.logger.info(ex.toString());
        }
    }

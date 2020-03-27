@@ -186,7 +186,6 @@ public class Settings {
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
             } catch(Exception ex) {
-                MainGlobals.LOGGER.logger = Logger.getLogger(Settings.class.getSimpleName());
                 MainGlobals.LOGGER.logger.info(ex.toString());
             }
         });
@@ -381,7 +380,6 @@ public class Settings {
                 writerEnvironment.close();
             }
             catch (Exception ex) {
-                MainGlobals.LOGGER.logger = Logger.getLogger(Settings.class.getSimpleName());
                 MainGlobals.LOGGER.logger.info(ex.toString());
             }
             this.invoke(this.scene, this.stage);

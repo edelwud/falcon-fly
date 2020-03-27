@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainMusic {
@@ -23,12 +24,11 @@ public class MainMusic {
     public MainMusic() {
         instance = this;
     }
-    public void addMedia(String musicPath) {
+    public void addMedia(String musicPath) throws IOException {
         try {
             Media tempMusic = new Media(musicPath);
             music.put(musicPath, tempMusic);
         } catch (Exception ex) {
-            MainGlobals.LOGGER.logger = Logger.getLogger(MainMusic.class.getSimpleName());
             MainGlobals.LOGGER.logger.info(ex.toString());
         }
     }
