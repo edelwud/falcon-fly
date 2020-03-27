@@ -45,6 +45,9 @@ public class Settings {
     Button buttonSettingsBack;
     Button buttonSettingsApply;
 
+    Button buttonDifficulty;
+    Label labelDifficulty;
+
     Button buttonMusicAction;
     Button buttonVolumeUp;
     Button buttonVolumeDown;
@@ -52,6 +55,7 @@ public class Settings {
     Label labelMusicSettings;
     private static boolean musicFlag = true;
 
+    private int difficultyFlag = MainGlobals.DIFFICULTY;
 
     public void invoke(Scene sceneSettings, Stage windowMain) {
         this.fonts = MainFont.getInstance();
@@ -182,6 +186,7 @@ public class Settings {
         buttonSettingsBack = new Button();
         buttonSettingsBack.setOnAction((e)->{
             try {
+                MainGlobals.DIFFICULTY = this.difficultyFlag;
                 Stage tempStage = new Stage();
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
@@ -239,6 +244,17 @@ public class Settings {
             st.play();
         });
 
+        labelDifficulty = new Label("Difficulty");
+        labelDifficulty.setFont(this.fonts.getFont("BN Jinx"));
+
+        buttonDifficulty = new Button();
+        buttonDifficulty.setText("0");
+        buttonDifficulty.setOnAction(this::handleDifficultyAction);
+        buttonDifficulty.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonDifficulty.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonDifficulty.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
+        buttonDifficulty.setFont(this.fonts.getFont("BN Jinx"));
+
         labelMusicSettings = new Label("Music Settings");
         labelMusicSettings.setFont(this.fonts.getFont("BN Jinx"));
 
@@ -291,7 +307,7 @@ public class Settings {
 
         VBox verticalSettingsBox = new VBox();
         verticalSettingsBox.setSpacing(25);
-        verticalSettingsBox.getChildren().addAll(labelMusicSettings, horizontalSettingsBox);
+        verticalSettingsBox.getChildren().addAll(labelDifficulty, buttonDifficulty, labelMusicSettings, horizontalSettingsBox);
 
         VBox mainSettingsBox = new VBox();
         mainSettingsBox.setSpacing(0);
@@ -319,6 +335,27 @@ public class Settings {
         windowMain.setTitle("Settings");
         windowMain.setFullScreen(true);
         windowMain.show();
+    }
+
+    private void handleDifficultyAction(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == this.buttonDifficulty) {
+            this.buttonSettingsApply.setDisable(false);
+
+            if(MainGlobals.DIFFICULTY == 1) {
+                MainGlobals.DIFFICULTY = 2;
+                this.difficultyFlag = 1;
+            }
+
+            if(MainGlobals.DIFFICULTY == 2) {
+                MainGlobals.DIFFICULTY = 3;
+                this.difficultyFlag = 2;
+            }
+
+            if(MainGlobals.DIFFICULTY == 3) {
+                MainGlobals.DIFFICULTY = 1;
+                this.difficultyFlag = 3;
+            }
+        }
     }
 
     private void handleMusicUp(ActionEvent actionEvent) {
@@ -376,6 +413,7 @@ public class Settings {
             File environmentFile = new File(storageLoader.Load("").get(0).substring(7));
             try {
                 PrintWriter writerEnvironment = new PrintWriter(environmentFile);
+                writerEnvironment.println(MainGlobals.DIFFICULTY);
                 writerEnvironment.print(MainGlobals.MUSIC_VOLUME);
                 writerEnvironment.close();
             }

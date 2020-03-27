@@ -64,6 +64,7 @@ public class MainMenu extends Application {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         MainGlobals.setScreenSize(screenSize.width, screenSize.height);
         MainGlobals.setVolume(Double.parseDouble(MainEnvironmentLoader.getVolume()));
+        MainGlobals.setDifficulty(Integer.parseInt(MainEnvironmentLoader.getDifficulty()));
 
         String basePath = new File("").getAbsolutePath();
 
