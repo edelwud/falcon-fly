@@ -190,7 +190,7 @@ public class MainMenu extends Application {
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonPlay);
             tt.setFromX(0);
-            tt.setToX(-50);
+            tt.setToX(MainGlobals.WIDTH * -0.0260416667);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
             locParallelTransition.play();
@@ -202,7 +202,7 @@ public class MainMenu extends Application {
             st.setToY(1);
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonPlay);
-            tt.setFromX(-50);
+            tt.setFromX(MainGlobals.WIDTH * -0.0260416667);
             tt.setToX(0);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
@@ -230,7 +230,7 @@ public class MainMenu extends Application {
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonSettings);
             tt.setFromX(0);
-            tt.setToX(-35);
+            tt.setToX(MainGlobals.WIDTH * -0.0182291667);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
             locParallelTransition.play();
@@ -242,7 +242,7 @@ public class MainMenu extends Application {
             st.setToY(1);
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonSettings);
-            tt.setFromX(-35);
+            tt.setFromX(MainGlobals.WIDTH * -0.0182291667);
             tt.setToX(0);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
@@ -270,7 +270,7 @@ public class MainMenu extends Application {
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonExit);
             tt.setFromX(0);
-            tt.setToX(-35);
+            tt.setToX(MainGlobals.WIDTH * -0.0182291667);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
             locParallelTransition.play();
@@ -282,7 +282,7 @@ public class MainMenu extends Application {
             st.setToY(1);
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonExit);
-            tt.setFromX(-35);
+            tt.setFromX(MainGlobals.WIDTH * -0.0182291667);
             tt.setToX(0);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
@@ -310,7 +310,7 @@ public class MainMenu extends Application {
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonStatistics);
             tt.setFromX(0);
-            tt.setToX(-35);
+            tt.setToX(MainGlobals.WIDTH * -0.0182291667);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
             locParallelTransition.play();
@@ -322,7 +322,7 @@ public class MainMenu extends Application {
             st.setToY(1);
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonStatistics);
-            tt.setFromX(-35);
+            tt.setFromX(MainGlobals.WIDTH * -0.0182291667);
             tt.setToX(0);
 
             ParallelTransition locParallelTransition = new ParallelTransition(st, tt);
