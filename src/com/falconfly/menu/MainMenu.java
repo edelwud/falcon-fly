@@ -164,7 +164,6 @@ public class MainMenu extends Application {
         stLabel.setFromY(1);
         stLabel.setToX(1.1);
         stLabel.setToY(1.1);
-        stLabel.play();
         ParallelTransition parallelTransition = new ParallelTransition(stLabel);
         parallelTransition.setCycleCount(Timeline.INDEFINITE);
         parallelTransition.setAutoReverse(true);
@@ -188,7 +187,6 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonPlay);
             tt.setFromX(0);
@@ -202,7 +200,6 @@ public class MainMenu extends Application {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonPlay);
             st.setToX(1);
             st.setToY(1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonPlay);
             tt.setFromX(-50);
@@ -230,7 +227,6 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonSettings);
             tt.setFromX(0);
@@ -244,7 +240,6 @@ public class MainMenu extends Application {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonSettings);
             st.setToX(1);
             st.setToY(1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonSettings);
             tt.setFromX(-35);
@@ -272,7 +267,6 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonExit);
             tt.setFromX(0);
@@ -286,7 +280,6 @@ public class MainMenu extends Application {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonExit);
             st.setToX(1);
             st.setToY(1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonExit);
             tt.setFromX(-35);
@@ -314,7 +307,6 @@ public class MainMenu extends Application {
             st.setFromY(1);
             st.setToX(1.1);
             st.setToY(1.1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonStatistics);
             tt.setFromX(0);
@@ -328,7 +320,6 @@ public class MainMenu extends Application {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonStatistics);
             st.setToX(1);
             st.setToY(1);
-            //st.play();
 
             TranslateTransition tt = new TranslateTransition(Duration.millis(250), buttonStatistics);
             tt.setFromX(-35);
@@ -345,11 +336,11 @@ public class MainMenu extends Application {
         BorderPane layout = new BorderPane();
         layout.setRight(verticalMenuBox);
         BorderPane.setAlignment(verticalMenuBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(verticalMenuBox, new Insets(resHeight * 0.4,-25,0,0));
+        BorderPane.setMargin(verticalMenuBox, new Insets(resHeight * 0.4,MainGlobals.WIDTH * -0.0130208333,0,0));
 
         StackPane root = new StackPane(mainPicBackground, transparentBorderBackground, mainBorderBackground);
         StackPane.setAlignment(labelName, Pos.TOP_RIGHT);
-        StackPane.setMargin(labelName, new Insets(30, 75, 0, 0));
+        StackPane.setMargin(labelName, new Insets(MainGlobals.HEIGHT * 0.02777778, MainGlobals.WIDTH * 0.0390625, 0, 0));
         root.getChildren().add(labelName);
         StackPane.setAlignment(gameMenuBackground, Pos.CENTER);
         StackPane.setMargin(gameMenuBackground, new Insets(0, 0, resHeight * 0.35, resWidth * 0.75));
