@@ -185,9 +185,9 @@ public class Settings {
 
         buttonSettingsBack = new Button();
         buttonSettingsBack.setBackground(new Background(backButtonBackground));
-        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
-        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
-        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
+        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.11);
+        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.11);
+        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.11);
 
         buttonSettingsBack.setOnAction((e)->{
             try {
@@ -225,9 +225,9 @@ public class Settings {
         buttonSettingsApply = new Button();
         buttonSettingsApply.setBackground(new Background(applyButtonBackground));
         buttonSettingsApply.setOnAction(this::handleApply);
-        buttonSettingsApply.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
-        buttonSettingsApply.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
-        buttonSettingsApply.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
+        buttonSettingsApply.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.13);
+        buttonSettingsApply.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.13);
+        buttonSettingsApply.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.13);
         buttonSettingsApply.setDisable(true);
 
         buttonSettingsApply.setOnMouseEntered(event -> {
@@ -313,8 +313,8 @@ public class Settings {
             ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonMusicAction);
             st.setFromX(1);
             st.setFromY(1);
-            st.setToX(1.1);
-            st.setToY(1.1);
+            st.setToX(1.2);
+            st.setToY(1.2);
             st.play();
         });
 
@@ -326,7 +326,7 @@ public class Settings {
         });
 
         BackgroundImage volumeUpBackground = new BackgroundImage(
-                new Image(storageLoader.Load("images/Settings").get(14), resWidth * 0.14, resHeight * 0.14,false,true),
+                new Image(storageLoader.Load("images/Settings").get(14), resWidth * 0.12, resHeight * 0.12,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
 
@@ -341,8 +341,8 @@ public class Settings {
             ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeUp);
             st.setFromX(1);
             st.setFromY(1);
-            st.setToX(1.1);
-            st.setToY(1.1);
+            st.setToX(1.2);
+            st.setToY(1.2);
             st.play();
         });
 
@@ -354,7 +354,7 @@ public class Settings {
         });
 
         BackgroundImage volumeDownBackground = new BackgroundImage(
-                new Image(storageLoader.Load("images/Settings").get(11), resWidth * 0.14, resHeight * 0.14,false,true),
+                new Image(storageLoader.Load("images/Settings").get(11), resWidth * 0.12, resHeight * 0.12,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
 
@@ -369,8 +369,8 @@ public class Settings {
             ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeDown);
             st.setFromX(1);
             st.setFromY(1);
-            st.setToX(1.1);
-            st.setToY(1.1);
+            st.setToX(1.2);
+            st.setToY(1.2);
             st.play();
         });
 
@@ -397,13 +397,51 @@ public class Settings {
             this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         });
 
+        BackgroundImage difficultyLabelBackground = new BackgroundImage(
+                new Image(storageLoader.Load("images/Settings").get(15), resWidth / 4.5, resHeight / 4.5,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
+        Label difficultyLabel = new Label();
+        difficultyLabel.setMaxSize(resWidth / 4.5, resHeight / 4.5);
+        difficultyLabel.setBackground(new Background(difficultyLabelBackground));
+
+        ScaleTransition stLabelDifficulty = new ScaleTransition(Duration.seconds(2), difficultyLabel);
+        stLabelDifficulty.setFromX(1);
+        stLabelDifficulty.setFromY(1);
+        stLabelDifficulty.setToX(1.07);
+        stLabelDifficulty.setToY(1.07);
+        ParallelTransition parallelTransitionDifficulty = new ParallelTransition(stLabelDifficulty);
+        parallelTransitionDifficulty.setCycleCount(Timeline.INDEFINITE);
+        parallelTransitionDifficulty.setAutoReverse(true);
+        parallelTransitionDifficulty.play();
+
+        BackgroundImage musicLabelBackground = new BackgroundImage(
+                new Image(storageLoader.Load("images/Settings").get(16), resWidth / 4.5, resHeight / 4.5,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
+        Label musicLabel = new Label();
+        musicLabel.setMaxSize(resWidth / 4.5, resHeight / 4.5);
+        musicLabel.setBackground(new Background(musicLabelBackground));
+
+        ScaleTransition stLabelMusic = new ScaleTransition(Duration.seconds(2), musicLabel);
+        stLabelMusic.setFromX(1);
+        stLabelMusic.setFromY(1);
+        stLabelMusic.setToX(1.07);
+        stLabelMusic.setToY(1.07);
+        ParallelTransition parallelTransitionMusic = new ParallelTransition(stLabelMusic);
+        parallelTransitionMusic.setCycleCount(Timeline.INDEFINITE);
+        parallelTransitionMusic.setAutoReverse(true);
+        parallelTransitionMusic.play();
+
         HBox horizontalSettingsBox = new HBox();
         horizontalSettingsBox.setSpacing(0);
         horizontalSettingsBox.getChildren().addAll(buttonMusicAction, musicVolume, buttonVolumeDown, buttonVolumeUp);
-        horizontalSettingsBox.setAlignment(Pos.CENTER_LEFT);
+        horizontalSettingsBox.setAlignment(Pos.CENTER);
 
         VBox verticalSettingsBox = new VBox();
-        verticalSettingsBox.setSpacing(MainGlobals.HEIGHT * 0.04);
+        verticalSettingsBox.setSpacing(MainGlobals.HEIGHT * 0.13);
         verticalSettingsBox.getChildren().addAll(buttonDifficulty, horizontalSettingsBox);
 
         VBox mainSettingsBox = new VBox();
@@ -417,11 +455,15 @@ public class Settings {
         BorderPane.setMargin(verticalSettingsBox, new Insets(MainGlobals.HEIGHT * 0.315,0, MainGlobals.HEIGHT * 0.05,MainGlobals.WIDTH * 0.28));
         layout.setBottom(mainSettingsBox);
         BorderPane.setAlignment(mainSettingsBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(mainSettingsBox, new Insets(0,0,20,MainGlobals.WIDTH * -0.053));
+        BorderPane.setMargin(mainSettingsBox, new Insets(0,0,MainGlobals.HEIGHT * 0.08,MainGlobals.WIDTH * -0.053));
 
         StackPane root = new StackPane(mainBackground);
         root.getChildren().addAll(borderTransparentBottomLeft, borderTransparentUpRight,
                 borderMainBottomLeft, borderMainUpLeft, borderMainUpRight);
+        root.setMargin(difficultyLabel, new Insets(0, MainGlobals.WIDTH * 0.205, MainGlobals.HEIGHT * 0.62, 0));
+        root.getChildren().add(difficultyLabel);
+        root.setMargin(musicLabel, new Insets(MainGlobals.HEIGHT * 0.03, MainGlobals.WIDTH * 0.25, 0, 0));
+        root.getChildren().add(musicLabel);
         root.getChildren().add(layout);
 
         sceneSettings = new Scene(root, MainGlobals.WIDTH, MainGlobals.HEIGHT);
