@@ -77,9 +77,17 @@ public class MainMenu extends Application {
         for (String path:loader.Load("music")) {
             this.music.addMedia(path);
         }
-        if(!MainGlobals.musicPlaying) {
-            music.getRandomMediaPlayer();
-            MainGlobals.musicPlaying = true;
+        if(Integer.parseInt(MainEnvironmentLoader.getMusicFlag()) == 1) {
+            if (!MainGlobals.musicPlaying) {
+                music.getRandomMediaPlayer(true);
+                MainGlobals.musicPlaying = true;
+            }
+        }
+        else {
+            if (!MainGlobals.musicPlaying) {
+                music.getRandomMediaPlayer(false);
+                MainGlobals.musicPlaying = true;
+            }
         }
 
         windowMain = primaryStage;

@@ -64,6 +64,12 @@ public class Settings {
         scene = sceneSettings;
         stage = windowMain;
 
+        tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
+        if(Integer.parseInt(MainEnvironmentLoader.getMusicFlag()) == 1)
+            this.musicFlag = true;
+        else
+            this.musicFlag = false;
+
         int resHeight = MainGlobals.HEIGHT;
         int resWidth  = MainGlobals.WIDTH;
 
@@ -191,8 +197,23 @@ public class Settings {
 
         buttonSettingsBack.setOnAction((e)->{
             try {
-                if(!buttonSettingsApply.isDisabled())
+                if(!buttonSettingsApply.isDisabled()) {
                     MainGlobals.DIFFICULTY = this.difficultyFlag;
+                    if(!this.musicFlag) {
+                        //MainGlobals.MUSIC_VOLUME = tempMUSIC_VOLUME;
+                        musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
+                        this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+                        this.music.mediaPlayer.play();
+                        this.musicFlag = true;
+                    }
+                    else {
+                        this.music.mediaPlayer.stop();
+                        this.musicFlag = false;
+                        this.musicVolume.setDisable(true);
+                        this.buttonVolumeDown.setDisable(true);
+                        this.buttonVolumeUp.setDisable(true);
+                    }
+                }
                 Stage tempStage = new Stage();
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
@@ -336,6 +357,8 @@ public class Settings {
         buttonVolumeUp.setPrefSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
         buttonVolumeUp.setMaxSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
         buttonVolumeUp.setMinSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        if(!this.musicFlag)
+            buttonVolumeUp.setDisable(true);
 
         buttonVolumeUp.setOnMouseEntered(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeUp);
@@ -364,6 +387,8 @@ public class Settings {
         buttonVolumeDown.setPrefSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
         buttonVolumeDown.setMaxSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
         buttonVolumeDown.setMinSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        if(!this.musicFlag)
+            buttonVolumeDown.setDisable(true);
 
         buttonVolumeDown.setOnMouseEntered(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeDown);
@@ -389,6 +414,8 @@ public class Settings {
         musicVolume.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
         musicVolume.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
         musicVolume.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
+        if(!this.musicFlag)
+            musicVolume.setDisable(true);
         musicVolume.valueProperty().addListener(event ->{
             if(musicVolume.isValueChanging()) {
                 this.buttonSettingsApply.setDisable(false);
@@ -547,11 +574,14 @@ public class Settings {
 
     private void handleMusicAction(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.buttonMusicAction) {
+            this.buttonSettingsApply.setDisable(false);
             if (this.musicFlag) {
                 tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
-                musicVolume.setValue(0);
                 this.music.mediaPlayer.stop();
                 this.musicFlag = false;
+                this.musicVolume.setDisable(true);
+                this.buttonVolumeDown.setDisable(true);
+                this.buttonVolumeUp.setDisable(true);
                 BackgroundImage musicOnBackground = new BackgroundImage(
                         new Image(storageLoader.Load("images/Settings").get(13), MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12,false,true),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
@@ -559,6 +589,9 @@ public class Settings {
                 this.buttonMusicAction.setBackground(new Background(musicOnBackground));
             }
             else {
+                this.musicVolume.setDisable(false);
+                this.buttonVolumeDown.setDisable(false);
+                this.buttonVolumeUp.setDisable(false);
                 MainGlobals.MUSIC_VOLUME = tempMUSIC_VOLUME;
                 musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
                 this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
@@ -579,6 +612,10 @@ public class Settings {
             File environmentFile = new File(storageLoader.Load("").get(0).substring(7));
             try {
                 PrintWriter writerEnvironment = new PrintWriter(environmentFile);
+                if(this.musicFlag)
+                    writerEnvironment.println("1");
+                else
+                    writerEnvironment.println("0");
                 writerEnvironment.println(MainGlobals.DIFFICULTY);
                 writerEnvironment.print(MainGlobals.MUSIC_VOLUME);
                 writerEnvironment.close();

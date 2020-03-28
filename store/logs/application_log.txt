@@ -10,3 +10,17 @@ INFO: java.lang.NumberFormatException: For input string: "10.10707070707070698"
 INFO: java.lang.NumberFormatException: For input string: "10.10707070707070698"
 мар. 28, 2020 10:03:02 AM com.falconfly.menu.Settings lambda$invoke$0
 INFO: java.lang.NumberFormatException: For input string: "10.10707070707070698"
+мар. 28, 2020 6:12:07 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 28, 2020 6:12:10 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 28, 2020 6:12:11 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 28, 2020 6:14:14 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 28, 2020 6:17:01 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 28, 2020 6:17:02 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 28, 2020 6:17:03 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException

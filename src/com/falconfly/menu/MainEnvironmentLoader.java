@@ -17,6 +17,7 @@ public class MainEnvironmentLoader {
     private static Scanner environmentFile;
     private static String volume;
     private static String difficulty;
+    private static String musicFlag;
     public static void openEnvironment() {
         MenuStorageLoader loader = new MenuStorageLoader();
         try {
@@ -39,7 +40,15 @@ public class MainEnvironmentLoader {
     public static String getDifficulty() {
         MainEnvironmentLoader.openEnvironment();
         difficulty = MainEnvironmentLoader.environmentFile.next();
+        difficulty = MainEnvironmentLoader.environmentFile.next();
         MainEnvironmentLoader.environmentFile.close();
         return difficulty;
+    }
+
+    public static String getMusicFlag() {
+        MainEnvironmentLoader.openEnvironment();
+        musicFlag = MainEnvironmentLoader.environmentFile.next();
+        MainEnvironmentLoader.environmentFile.close();
+        return musicFlag;
     }
 }
