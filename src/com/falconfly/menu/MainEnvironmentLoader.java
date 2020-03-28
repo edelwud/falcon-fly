@@ -20,7 +20,7 @@ public class MainEnvironmentLoader {
     public static void openEnvironment() {
         MenuStorageLoader loader = new MenuStorageLoader();
         try {
-            environmentFile = new Scanner(new File(loader.Load("").get(0).substring(7,loader.Load("").get(0).length())));
+            environmentFile = new Scanner(new File(loader.Load("").get(0).substring(8)));
         }
         catch(Exception ex) {
            MainGlobals.LOGGER.logger.info(ex.toString());

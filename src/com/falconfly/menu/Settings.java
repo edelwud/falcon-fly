@@ -186,7 +186,8 @@ public class Settings {
         buttonSettingsBack = new Button();
         buttonSettingsBack.setOnAction((e)->{
             try {
-                MainGlobals.DIFFICULTY = this.difficultyFlag;
+                if(!buttonSettingsApply.isDisabled())
+                    MainGlobals.DIFFICULTY = this.difficultyFlag;
                 Stage tempStage = new Stage();
                 (new MainMenu()).start(tempStage);
                 windowMain.close();
@@ -342,18 +343,21 @@ public class Settings {
             this.buttonSettingsApply.setDisable(false);
 
             if(MainGlobals.DIFFICULTY == 1) {
-                MainGlobals.DIFFICULTY = 2;
+                MainGlobals.DIFFICULTY++;
                 this.difficultyFlag = 1;
+                return;
             }
 
             if(MainGlobals.DIFFICULTY == 2) {
-                MainGlobals.DIFFICULTY = 3;
+                MainGlobals.DIFFICULTY++;
                 this.difficultyFlag = 2;
+                return;
             }
 
             if(MainGlobals.DIFFICULTY == 3) {
                 MainGlobals.DIFFICULTY = 1;
                 this.difficultyFlag = 3;
+                return;
             }
         }
     }
