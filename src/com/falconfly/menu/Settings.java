@@ -501,7 +501,7 @@ public class Settings {
         windowMain.setWidth(MainGlobals.WIDTH);
         windowMain.setHeight(MainGlobals.HEIGHT);
         windowMain.setTitle("Settings");
-       // windowMain.setFullScreen(true);
+        windowMain.setFullScreen(true);
         windowMain.show();
     }
 
