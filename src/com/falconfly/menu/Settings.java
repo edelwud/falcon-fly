@@ -55,6 +55,8 @@ public class Settings {
     Label labelMusicSettings;
     private static boolean musicFlag = true;
 
+    private static int count = 0;
+
     private int difficultyFlag = MainGlobals.DIFFICULTY;
 
     public void invoke(Scene sceneSettings, Stage windowMain) {
@@ -69,6 +71,8 @@ public class Settings {
             this.musicFlag = true;
         else
             this.musicFlag = false;
+
+        count = 0;
 
         int resHeight = MainGlobals.HEIGHT;
         int resWidth  = MainGlobals.WIDTH;
@@ -197,10 +201,9 @@ public class Settings {
 
         buttonSettingsBack.setOnAction((e)->{
             try {
-                if(!buttonSettingsApply.isDisabled()) {
+                if(!buttonSettingsApply.isDisabled() && (count % 2 == 1)) {
                     MainGlobals.DIFFICULTY = this.difficultyFlag;
                     if(!this.musicFlag) {
-                        //MainGlobals.MUSIC_VOLUME = tempMUSIC_VOLUME;
                         musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
                         this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
                         this.music.mediaPlayer.play();
@@ -498,7 +501,7 @@ public class Settings {
         windowMain.setWidth(MainGlobals.WIDTH);
         windowMain.setHeight(MainGlobals.HEIGHT);
         windowMain.setTitle("Settings");
-        windowMain.setFullScreen(true);
+       // windowMain.setFullScreen(true);
         windowMain.show();
     }
 
@@ -575,6 +578,7 @@ public class Settings {
     private void handleMusicAction(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.buttonMusicAction) {
             this.buttonSettingsApply.setDisable(false);
+            count++;
             if (this.musicFlag) {
                 tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
                 this.music.mediaPlayer.stop();
