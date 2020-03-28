@@ -137,9 +137,9 @@ public class ExitAlert {
         buttonExitApply = new Button();
         buttonExitApply.setOnAction(this::wasPressed);
         buttonExitApply.setBackground(new Background(buttonYesBackgroundWhiteImg));
-        buttonExitApply.setPrefSize(resWidth * buttonsScale, resHeight * buttonsScale);
-        buttonExitApply.setMaxSize(resWidth * buttonsScale, resHeight * buttonsScale);
-        buttonExitApply.setMinSize(resWidth * buttonsScale, resHeight * buttonsScale);
+        buttonExitApply.setPrefSize(resWidth * 0.07, resHeight * buttonsScale);
+        buttonExitApply.setMaxSize(resWidth * 0.07, resHeight * buttonsScale);
+        buttonExitApply.setMinSize(resWidth * 0.07, resHeight * buttonsScale);
 
         buttonExitApply.setOnMouseEntered(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonExitApply);
@@ -165,9 +165,9 @@ public class ExitAlert {
         buttonExitCancel = new Button();
         buttonExitCancel.setOnAction(this::wasPressed);
         buttonExitCancel.setBackground(new Background(buttonNoBackgroundWhiteImg));
-        buttonExitCancel.setPrefSize(resWidth * buttonsScale, resHeight * buttonsScale);
-        buttonExitCancel.setMaxSize(resWidth * buttonsScale, resHeight * buttonsScale);
-        buttonExitCancel.setMinSize(resWidth * buttonsScale, resHeight * buttonsScale);
+        buttonExitCancel.setPrefSize(resWidth * 0.07, resHeight * buttonsScale);
+        buttonExitCancel.setMaxSize(resWidth * 0.07, resHeight * buttonsScale);
+        buttonExitCancel.setMinSize(resWidth * 0.07, resHeight * buttonsScale);
 
         buttonExitCancel.setOnMouseEntered(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(250), buttonExitCancel);
@@ -195,7 +195,7 @@ public class ExitAlert {
         root.setMargin(exitText, new Insets(0, resWidth * 0.01, resHeight * 0.01, 0));
         root.getChildren().add(exitText);
         root.setAlignment(this.buttonExitApply, Pos.BOTTOM_LEFT);
-        root.setMargin(this.buttonExitApply, new Insets(0, 0, resHeight * 0.01, resWidth * 0.005));
+        root.setMargin(this.buttonExitApply, new Insets(0, 0, resHeight * 0.01, resWidth * 0.03));
         root.getChildren().add(this.buttonExitApply);
         root.setAlignment(this.buttonExitCancel, Pos.BOTTOM_LEFT);
         root.setMargin(this.buttonExitCancel, new Insets(0, 0, resHeight * 0.01, resWidth * 0.11));
