@@ -184,6 +184,11 @@ public class Settings {
                 BackgroundSize.DEFAULT);
 
         buttonSettingsBack = new Button();
+        buttonSettingsBack.setBackground(new Background(backButtonBackground));
+        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
+        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
+        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
+
         buttonSettingsBack.setOnAction((e)->{
             try {
                 if(!buttonSettingsApply.isDisabled())
@@ -195,10 +200,6 @@ public class Settings {
                 MainGlobals.LOGGER.logger.info(ex.toString());
             }
         });
-        buttonSettingsBack.setBackground(new Background(backButtonBackground));
-        buttonSettingsBack.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
-        buttonSettingsBack.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
-        buttonSettingsBack.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.15);
 
         buttonSettingsBack.setOnMouseEntered(event -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(150), buttonSettingsBack);
@@ -245,53 +246,142 @@ public class Settings {
             st.play();
         });
 
-        labelDifficulty = new Label("Difficulty");
-        labelDifficulty.setFont(this.fonts.getFont("BN Jinx"));
-
         buttonDifficulty = new Button();
-        buttonDifficulty.setText("0");
         buttonDifficulty.setOnAction(this::handleDifficultyAction);
-        buttonDifficulty.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonDifficulty.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonDifficulty.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.08);
-        buttonDifficulty.setFont(this.fonts.getFont("BN Jinx"));
+        if (MainGlobals.DIFFICULTY == 1) {
+            BackgroundImage difficultyEasyBackground = new BackgroundImage(
+                    new Image(storageLoader.Load("images/Settings").get(7), resWidth * 0.3, resHeight * 0.3,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+            buttonDifficulty.setBackground(new Background(difficultyEasyBackground));
+        }
+        else if (MainGlobals.DIFFICULTY == 2) {
+            BackgroundImage difficultyNormalBackground = new BackgroundImage(
+                    new Image(storageLoader.Load("images/Settings").get(9), resWidth * 0.3, resHeight * 0.3,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+            buttonDifficulty.setBackground(new Background(difficultyNormalBackground));
+        }
+        else {
+            BackgroundImage difficultyHardBackground = new BackgroundImage(
+                    new Image(storageLoader.Load("images/Settings").get(8), resWidth * 0.3, resHeight * 0.3,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+            buttonDifficulty.setBackground(new Background(difficultyHardBackground));
+        }
+        buttonDifficulty.setPrefSize(MainGlobals.WIDTH * 0.36, MainGlobals.HEIGHT * 0.19);
+        buttonDifficulty.setMaxSize(MainGlobals.WIDTH * 0.36, MainGlobals.HEIGHT * 0.19);
+        buttonDifficulty.setMinSize(MainGlobals.WIDTH * 0.36, MainGlobals.HEIGHT * 0.19);
 
-        labelMusicSettings = new Label("Music Settings");
-        labelMusicSettings.setFont(this.fonts.getFont("BN Jinx"));
+        buttonDifficulty.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonDifficulty);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonDifficulty.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonDifficulty);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
 
         buttonMusicAction = new Button();
-        buttonMusicAction.setText("On/Off");
         buttonMusicAction.setOnAction(this::handleMusicAction);
-        buttonMusicAction.setPrefSize(MainGlobals.WIDTH * 0.1, MainGlobals.HEIGHT * 0.08);
-        buttonMusicAction.setMaxSize(MainGlobals.WIDTH * 0.1, MainGlobals.HEIGHT * 0.08);
-        buttonMusicAction.setMinSize(MainGlobals.WIDTH * 0.1, MainGlobals.HEIGHT * 0.08);
-        buttonMusicAction.setFont(this.fonts.getFont("BN Jinx"));
+        if (this.musicFlag) {
+            BackgroundImage musicOffBackground = new BackgroundImage(
+                    new Image(storageLoader.Load("images/Settings").get(12), resWidth * 0.12, resHeight * 0.12,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+            buttonMusicAction.setBackground(new Background(musicOffBackground));
+        }
+        else {
+            BackgroundImage musicOnBackground = new BackgroundImage(
+                    new Image(storageLoader.Load("images/Settings").get(13), resWidth * 0.12, resHeight * 0.12,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+            buttonMusicAction.setBackground(new Background(musicOnBackground));
+        }
+        buttonMusicAction.setPrefSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        buttonMusicAction.setMaxSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        buttonMusicAction.setMinSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+
+        buttonMusicAction.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonMusicAction);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonMusicAction.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonMusicAction);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
+
+        BackgroundImage volumeUpBackground = new BackgroundImage(
+                new Image(storageLoader.Load("images/Settings").get(14), resWidth * 0.14, resHeight * 0.14,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
         buttonVolumeUp = new Button();
-        buttonVolumeUp.setText("Up");
         buttonVolumeUp.setOnAction(this::handleMusicUp);
-        buttonVolumeUp.setPrefSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
-        buttonVolumeUp.setMaxSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
-        buttonVolumeUp.setMinSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
-        buttonVolumeUp.setFont(this.fonts.getFont("BN Jinx"));
+        buttonVolumeUp.setBackground(new Background(volumeUpBackground));
+        buttonVolumeUp.setPrefSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        buttonVolumeUp.setMaxSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        buttonVolumeUp.setMinSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+
+        buttonVolumeUp.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeUp);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonVolumeUp.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeUp);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
+
+        BackgroundImage volumeDownBackground = new BackgroundImage(
+                new Image(storageLoader.Load("images/Settings").get(11), resWidth * 0.14, resHeight * 0.14,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
         buttonVolumeDown = new Button();
-        buttonVolumeDown.setText("Down");
         buttonVolumeDown.setOnAction(this::handleMusicDown);
-        buttonVolumeDown.setPrefSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
-        buttonVolumeDown.setMaxSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
-        buttonVolumeDown.setMinSize(MainGlobals.WIDTH * 0.09, MainGlobals.HEIGHT * 0.08);
-        buttonVolumeDown.setFont(this.fonts.getFont("BN Jinx"));
+        buttonVolumeDown.setBackground(new Background(volumeDownBackground));
+        buttonVolumeDown.setPrefSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        buttonVolumeDown.setMaxSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
+        buttonVolumeDown.setMinSize(MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12);
 
+        buttonVolumeDown.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeDown);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonVolumeDown.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonVolumeDown);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
 
         musicVolume = new Slider();
-        musicVolume.valueProperty().addListener(event ->{
-            if(musicVolume.isValueChanging()) {
-                this.buttonSettingsApply.setDisable(false);
-            }
-            MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
-            this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
-        });
         musicVolume.setMin(0);
         musicVolume.setMax(1);
         musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
@@ -299,16 +389,22 @@ public class Settings {
         musicVolume.setPrefSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
         musicVolume.setMaxSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
         musicVolume.setMinSize(MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.02);
-
+        musicVolume.valueProperty().addListener(event ->{
+            if(musicVolume.isValueChanging()) {
+                this.buttonSettingsApply.setDisable(false);
+            }
+            MainGlobals.MUSIC_VOLUME = musicVolume.getValue();
+            this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
+        });
 
         HBox horizontalSettingsBox = new HBox();
-        horizontalSettingsBox.setSpacing(25);
+        horizontalSettingsBox.setSpacing(0);
         horizontalSettingsBox.getChildren().addAll(buttonMusicAction, musicVolume, buttonVolumeDown, buttonVolumeUp);
         horizontalSettingsBox.setAlignment(Pos.CENTER_LEFT);
 
         VBox verticalSettingsBox = new VBox();
-        verticalSettingsBox.setSpacing(25);
-        verticalSettingsBox.getChildren().addAll(labelDifficulty, buttonDifficulty, labelMusicSettings, horizontalSettingsBox);
+        verticalSettingsBox.setSpacing(MainGlobals.HEIGHT * 0.04);
+        verticalSettingsBox.getChildren().addAll(buttonDifficulty, horizontalSettingsBox);
 
         VBox mainSettingsBox = new VBox();
         mainSettingsBox.setSpacing(0);
@@ -318,11 +414,10 @@ public class Settings {
 
         layout.setCenter(verticalSettingsBox);
         BorderPane.setAlignment(verticalSettingsBox, Pos.CENTER);
-        BorderPane.setMargin(verticalSettingsBox, new Insets(MainGlobals.HEIGHT * 0.375,0, 0,MainGlobals.WIDTH * 0.15 + 50));
-
+        BorderPane.setMargin(verticalSettingsBox, new Insets(MainGlobals.HEIGHT * 0.315,0, MainGlobals.HEIGHT * 0.05,MainGlobals.WIDTH * 0.28));
         layout.setBottom(mainSettingsBox);
         BorderPane.setAlignment(mainSettingsBox, Pos.BOTTOM_RIGHT);
-        BorderPane.setMargin(mainSettingsBox, new Insets(0,0,20,5));
+        BorderPane.setMargin(mainSettingsBox, new Insets(0,0,20,MainGlobals.WIDTH * -0.053));
 
         StackPane root = new StackPane(mainBackground);
         root.getChildren().addAll(borderTransparentBottomLeft, borderTransparentUpRight,
@@ -345,27 +440,42 @@ public class Settings {
             if(MainGlobals.DIFFICULTY == 1) {
                 MainGlobals.DIFFICULTY++;
                 this.difficultyFlag = 1;
+                BackgroundImage difficultyNormalBackground = new BackgroundImage(
+                        new Image(storageLoader.Load("images/Settings").get(9), MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.3,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+                this.buttonDifficulty.setBackground(new Background(difficultyNormalBackground));
                 return;
             }
 
             if(MainGlobals.DIFFICULTY == 2) {
                 MainGlobals.DIFFICULTY++;
                 this.difficultyFlag = 2;
+                BackgroundImage difficultyHardBackground = new BackgroundImage(
+                        new Image(storageLoader.Load("images/Settings").get(8), MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.3,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+                this.buttonDifficulty.setBackground(new Background(difficultyHardBackground));
                 return;
             }
 
             if(MainGlobals.DIFFICULTY == 3) {
                 MainGlobals.DIFFICULTY = 1;
                 this.difficultyFlag = 3;
+                BackgroundImage difficultyEasyBackground = new BackgroundImage(
+                        new Image(storageLoader.Load("images/Settings").get(7), MainGlobals.WIDTH * 0.3, MainGlobals.HEIGHT * 0.3,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+                this.buttonDifficulty.setBackground(new Background(difficultyEasyBackground));
                 return;
             }
         }
     }
 
     private void handleMusicUp(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == this.buttonVolumeUp) {
+        if (actionEvent.getSource() == this.buttonVolumeUp) {
             this.buttonSettingsApply.setDisable(false);
-            if(MainGlobals.MUSIC_VOLUME <= 0.9) {
+            if (MainGlobals.MUSIC_VOLUME <= 0.9) {
                 MainGlobals.MUSIC_VOLUME += 0.1;
                 musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
                 this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
@@ -395,11 +505,16 @@ public class Settings {
 
     private void handleMusicAction(ActionEvent actionEvent) {
         if(actionEvent.getSource() == this.buttonMusicAction) {
-            if(this.musicFlag) {
+            if (this.musicFlag) {
                 tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
                 musicVolume.setValue(0);
                 this.music.mediaPlayer.stop();
                 this.musicFlag = false;
+                BackgroundImage musicOnBackground = new BackgroundImage(
+                        new Image(storageLoader.Load("images/Settings").get(13), MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+                this.buttonMusicAction.setBackground(new Background(musicOnBackground));
             }
             else {
                 MainGlobals.MUSIC_VOLUME = tempMUSIC_VOLUME;
@@ -407,12 +522,17 @@ public class Settings {
                 this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
                 this.music.mediaPlayer.play();
                 this.musicFlag = true;
+                BackgroundImage musicOffBackground = new BackgroundImage(
+                        new Image(storageLoader.Load("images/Settings").get(12), MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+                this.buttonMusicAction.setBackground(new Background(musicOffBackground));
             }
         }
     }
 
     private void handleApply(ActionEvent actionEvent) {
-        if(actionEvent.getSource() == this.buttonSettingsApply) {
+        if (actionEvent.getSource() == this.buttonSettingsApply) {
             storageLoader = new MenuStorageLoader();
             File environmentFile = new File(storageLoader.Load("").get(0).substring(7));
             try {
