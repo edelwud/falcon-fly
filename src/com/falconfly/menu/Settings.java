@@ -490,7 +490,7 @@ public class Settings {
         StackPane root = new StackPane(mainBackground);
         root.getChildren().addAll(borderTransparentBottomLeft, borderTransparentUpRight,
                 borderMainBottomLeft, borderMainUpLeft, borderMainUpRight);
-        root.setMargin(difficultyLabel, new Insets(0, MainGlobals.WIDTH * 0.205, MainGlobals.HEIGHT * 0.62, 0));
+        root.setMargin(difficultyLabel, new Insets(0, MainGlobals.WIDTH * 0.208, MainGlobals.HEIGHT * 0.62, 0));
         root.getChildren().add(difficultyLabel);
         root.setMargin(musicLabel, new Insets(MainGlobals.HEIGHT * 0.03, MainGlobals.WIDTH * 0.25, 0, 0));
         root.getChildren().add(musicLabel);
