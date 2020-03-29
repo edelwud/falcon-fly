@@ -206,11 +206,11 @@ public class Settings {
                     if(!this.musicFlag) {
                         musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
                         this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
-                        this.music.mediaPlayer.play();
+                        this.music.mediaPlayer.setMute(false);
                         this.musicFlag = true;
                     }
                     else {
-                        this.music.mediaPlayer.stop();
+                        this.music.mediaPlayer.setMute(true);
                         this.musicFlag = false;
                         this.musicVolume.setDisable(true);
                         this.buttonVolumeDown.setDisable(true);
@@ -581,7 +581,7 @@ public class Settings {
             count++;
             if (this.musicFlag) {
                 tempMUSIC_VOLUME = MainGlobals.MUSIC_VOLUME;
-                this.music.mediaPlayer.stop();
+                this.music.mediaPlayer.setMute(true);
                 this.musicFlag = false;
                 this.musicVolume.setDisable(true);
                 this.buttonVolumeDown.setDisable(true);
@@ -599,7 +599,7 @@ public class Settings {
                 MainGlobals.MUSIC_VOLUME = tempMUSIC_VOLUME;
                 musicVolume.setValue(MainGlobals.MUSIC_VOLUME);
                 this.music.mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
-                this.music.mediaPlayer.play();
+                this.music.mediaPlayer.setMute(false);
                 this.musicFlag = true;
                 BackgroundImage musicOffBackground = new BackgroundImage(
                         new Image(storageLoader.Load("images/Settings").get(12), MainGlobals.WIDTH * 0.12, MainGlobals.HEIGHT * 0.12,false,true),

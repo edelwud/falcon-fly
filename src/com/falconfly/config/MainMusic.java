@@ -43,15 +43,16 @@ public class MainMusic {
         return music.get(randomPath);
     }
 
-    public void getRandomMediaPlayer() {
+    public void getRandomMediaPlayer(boolean flag) {
         musicMedia = this.getRandomMedia();
 
         mediaPlayer = new MediaPlayer(musicMedia);
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setMute(!flag);
         mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         mediaPlayer.setOnEndOfMedia(()-> {
             mediaPlayer.stop();
-            this.getRandomMediaPlayer();
+            this.getRandomMediaPlayer(true);
         });
     }
     public static MainMusic getInstance() {
