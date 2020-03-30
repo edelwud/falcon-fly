@@ -367,7 +367,11 @@ public class MainMenu extends Application {
      public void handle(ActionEvent eventMain) {
 
         if(eventMain.getSource() == buttonPlay) {
-            new Main().main();
+            try {
+                new Main().main();
+            } catch (Exception e) {
+                MainLogger.logger.info(e.toString());
+            }
         }
 
         if(eventMain.getSource() == buttonExit) {

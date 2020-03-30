@@ -40,8 +40,6 @@ public class Texture {
 			IntBuffer h = stack.mallocInt(1);
 			IntBuffer channels = stack.mallocInt(1);
 
-			System.out.println(new MenuStorageLoader().Load(fileName).get(0));
-
 			buf = stbi_load(new MenuStorageLoader().Load(fileName).get(0).substring(8), w, h, channels, 4);
 			if (buf == null) {
 				throw new Exception("Image file [" + fileName  + "] not loaded: " + stbi_failure_reason());

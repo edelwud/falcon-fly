@@ -22,17 +22,11 @@ public class FileReader {
 		return newBuffer;
 	}
 
-	public ByteBuffer getResource(String resource, int size) {
+	public ByteBuffer getResource(String resource, int size) throws IOException {
 		ByteBuffer buffer = createByteBuffer(size);
 
-		try {
-			byte[] bytes = readAllBytes(Paths.get(resource));
-			buffer.put(bytes);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		byte[] bytes = readAllBytes(Paths.get(resource));
+		buffer.put(bytes);
 
 		buffer.flip();
 		return buffer;

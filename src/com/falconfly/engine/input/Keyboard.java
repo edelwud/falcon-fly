@@ -4,7 +4,7 @@ import com.falconfly.engine.EngineWindow;
 import org.lwjgl.glfw.GLFW;
 
 public class Keyboard {
-    private static EngineWindow window = EngineWindow.getWindowInstance();
+    private static EngineWindow window = EngineWindow.getInstance();
     public static boolean[] keys = new boolean[GLFW.GLFW_KEY_LAST]; // contains all keyboard keys
 
     public static boolean keyDown(int keyId) {

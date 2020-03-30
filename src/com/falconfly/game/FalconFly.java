@@ -9,6 +9,8 @@ import com.falconfly.engine.graph.Texture;
 import com.falconfly.engine.input.Keyboard;
 import org.joml.Vector3f;
 
+import java.io.IOException;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 public class FalconFly implements IGameLogic {
@@ -23,19 +25,15 @@ public class FalconFly implements IGameLogic {
 	private GameItem[] gameItems;
 
 	private final Renderer renderer;
-	private final TextRenderer textRenderer;
 
 	private Mesh mesh;
 
-	public FalconFly() {
+	public FalconFly() throws IOException {
 		renderer = new Renderer();
-		textRenderer = new TextRenderer();
-		textRenderer.SetFontSize(50);
 	}
 
 	@Override
 	public void init() throws Exception {
-//		textRenderer.Init();
 		renderer.init();
 
 		float[] positions = new float[] {
@@ -205,7 +203,6 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void render(EngineWindow window) {
 		renderer.render(window, gameItems);
-//		textRenderer.DrawString(10, 15, "Flex");
 	}
 
 	@Override

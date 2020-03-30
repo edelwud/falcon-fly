@@ -1,5 +1,6 @@
 package com.falconfly.engine;
 
+import com.falconfly.config.MainLogger;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -7,6 +8,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryStack;
 
+import java.io.IOException;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -26,6 +28,7 @@ public class EngineWindow {
     private int height;
     private boolean vSync;
 
+    private MainLogger engineWindowLogger;
     private GLFWVidMode videomode;
     public IntBuffer bufferedWidth;
     public IntBuffer bufferedHeight;
@@ -33,13 +36,19 @@ public class EngineWindow {
     // Singleton
     public static EngineWindow windowInstance;
 
-
-    public EngineWindow(String title, int width, int height, boolean vSync) {
-        windowInstance = this;
+    private EngineWindow(String title, int width, int height, boolean vSync) throws IOException {
+        engineWindowLogger = new MainLogger("./store/logs/application_log_engine.txt", EngineWindow.class.getSimpleName());
         this.width = width;
         this.height = height;
         this.title = title;
         this.vSync = vSync;
+    }
+
+    public static EngineWindow getWindowInstance(String title, int width, int height, boolean vSync) throws IOException {
+        if (windowInstance == null) {
+            windowInstance = new EngineWindow(title, width, height, vSync);
+        }
+        return windowInstance;
     }
 
     private void windowSizeChanged(long window, int width, int height) {
@@ -69,8 +78,7 @@ public class EngineWindow {
             this.bufferedHeight = BufferUtils.createIntBuffer(1);
             GLFW.glfwGetWindowSize(this.id, this.bufferedWidth, this.bufferedHeight);
         } catch (Exception e) {
-            System.err.println("Cannot alloc memory");
-            System.exit(-1);
+            engineWindowLogger.logger.info(e.toString());
         }
         // Getting video mode of primary monitor
         this.videomode = GLFW.glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -122,10 +130,6 @@ public class EngineWindow {
         return GLFW.glfwWindowShouldClose(this.id);
     }
 
-    public static EngineWindow getWindowInstance() {
-        return windowInstance;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -152,6 +156,10 @@ public class EngineWindow {
 
     public boolean isvSync() {
         return vSync;
+    }
+
+    public static EngineWindow getInstance() {
+        return windowInstance;
     }
 
     public void setvSync(boolean vSync) {

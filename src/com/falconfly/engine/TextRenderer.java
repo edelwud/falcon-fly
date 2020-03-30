@@ -8,6 +8,7 @@ import org.lwjgl.stb.STBTTBakedChar;
 import org.lwjgl.stb.STBTTFontinfo;
 import org.lwjgl.system.MemoryStack;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -32,11 +33,11 @@ public class TextRenderer {
 	private static final int BITMAP_W = 512;
 	private static final int BITMAP_H = 512;
 
-	public TextRenderer() {
-		LoadFont(new MenuStorageLoader().Load("fonts").get(0).substring(8));
+	public TextRenderer() throws IOException {
+		loadFont(new MenuStorageLoader().Load("fonts").get(0).substring(8));
 	}
 
-	public void LoadFont(String resource) {
+	public void loadFont(String resource) throws IOException {
 		FileReader fr = new FileReader();
 		ttf = fr.getResource(resource, MAX_BUFFER_SIZE);
 		info = STBTTFontinfo.create();
@@ -44,8 +45,6 @@ public class TextRenderer {
 		if (!stbtt_InitFont(info, ttf)) {
 			throw new IllegalStateException("Failed to initialize font information.");
 		}
-
-		/* L s */
 
 		try (MemoryStack stack = stackPush()) {
 			IntBuffer pAscent  = stack.mallocInt(1);
@@ -60,7 +59,7 @@ public class TextRenderer {
 		}
 	}
 
-	public void Init() {
+	public void init() {
 		int texID = glGenTextures();
 		cdata = STBTTBakedChar.malloc(CHAR_BUFFER_CAPACITY);
 
@@ -81,7 +80,7 @@ public class TextRenderer {
 		glColor3f(r / 255f, g / 255f, b / 255f);
 	}
 
-	public void DrawString(float dx, float dy, String text) {
+	public void drawString(float dx, float dy, String text) {
 		glPushMatrix();
 		float scaleFactor = 1.0f + 0 * 0.25f;
 		glScalef(scaleFactor, scaleFactor, 1f);
@@ -238,11 +237,11 @@ public class TextRenderer {
 		return (offset - center) * factor + center;
 	}
 
-	public int GetFontSize() {
+	public int getFontSize() {
 		return fontSize;
 	}
 
-	public void SetFontSize(int fz) {
+	public void setFontSize(int fz) {
 		fontSize = fz;
 	}
 }

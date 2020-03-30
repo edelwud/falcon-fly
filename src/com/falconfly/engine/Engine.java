@@ -1,5 +1,6 @@
 package com.falconfly.engine;
 
+import com.falconfly.config.MainLogger;
 import com.falconfly.engine.input.Keyboard;
 import org.lwjgl.stb.STBTTBakedChar;
 
@@ -16,14 +17,15 @@ public class Engine implements Runnable {
 	public static final int TARGET_FPS = 75;
 	public static final int TARGET_UPS = 30;
 
+	private final MainLogger engineLogger;
 	private final Timer timer;
 
     private EngineWindow window;
-    private TextRenderer textRenderer;
     private final IGameLogic gameLogic;
 
 	public Engine(String windowTitle, int width, int height, boolean vsSync, IGameLogic gameLogic) throws Exception {
-		window = new EngineWindow(windowTitle, width, height, vsSync);
+		window = EngineWindow.getWindowInstance(windowTitle, width, height, vsSync);
+		engineLogger = new MainLogger("./store/logs/application_log_engine.txt", Engine.class.getSimpleName());
 		this.gameLogic = gameLogic;
 		timer = new Timer();
 	}
@@ -33,8 +35,8 @@ public class Engine implements Runnable {
 		try {
 			init();
 			gameLoop();
-		} catch (Exception excp) {
-			excp.printStackTrace();
+		} catch (Exception e) {
+			engineLogger.logger.info(e.toString());
 		} finally {
 			cleanup();
 		}
@@ -82,7 +84,8 @@ public class Engine implements Runnable {
 		while (timer.getTime() < endTime) {
 			try {
 				Thread.sleep(1);
-			} catch (InterruptedException ie) {
+			} catch (InterruptedException e) {
+				engineLogger.logger.info(e.toString());
 			}
 		}
 	}
