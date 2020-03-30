@@ -89,6 +89,8 @@ public class EngineWindow {
         // Creating window viewport: x, y - offset
         GL11.glViewport(0, 0, this.bufferedWidth.get(0), this.bufferedHeight.get(0));
 
+
+        // For text renderer
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0.0, width, height, 0.0, -1.0, 1.0);

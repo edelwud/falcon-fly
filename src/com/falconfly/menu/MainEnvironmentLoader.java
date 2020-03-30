@@ -1,9 +1,12 @@
 package com.falconfly.menu;
 
 import com.falconfly.config.MainGlobals;
+import com.falconfly.config.MainLogger;
+import com.falconfly.config.MainMusic;
 import javafx.util.Pair;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,36 +14,41 @@ import java.util.logging.Logger;
 
 public class MainEnvironmentLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(MainEnvironmentLoader.class.getSimpleName());
-
     private static Scanner environmentFile;
     private static String volume;
+    private static String difficulty;
+    private static String musicFlag;
     public static void openEnvironment() {
         MenuStorageLoader loader = new MenuStorageLoader();
         try {
-            environmentFile = new Scanner(new File(loader.Load("").get(0).substring(7,loader.Load("").get(0).length())));
+            environmentFile = new Scanner(new File(loader.Load("").get(0).substring(8)));
         }
         catch(Exception ex) {
-            LOGGER.info(ex.toString());
+           MainGlobals.LOGGER.logger.info(ex.toString());
         }
-    }
-
-    public static List<Pair<String, String>> getScreenSizes() {
-
-        List<Pair<String, String>> screenSizes = new LinkedList<>();
-        MainEnvironmentLoader.openEnvironment();
-            screenSizes.add(new Pair<>(MainEnvironmentLoader.environmentFile.next(), MainEnvironmentLoader.environmentFile.next()));
-        MainEnvironmentLoader.environmentFile.close();
-        return screenSizes;
     }
 
     public static String getVolume() {
-
         MainEnvironmentLoader.openEnvironment();
-        while(MainEnvironmentLoader.environmentFile.hasNext()) {
+        while (MainEnvironmentLoader.environmentFile.hasNext()) {
             volume = MainEnvironmentLoader.environmentFile.next();
         }
         MainEnvironmentLoader.environmentFile.close();
         return volume;
+    }
+
+    public static String getDifficulty() {
+        MainEnvironmentLoader.openEnvironment();
+        difficulty = MainEnvironmentLoader.environmentFile.next();
+        difficulty = MainEnvironmentLoader.environmentFile.next();
+        MainEnvironmentLoader.environmentFile.close();
+        return difficulty;
+    }
+
+    public static String getMusicFlag() {
+        MainEnvironmentLoader.openEnvironment();
+        musicFlag = MainEnvironmentLoader.environmentFile.next();
+        MainEnvironmentLoader.environmentFile.close();
+        return musicFlag;
     }
 }

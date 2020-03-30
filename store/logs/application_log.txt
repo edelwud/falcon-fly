@@ -1,0 +1,22 @@
+мар. 27, 2020 11:51:31 PM com.falconfly.config.MainMusic addMedia
+INFO: MediaException: MEDIA_UNSUPPORTED : Empty signature!
+мар. 27, 2020 11:51:50 PM com.falconfly.config.MainMusic addMedia
+INFO: MediaException: MEDIA_UNSUPPORTED : Empty signature!
+мар. 28, 2020 10:02:56 AM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NumberFormatException: For input string: "10.10707070707070698"
+мар. 28, 2020 10:02:58 AM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NumberFormatException: For input string: "10.10707070707070698"
+мар. 28, 2020 10:02:59 AM com.falconfly.menu.Settings lambda$invoke$0
+
+мар. 29, 2020 1:18:51 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 29, 2020 1:18:53 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 29, 2020 1:20:13 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 29, 2020 1:22:26 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 29, 2020 1:23:48 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException
+мар. 29, 2020 1:28:43 PM com.falconfly.menu.Settings lambda$invoke$0
+INFO: java.lang.NullPointerException

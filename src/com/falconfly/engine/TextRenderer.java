@@ -45,6 +45,8 @@ public class TextRenderer {
 			throw new IllegalStateException("Failed to initialize font information.");
 		}
 
+		/* L s */
+
 		try (MemoryStack stack = stackPush()) {
 			IntBuffer pAscent  = stack.mallocInt(1);
 			IntBuffer pDescent = stack.mallocInt(1);
@@ -83,7 +85,7 @@ public class TextRenderer {
 		glPushMatrix();
 		float scaleFactor = 1.0f + 0 * 0.25f;
 		glScalef(scaleFactor, scaleFactor, 1f);
-		glTranslatef(4.0f, 0.5f * fontSize, 0f);
+		glTranslatef(4.0f, fontSize, 0f);
 
 		float scale = stbtt_ScaleForPixelHeight(info, fontSize);
 

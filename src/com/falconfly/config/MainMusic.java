@@ -1,34 +1,35 @@
 package com.falconfly.config;
 
 import com.falconfly.menu.MainEnvironmentLoader;
+import com.falconfly.menu.MainMenu;
+import com.falconfly.menu.MenuStorageLoader;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainMusic {
-
-    private static final Logger LOGGER = Logger.getLogger(MainMusic.class.getSimpleName());
 
     private Map<String, Media> music = new HashMap<String, Media>();
     public static MainMusic instance;
     private Media musicMedia;
     public static MediaPlayer mediaPlayer;
 
-
     public MainMusic() {
         instance = this;
     }
-    public void addMedia(String musicPath) {
+    public void addMedia(String musicPath) throws IOException {
         try {
             Media tempMusic = new Media(musicPath);
             music.put(musicPath, tempMusic);
         } catch (Exception ex) {
-            LOGGER.info(ex.toString());
+            MainGlobals.LOGGER.logger.info(ex.toString());
         }
     }
     public Media getMedia(String musicPath) {
@@ -42,15 +43,16 @@ public class MainMusic {
         return music.get(randomPath);
     }
 
-    public void getRandomMediaPlayer() {
+    public void getRandomMediaPlayer(boolean flag) {
         musicMedia = this.getRandomMedia();
 
         mediaPlayer = new MediaPlayer(musicMedia);
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setMute(!flag);
         mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         mediaPlayer.setOnEndOfMedia(()-> {
             mediaPlayer.stop();
-            this.getRandomMediaPlayer();
+            this.getRandomMediaPlayer(true);
         });
     }
     public static MainMusic getInstance() {
