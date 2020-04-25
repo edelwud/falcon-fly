@@ -18,6 +18,7 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Vector;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
@@ -81,7 +82,7 @@ public class Renderer {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void render(EngineWindow window, GameItem[] gameItems, Camera camera) {
+	public void render(EngineWindow window, Vector<GameItem> gameItems, Camera camera) {
 		clear();
 
 		shaderProgram.bind();

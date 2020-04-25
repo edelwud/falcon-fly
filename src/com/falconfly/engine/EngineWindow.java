@@ -20,8 +20,8 @@ public class EngineWindow {
     public long id;
 
     // Maximal values
-    private int MAX_WIDTH = 600;
-    private int MAX_HEIGHT = 400;
+    private int MAX_WIDTH = 1920;
+    private int MAX_HEIGHT = 1080;
 
     private String title;
     private int width;
@@ -89,14 +89,12 @@ public class EngineWindow {
         GLFW.glfwSetWindowTitle(this.id, this.title);
         GLFW.glfwSetWindowSize(this.id, this.width, this.height);
 
-
         // Creating context
         glfwMakeContextCurrent(this.id);
         GL.createCapabilities();
 
         // Creating window viewport: x, y - offset
         GL11.glViewport(0, 0, this.bufferedWidth.get(0), this.bufferedHeight.get(0));
-
 
         // For text renderer
         glMatrixMode(GL_PROJECTION);

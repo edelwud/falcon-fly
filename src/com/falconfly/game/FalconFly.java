@@ -14,23 +14,57 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class FalconFly implements IGameLogic {
 
 	private Vector3f cameraInc;
-
-	private GameItem[] gameItems;
-
+	private Vector<GameItem> gameItems;
 	private final Renderer renderer;
-
 	private Camera camera;
-
-	private Mesh mesh;
 
 	private final float CAMERA_POS_STEP = 0.01f;
 	private final float MOUSE_SENSITIVITY = 0.1f;
+
+	private static class GrassLine {
+
+		private GameItem[] grassLine;
+
+		public GrassLine(Mesh mesh, float posZ) {
+
+			grassLine = new GameItem[] {
+					new GameItem(mesh),
+					new GameItem(mesh),
+					new GameItem(mesh),
+					new GameItem(mesh)
+			};
+
+			float posX = -6;
+			for (GameItem obj : grassLine) {
+				obj.setScale(1f);
+				obj.setPosition(posX, -5, posZ);
+				posX += 3;
+			}
+		}
+	}
+
+	private static class GrassSurface {
+
+		private Vector<GrassLine> GrassSurface;
+		private final int LENGTH = 128;
+
+		public GrassSurface(Mesh mesh) {
+
+			GrassSurface = new Vector<>();
+
+			for (int i = 0, posZ = -3; i < LENGTH; i++, posZ -= 3) {
+
+				GrassSurface.add(new GrassLine(mesh, posZ));
+			}
+		}
+	}
 
 	public FalconFly() throws IOException {
 		cameraInc = new Vector3f();
@@ -45,32 +79,17 @@ public class FalconFly implements IGameLogic {
 		Mesh mesh = OBJLoader.loadMesh("models/grass");
 		Texture texture = new Texture("models/grass");
 		mesh.setTexture(texture);
-		GameItem gameItem = new GameItem(mesh);
-		gameItem.setScale(1.5f);
-		gameItem.setPosition(0, -5, -2);
 
-		Mesh meshOne = OBJLoader.loadMesh("models/grass");
-		Texture textureOne = new Texture("models/grass");
-		meshOne.setTexture(textureOne);
-		GameItem gameItemOne = new GameItem(meshOne);
-		gameItemOne.setScale(1.5f);
-		gameItemOne.setPosition(-4, -5, -2);
+		GrassSurface grassSurface = new GrassSurface(mesh);
+		Vector<GameItem> allGrass = new Vector<>();
+		for (int i = 0; i < grassSurface.LENGTH; i++) {
+			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[0]);
+			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[1]);
+			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[2]);
+			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[3]);
+		}
 
-		Mesh meshTwo = OBJLoader.loadMesh("models/grass");
-		Texture textureTwo = new Texture("models/grass");
-		meshTwo.setTexture(textureTwo);
-		GameItem gameItemTwo = new GameItem(meshTwo);
-		gameItemTwo.setScale(1.5f);
-		gameItemTwo.setPosition(-4, -5, -6);
-
-		Mesh meshThree = OBJLoader.loadMesh("models/grass");
-		Texture textureThree = new Texture("models/grass");
-		meshThree.setTexture(textureThree);
-		GameItem gameItemThree = new GameItem(meshThree);
-		gameItemThree.setScale(1.5f);
-		gameItemThree.setPosition(0, -5, -6);
-		gameItems = new GameItem[]{gameItem, gameItemOne, gameItemTwo, gameItemThree};
-
+		gameItems = allGrass;
 	}
 
 //	@Override
@@ -125,9 +144,7 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void update(float interval, MouseInput mouseInput) {
 		// Update camera position
-		camera.movePosition(cameraInc.x * CAMERA_POS_STEP,
-				cameraInc.y * CAMERA_POS_STEP,
-				cameraInc.z * CAMERA_POS_STEP);
+		camera.movePosition(0, 0, -0.2f);
 
 		// Update camera based on mouse
 		if (mouseInput.isRightButtonPressed()) {
