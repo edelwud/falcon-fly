@@ -28,40 +28,38 @@ public class FalconFly implements IGameLogic {
 	private final float CAMERA_POS_STEP = 0.01f;
 	private final float MOUSE_SENSITIVITY = 0.1f;
 
-	private static class GrassLine {
+	private float step = 0.05f;
+	private static float acceleration = 0.001f;
 
-		private GameItem[] grassLine;
+	private static class OLine {
 
-		public GrassLine(Mesh mesh, float posZ) {
+		private Vector<GameItem> line;
 
-			grassLine = new GameItem[] {
-					new GameItem(mesh),
-					new GameItem(mesh),
-					new GameItem(mesh),
-					new GameItem(mesh)
-			};
+		public OLine(Mesh mesh, int count, float posX, float distance, float posY, float posZ) {
+			line = new Vector<>();
 
-			float posX = -6;
-			for (GameItem obj : grassLine) {
+			for (int i = 0; i < count; i++) {
+				line.add(new GameItem(mesh));
+			}
+
+			for (GameItem obj : line) {
 				obj.setScale(1f);
-				obj.setPosition(posX, -5, posZ);
-				posX += 3;
+				obj.setPosition(posX, posY, posZ);
+				posX += distance;
 			}
 		}
 	}
 
-	private static class GrassSurface {
+	private static class OSurface {
 
-		private Vector<GrassLine> GrassSurface;
+		private Vector<OLine> surface;
 		private final int LENGTH = 128;
 
-		public GrassSurface(Mesh mesh) {
+		public OSurface(Mesh mesh, int count, float posX, float distanceX, float posY, float posZ, float distanceZ) {
+			surface = new Vector<>();
 
-			GrassSurface = new Vector<>();
-
-			for (int i = 0, posZ = -3; i < LENGTH; i++, posZ -= 3) {
-
-				GrassSurface.add(new GrassLine(mesh, posZ));
+			for (int i = 0; i < LENGTH; i++, posZ -= distanceZ) {
+				surface.add(new OLine(mesh, count, posX, distanceX, posY, posZ));
 			}
 		}
 	}
@@ -76,20 +74,48 @@ public class FalconFly implements IGameLogic {
 	public void init() throws Exception {
 		renderer.init();
 
-		Mesh mesh = OBJLoader.loadMesh("models/grass");
-		Texture texture = new Texture("models/grass");
-		mesh.setTexture(texture);
+		Mesh grassMesh = OBJLoader.loadMesh("models/grass");
+		Texture grassTexture = new Texture("models/grass");
+		grassMesh.setTexture(grassTexture);
 
-		GrassSurface grassSurface = new GrassSurface(mesh);
+		OSurface grassSurface = new OSurface(grassMesh, 4, -6, 3, -5, -3, 3);
 		Vector<GameItem> allGrass = new Vector<>();
 		for (int i = 0; i < grassSurface.LENGTH; i++) {
-			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[0]);
-			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[1]);
-			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[2]);
-			allGrass.add(grassSurface.GrassSurface.get(i).grassLine[3]);
+			allGrass.add(grassSurface.surface.get(i).line.get(0));
+			allGrass.add(grassSurface.surface.get(i).line.get(1));
+			allGrass.add(grassSurface.surface.get(i).line.get(2));
+			allGrass.add(grassSurface.surface.get(i).line.get(3));
+		}
+
+		Mesh fenceMesh = OBJLoader.loadMesh("models/fence");
+		Texture fenceTexture = new Texture("models/fence");
+		fenceMesh.setTexture(fenceTexture);
+
+		OSurface fenceSurface = new OSurface(fenceMesh, 2, -7,14, -5, -3, 2);
+		Vector<GameItem> allFence = new Vector<>();
+		for (int i = 0; i < fenceSurface.LENGTH; i++) {
+			allGrass.add(fenceSurface.surface.get(i).line.get(0));
+			allGrass.add(fenceSurface.surface.get(i).line.get(1));
+		}
+
+		Mesh humansRoadMesh = OBJLoader.loadMesh("models/humansRoad");
+		Texture humansRoadTexture = new Texture("models/humansRoad");
+		humansRoadMesh.setTexture(humansRoadTexture);
+
+		OSurface humansRoadSurface = new OSurface(humansRoadMesh, 2, -10, 16, -5, -3, 4);
+		Vector<GameItem> allHumansRoad = new Vector<>();
+		for (int i = 0; i < humansRoadSurface.LENGTH; i++) {
+			allGrass.add(humansRoadSurface.surface.get(i).line.get(0));
+			allGrass.add(humansRoadSurface.surface.get(i).line.get(1));
 		}
 
 		gameItems = allGrass;
+		for (GameItem obj : allFence) {
+			gameItems.add(obj);
+		}
+		for (GameItem obj : allHumansRoad) {
+			gameItems.add(obj);
+		}
 	}
 
 //	@Override
@@ -144,7 +170,14 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void update(float interval, MouseInput mouseInput) {
 		// Update camera position
-		camera.movePosition(0, 0, -0.2f);
+		camera.movePosition(0, 0, 0);
+		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
+
+		for (GameItem obj : gameItems) {
+			obj.setPosition(obj.getPosition().x, obj.getPosition().y, obj.getPosition().z + step);
+		}
+
+		step += acceleration;
 
 		// Update camera based on mouse
 		if (mouseInput.isRightButtonPressed()) {
