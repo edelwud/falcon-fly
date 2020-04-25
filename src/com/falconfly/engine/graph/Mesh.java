@@ -1,10 +1,18 @@
 package com.falconfly.engine.graph;
 
+import com.falconfly.engine.Utils;
+import com.falconfly.engine.input.FileReader;
+import com.falconfly.menu.MenuStorageLoader;
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.lwjgl.system.MemoryUtil;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -26,6 +34,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Mesh {
 
+	private static MenuStorageLoader loader = new MenuStorageLoader();
 	private final int vaoId;
 
 	private final List<Integer> vboIdList;
@@ -34,9 +43,12 @@ public class Mesh {
 
 	private final Texture texture;
 
-	public Mesh(float[] positions, float[] textCoords, int[] indices, Texture texture) {
+	private Vector3f colour;
+
+	public Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices, Texture texture) {
 		FloatBuffer posBuffer = null;
 		FloatBuffer textCoordsBuffer = null;
+		FloatBuffer vecNormalsBuffer = null;
 		IntBuffer indicesBuffer = null;
 		try {
 			this.texture = texture;
@@ -66,6 +78,16 @@ public class Mesh {
 			glEnableVertexAttribArray(1);
 			glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
 
+			// Vertex normals VBO
+			vboId = glGenBuffers();
+			vboIdList.add(vboId);
+			vecNormalsBuffer = MemoryUtil.memAllocFloat(normals.length);
+			vecNormalsBuffer.put(normals).flip();
+			glBindBuffer(GL_ARRAY_BUFFER, vboId);
+			glBufferData(GL_ARRAY_BUFFER, vecNormalsBuffer, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, 0);
+
 			// Index VBO
 			vboId = glGenBuffers();
 			vboIdList.add(vboId);
@@ -82,6 +104,9 @@ public class Mesh {
 			}
 			if (textCoordsBuffer != null) {
 				MemoryUtil.memFree(textCoordsBuffer);
+			}
+			if (vecNormalsBuffer != null) {
+				MemoryUtil.memFree(vecNormalsBuffer);
 			}
 			if (indicesBuffer != null) {
 				MemoryUtil.memFree(indicesBuffer);
@@ -127,5 +152,17 @@ public class Mesh {
 		// Delete the VAO
 		glBindVertexArray(0);
 		glDeleteVertexArrays(vaoId);
+	}
+
+	public boolean isTextured() {
+		return texture != null;
+	}
+
+	public Vector3f getColour() {
+		return colour;
+	}
+
+	public void setColour(Vector3f colour) {
+		this.colour = colour;
 	}
 }

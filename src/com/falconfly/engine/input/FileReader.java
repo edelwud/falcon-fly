@@ -22,7 +22,7 @@ public class FileReader {
 		return newBuffer;
 	}
 
-	public ByteBuffer getResource(String resource, int size) throws IOException {
+	public static ByteBuffer getResource(String resource, int size) throws IOException {
 		ByteBuffer buffer = createByteBuffer(size);
 
 		byte[] bytes = readAllBytes(Paths.get(resource));

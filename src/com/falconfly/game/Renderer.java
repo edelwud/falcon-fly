@@ -2,6 +2,7 @@ package com.falconfly.game;
 
 import com.falconfly.engine.GameItem;
 import com.falconfly.engine.TextRenderer;
+import com.falconfly.engine.graph.Camera;
 import com.falconfly.engine.graph.Mesh;
 import com.falconfly.engine.graph.Transformation;
 import com.falconfly.engine.input.FileReader;
@@ -70,13 +71,16 @@ public class Renderer {
 		// Create uniforms for world and projection matrices
 		shaderProgram.createUniform("projectionMatrix");
 		shaderProgram.createUniform("worldMatrix");
+		// Create uniform for default colour and the flag that controls it
+		shaderProgram.createUniform("colour");
+		shaderProgram.createUniform("useColour");
 	}
 
 	public void clear() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void render(EngineWindow window, GameItem[] gameItems) {
+	public void render(EngineWindow window, GameItem[] gameItems, Camera camera) {
 		clear();
 
 		shaderProgram.bind();
@@ -84,16 +88,20 @@ public class Renderer {
 		Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
 		shaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
+		// Update view Matrix
+		Matrix4f viewMatrix = transformation.getViewMatrix(camera);
+
+		shaderProgram.setUniform("texture_sampler", 0);
 		// Render each gameItem
 		for (GameItem gameItem : gameItems) {
-			// Set world matrix for this item
-			Matrix4f worldMatrix = transformation.getWorldMatrix(
-					gameItem.getPosition(),
-					gameItem.getRotation(),
-					gameItem.getScale());
-			shaderProgram.setUniform("worldMatrix", worldMatrix);
-			// Render the mes for this game item
-			gameItem.getMesh().render();
+			Mesh mesh = gameItem.getMesh();
+			// Set model view matrix for this item
+			Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItem, viewMatrix);
+			shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+			// Render the mesh for this game item
+			shaderProgram.setUniform("colour", mesh.getColour());
+			shaderProgram.setUniform("useColour", mesh.isTextured() ? 0 : 1);
+			mesh.render();
 		}
 
 		shaderProgram.unbind();

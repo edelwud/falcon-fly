@@ -2,6 +2,7 @@ package com.falconfly.engine;
 
 import com.falconfly.config.MainLogger;
 import com.falconfly.engine.input.Keyboard;
+import com.falconfly.engine.input.MouseInput;
 import org.lwjgl.stb.STBTTBakedChar;
 
 import static java.lang.Thread.sleep;
@@ -22,12 +23,14 @@ public class Engine implements Runnable {
 
     private EngineWindow window;
     private final IGameLogic gameLogic;
+    private final MouseInput mouseInput;
 
 	public Engine(String windowTitle, int width, int height, boolean vsSync, IGameLogic gameLogic) throws Exception {
 		window = EngineWindow.getWindowInstance(windowTitle, width, height, vsSync);
 		engineLogger = new MainLogger("./store/logs/application_log_engine.txt", Engine.class.getSimpleName());
 		this.gameLogic = gameLogic;
 		timer = new Timer();
+		mouseInput = new MouseInput();
 	}
 
 	@Override
@@ -91,11 +94,12 @@ public class Engine implements Runnable {
 	}
 
 	protected void input() {
-		gameLogic.input(window);
+		mouseInput.input(window);
+		gameLogic.input(window, mouseInput);
 	}
 
 	protected void update(float interval) {
-		gameLogic.update(interval);
+		gameLogic.update(interval, mouseInput);
 	}
 
 	protected void render() {
