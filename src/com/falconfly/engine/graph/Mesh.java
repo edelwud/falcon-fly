@@ -41,17 +41,16 @@ public class Mesh {
 
 	private final int vertexCount;
 
-	private final Texture texture;
+	private Texture texture = null;
 
 	private Vector3f colour;
 
-	public Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices, Texture texture) {
+	public Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices) {
 		FloatBuffer posBuffer = null;
 		FloatBuffer textCoordsBuffer = null;
 		FloatBuffer vecNormalsBuffer = null;
 		IntBuffer indicesBuffer = null;
 		try {
-			this.texture = texture;
 			vertexCount = indices.length;
 			vboIdList = new ArrayList<>();
 
@@ -126,7 +125,8 @@ public class Mesh {
 		// Activate firs texture bank
 		glActiveTexture(GL_TEXTURE0);
 		// Bind the texture
-		glBindTexture(GL_TEXTURE_2D, texture.getId());
+		if(isTextured())
+			glBindTexture(GL_TEXTURE_2D, texture.getId());
 
 		// Draw the mesh
 		glBindVertexArray(getVaoId());
@@ -147,7 +147,8 @@ public class Mesh {
 		}
 
 		// Delete the texture
-		texture.cleanup();
+		if(isTextured())
+			texture.cleanup();
 
 		// Delete the VAO
 		glBindVertexArray(0);
@@ -155,7 +156,7 @@ public class Mesh {
 	}
 
 	public boolean isTextured() {
-		return texture != null;
+		return this.texture != null;
 	}
 
 	public Vector3f getColour() {
@@ -164,5 +165,13 @@ public class Mesh {
 
 	public void setColour(Vector3f colour) {
 		this.colour = colour;
+	}
+
+	public Texture getTexture() {
+		return texture;
+	}
+
+	public void setTexture(Texture texture) {
+		this.texture = texture;
 	}
 }

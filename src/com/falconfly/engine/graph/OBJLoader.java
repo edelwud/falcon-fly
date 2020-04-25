@@ -7,10 +7,7 @@ import org.joml.Vector3f;
 
 import java.io.File;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class OBJLoader {
 
@@ -97,7 +94,7 @@ public class OBJLoader {
         }
         int[] indicesArr = new int[indices.size()];
         indicesArr = indices.stream().mapToInt((Integer v) -> v).toArray();
-        Mesh mesh = new Mesh(posArr, textCoordArr, normArr, indicesArr, new Texture("textures"));
+        Mesh mesh = new Mesh(posArr, textCoordArr, normArr, indicesArr);
         return mesh;
     }
 
@@ -125,10 +122,11 @@ public class OBJLoader {
     }
 
     public static Mesh loadMesh(String fileName) throws Exception {
-        //ByteBuffer byteMap = FileReader.getResource(fileName, 1024 * 1000);
-        String byteMap = new Scanner(new File(loader.Load(fileName).get(0).substring(8))).toString();
-        String[] strList = byteMap.split("\n");
-        List<String> lines = Arrays.asList(strList);
+        Scanner fileMash = new Scanner(new File(loader.Load(fileName).get(0).substring(8)));
+        List<String> lines = new LinkedList<>();
+        while(fileMash.hasNextLine())
+            lines.add(fileMash.nextLine());
+        fileMash.close();
 
         List<Vector3f> vertices = new ArrayList<>();
         List<Vector2f> textures = new ArrayList<>();

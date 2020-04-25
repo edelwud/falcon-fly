@@ -43,10 +43,34 @@ public class FalconFly implements IGameLogic {
 		renderer.init();
 
 		Mesh mesh = OBJLoader.loadMesh("models/grass");
+		Texture texture = new Texture("models/grass");
+		mesh.setTexture(texture);
 		GameItem gameItem = new GameItem(mesh);
 		gameItem.setScale(1.5f);
-		gameItem.setPosition(0, 0, -2);
-		gameItems = new GameItem[]{gameItem};
+		gameItem.setPosition(0, -5, -2);
+
+		Mesh meshOne = OBJLoader.loadMesh("models/grass");
+		Texture textureOne = new Texture("models/grass");
+		meshOne.setTexture(textureOne);
+		GameItem gameItemOne = new GameItem(meshOne);
+		gameItemOne.setScale(1.5f);
+		gameItemOne.setPosition(-4, -5, -2);
+
+		Mesh meshTwo = OBJLoader.loadMesh("models/grass");
+		Texture textureTwo = new Texture("models/grass");
+		meshTwo.setTexture(textureTwo);
+		GameItem gameItemTwo = new GameItem(meshTwo);
+		gameItemTwo.setScale(1.5f);
+		gameItemTwo.setPosition(-4, -5, -6);
+
+		Mesh meshThree = OBJLoader.loadMesh("models/grass");
+		Texture textureThree = new Texture("models/grass");
+		meshThree.setTexture(textureThree);
+		GameItem gameItemThree = new GameItem(meshThree);
+		gameItemThree.setScale(1.5f);
+		gameItemThree.setPosition(0, -5, -6);
+		gameItems = new GameItem[]{gameItem, gameItemOne, gameItemTwo, gameItemThree};
+
 	}
 
 //	@Override

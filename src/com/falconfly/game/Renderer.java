@@ -70,7 +70,8 @@ public class Renderer {
 
 		// Create uniforms for world and projection matrices
 		shaderProgram.createUniform("projectionMatrix");
-		shaderProgram.createUniform("worldMatrix");
+		shaderProgram.createUniform("modelViewMatrix");
+		shaderProgram.createUniform("texture_sampler");
 		// Create uniform for default colour and the flag that controls it
 		shaderProgram.createUniform("colour");
 		shaderProgram.createUniform("useColour");
@@ -88,6 +89,9 @@ public class Renderer {
 		Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
 		shaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
+		Matrix4f worldMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
+		shaderProgram.setUniform("modelViewMatrix", projectionMatrix);
+
 		// Update view Matrix
 		Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
@@ -99,7 +103,7 @@ public class Renderer {
 			Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItem, viewMatrix);
 			shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
 			// Render the mesh for this game item
-			shaderProgram.setUniform("colour", mesh.getColour());
+			//shaderProgram.setUniform("colour", mesh.getColour());
 			shaderProgram.setUniform("useColour", mesh.isTextured() ? 0 : 1);
 			mesh.render();
 		}

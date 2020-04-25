@@ -39,7 +39,8 @@ public class Engine implements Runnable {
 			init();
 			gameLoop();
 		} catch (Exception e) {
-			engineLogger.logger.info(e.toString());
+			//engineLogger.logger.info(e.toString());
+			e.printStackTrace();
 		} finally {
 			cleanup();
 		}
