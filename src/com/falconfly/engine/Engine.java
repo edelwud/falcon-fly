@@ -1,14 +1,9 @@
 package com.falconfly.engine;
 
 import com.falconfly.config.MainLogger;
-import com.falconfly.engine.input.Keyboard;
 import com.falconfly.engine.input.MouseInput;
-import org.lwjgl.stb.STBTTBakedChar;
 
-import static java.lang.Thread.sleep;
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 public class Engine implements Runnable {
     public static int WIDTH = 1920;

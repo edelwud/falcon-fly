@@ -1,36 +1,19 @@
 package com.falconfly.engine.graph;
 
-import com.falconfly.engine.Utils;
-import com.falconfly.engine.input.FileReader;
 import com.falconfly.menu.MenuStorageLoader;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
 import org.lwjgl.system.MemoryUtil;
 
-import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL15.glBufferData;
-import static org.lwjgl.opengl.GL15.glDeleteBuffers;
-import static org.lwjgl.opengl.GL15.glGenBuffers;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
 
 public class Mesh {
 
@@ -41,9 +24,7 @@ public class Mesh {
 
 	private final int vertexCount;
 
-	private Texture texture = null;
-
-	private Vector3f colour;
+	private Material material;
 
 	public Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices) {
 		FloatBuffer posBuffer = null;
@@ -122,11 +103,13 @@ public class Mesh {
 	}
 
 	public void render() {
-		// Activate firs texture bank
-		glActiveTexture(GL_TEXTURE0);
-		// Bind the texture
-		if(isTextured())
+		Texture texture = material.getTexture();
+		if (texture != null) {
+			// Activate firs texture bank
+			glActiveTexture(GL_TEXTURE0);
+			// Bind the texture
 			glBindTexture(GL_TEXTURE_2D, texture.getId());
+		}
 
 		// Draw the mesh
 		glBindVertexArray(getVaoId());
@@ -147,31 +130,21 @@ public class Mesh {
 		}
 
 		// Delete the texture
-		if(isTextured())
+		Texture texture = material.getTexture();
+		if (texture != null) {
 			texture.cleanup();
+		}
 
 		// Delete the VAO
 		glBindVertexArray(0);
 		glDeleteVertexArrays(vaoId);
 	}
 
-	public boolean isTextured() {
-		return this.texture != null;
+	public Material getMaterial() {
+		return material;
 	}
 
-	public Vector3f getColour() {
-		return colour;
-	}
-
-	public void setColour(Vector3f colour) {
-		this.colour = colour;
-	}
-
-	public Texture getTexture() {
-		return texture;
-	}
-
-	public void setTexture(Texture texture) {
-		this.texture = texture;
+	public void setMaterial(Material material) {
+		this.material = material;
 	}
 }

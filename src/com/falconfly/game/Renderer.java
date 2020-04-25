@@ -1,38 +1,24 @@
 package com.falconfly.game;
 
+import com.falconfly.engine.EngineWindow;
 import com.falconfly.engine.GameItem;
-import com.falconfly.engine.TextRenderer;
-import com.falconfly.engine.graph.Camera;
-import com.falconfly.engine.graph.Mesh;
-import com.falconfly.engine.graph.Transformation;
+import com.falconfly.engine.graph.*;
 import com.falconfly.engine.input.FileReader;
 import com.falconfly.menu.MenuStorageLoader;
 import org.joml.Matrix4f;
-import org.lwjgl.stb.STBTTBakedChar;
-import org.lwjgl.system.MemoryUtil;
-import com.falconfly.engine.Utils;
-import com.falconfly.engine.EngineWindow;
-import com.falconfly.engine.graph.ShaderProgram;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Vector;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL15.glBufferData;
-import static org.lwjgl.opengl.GL15.glDeleteBuffers;
-import static org.lwjgl.opengl.GL15.glGenBuffers;
+import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Renderer {
 
@@ -46,12 +32,15 @@ public class Renderer {
 
 	private static final float Z_FAR = 1000.f;
 
+	private float specularPower;
+
 	private final Transformation transformation;
 
 	private ShaderProgram shaderProgram;
 
 	public Renderer() {
 		transformation = new Transformation();
+		specularPower = 10f;
 	}
 
 	public void init() throws Exception {
@@ -59,30 +48,37 @@ public class Renderer {
 
 		Charset charset = StandardCharsets.ISO_8859_1;
 
-		ByteBuffer vertex = new FileReader().getResource(new MenuStorageLoader().Load("shaders").get(1).substring(8), 512);
+		ByteBuffer vertex = new FileReader().getResource(new MenuStorageLoader().Load("shaders").get(1).substring(8), 512 * 512);
 		String vertexContent = charset.decode(vertex).toString();
 
-		ByteBuffer fragment = new FileReader().getResource(new MenuStorageLoader().Load("shaders").get(0).substring(8), 512);
+		ByteBuffer fragment = new FileReader().getResource(new MenuStorageLoader().Load("shaders").get(0).substring(8), 512 * 512);
 		String fragmentContent = charset.decode(fragment).toString();
 
 		shaderProgram.createVertexShader(vertexContent);
 		shaderProgram.createFragmentShader(fragmentContent);
 		shaderProgram.link();
 
-		// Create uniforms for world and projection matrices
+		// Create uniforms for modelView and projection matrices and texture
 		shaderProgram.createUniform("projectionMatrix");
 		shaderProgram.createUniform("modelViewMatrix");
 		shaderProgram.createUniform("texture_sampler");
-		// Create uniform for default colour and the flag that controls it
-		shaderProgram.createUniform("colour");
-		shaderProgram.createUniform("useColour");
+		// Create uniform for material
+		shaderProgram.createMaterialUniform("material");
+		// Create lighting related uniforms
+		shaderProgram.createUniform("specularPower");
+		shaderProgram.createUniform("ambientLight");
+		shaderProgram.createPointLightUniform("pointLight");
 	}
 
 	public void clear() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	public void render(EngineWindow window, Vector<GameItem> gameItems, Camera camera) {
+	public void render(EngineWindow window,
+					   Vector<GameItem> gameItems,
+					   Camera camera,
+					   Vector3f ambientLight,
+					   PointLight pointLight) {
 		clear();
 
 		shaderProgram.bind();
@@ -96,6 +92,19 @@ public class Renderer {
 		// Update view Matrix
 		Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
+		// Update Light Uniforms
+		shaderProgram.setUniform("ambientLight", ambientLight);
+		shaderProgram.setUniform("specularPower", specularPower);
+		// Get a copy of the light object and transform its position to view coordinates
+		PointLight currPointLight = new PointLight(pointLight);
+		Vector3f lightPos = currPointLight.getPosition();
+		Vector4f aux = new Vector4f(lightPos, 1);
+		aux.mul(viewMatrix);
+		lightPos.x = aux.x;
+		lightPos.y = aux.y;
+		lightPos.z = aux.z;
+		shaderProgram.setUniform("pointLight", currPointLight);
+
 		shaderProgram.setUniform("texture_sampler", 0);
 		// Render each gameItem
 		for (GameItem gameItem : gameItems) {
@@ -105,7 +114,7 @@ public class Renderer {
 			shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
 			// Render the mesh for this game item
 			//shaderProgram.setUniform("colour", mesh.getColour());
-			shaderProgram.setUniform("useColour", mesh.isTextured() ? 0 : 1);
+			shaderProgram.setUniform("material", mesh.getMaterial());
 			mesh.render();
 		}
 
