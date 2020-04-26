@@ -105,7 +105,7 @@ public class Renderer {
 		lightPos.z = aux.z;
 		shaderProgram.setUniform("pointLight", currPointLight);
 
-		shaderProgram.setUniform("texture_sampler", 0);
+		shaderProgram.setUniform("texture_sampler", 0); //?
 		// Render each gameItem
 		for (GameItem gameItem : gameItems) {
 			Mesh mesh = gameItem.getMesh();

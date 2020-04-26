@@ -20,3 +20,5 @@ INFO: java.lang.NullPointerException
 INFO: java.lang.NullPointerException
 мар. 29, 2020 1:28:43 PM com.falconfly.menu.Settings lambda$invoke$0
 INFO: java.lang.NullPointerException
+апр. 27, 2020 12:25:31 AM com.falconfly.config.MainMusic addMedia
+INFO: MediaException: MEDIA_UNSUPPORTED : Unrecognized file signature!

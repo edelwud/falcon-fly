@@ -368,6 +368,20 @@ public class MainMenu extends Application {
 
         if(eventMain.getSource() == buttonPlay) {
             try {
+                    MainGlobals.musicSwitcher = 1;
+                    for (String path: new MenuStorageLoader().Load("gameplay_music"))
+                        this.music.addGameplayMedia(path);
+
+                    if(Integer.parseInt(MainEnvironmentLoader.getMusicFlag()) == 1) {
+                        music.mediaPlayer.stop();
+                        music.getRandomMediaPlayer(true);
+                        MainGlobals.musicPlaying = true;
+                    }
+                    else {
+                        music.mediaPlayer.stop();
+                        music.getRandomMediaPlayer(false);
+                        MainGlobals.musicPlaying = true;
+                    }
                 new Main().main();
             } catch (Exception e) {
                 MainLogger.logger.info(e.toString());

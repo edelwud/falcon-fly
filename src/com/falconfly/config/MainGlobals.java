@@ -13,6 +13,7 @@ public class MainGlobals {
     public static int HEIGHT = 0;
     public static double MUSIC_VOLUME = 0;;
     public static boolean musicPlaying = false;
+    public static int musicSwitcher = 0;
 
     public static int DIFFICULTY = 1;
 

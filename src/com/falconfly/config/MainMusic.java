@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class MainMusic {
 
     private Map<String, Media> music = new HashMap<String, Media>();
+    private Map<String, Media> musicGameplay = new HashMap<String, Media>();
     public static MainMusic instance;
     private Media musicMedia;
     public static MediaPlayer mediaPlayer;
@@ -32,6 +33,14 @@ public class MainMusic {
             MainGlobals.LOGGER.logger.info(ex.toString());
         }
     }
+    public void addGameplayMedia(String musicPath) throws IOException {
+        try {
+            Media tempMusic = new Media(musicPath);
+            musicGameplay.put(musicPath, tempMusic);
+        } catch (Exception ex) {
+            MainGlobals.LOGGER.logger.info(ex.toString());
+        }
+    }
     public Media getMedia(String musicPath) {
         return music.get(musicPath);
     }
@@ -43,8 +52,20 @@ public class MainMusic {
         return music.get(randomPath);
     }
 
+    public Media getGameplayRandomMedia() {
+        Set<String> tempString = musicGameplay.keySet();
+        Object[] musicPath = tempString.toArray();
+        int randomNumber = new Random().nextInt(musicPath.length);
+        Object randomPath = musicPath[randomNumber];
+        return musicGameplay.get(randomPath);
+    }
+
     public void getRandomMediaPlayer(boolean flag) {
-        musicMedia = this.getRandomMedia();
+
+       if(MainGlobals.musicSwitcher == 0)
+           musicMedia = this.getRandomMedia();
+       else
+           musicMedia = this.getGameplayRandomMedia();
 
         mediaPlayer = new MediaPlayer(musicMedia);
         mediaPlayer.setAutoPlay(true);
