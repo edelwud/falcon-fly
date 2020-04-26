@@ -91,7 +91,6 @@ public class FalconFly implements IGameLogic {
 		Mesh grassMesh = OBJLoader.loadMesh("models/grass");
 		Texture grassTexture = new Texture("models/grass");
 		Material grassMaterial = new Material(grassTexture, reflectance);
-
 		grassMesh.setMaterial(grassMaterial);
 
 		OSurface grassSurface = new OSurface(grassMesh, 4, -6, 3, -5, -3, 3);
@@ -106,7 +105,6 @@ public class FalconFly implements IGameLogic {
 		Mesh fenceMesh = OBJLoader.loadMesh("models/fence");
 		Texture fenceTexture = new Texture("models/fence");
 		Material fenceMaterial = new Material(fenceTexture, reflectance);
-
 		fenceMesh.setMaterial(fenceMaterial);
 
 		OSurface fenceSurface = new OSurface(fenceMesh, 2, -7,14, -5, -3, 2);
@@ -128,11 +126,26 @@ public class FalconFly implements IGameLogic {
 			allGrass.add(humansRoadSurface.surface.get(i).line.get(1));
 		}
 
+		Mesh house_6Mesh = OBJLoader.loadMesh("models/house_6");
+		Texture house_6Texture = new Texture("models/house_6");
+		Material house_6Material = new Material(house_6Texture, reflectance);
+		house_6Mesh.setMaterial(house_6Material);
+
+		OSurface house_6Surface = new OSurface(house_6Mesh, 1, 15, 16, -5, -3, 4);
+		Vector<GameItem> house_6 = new Vector<>();
+		for (int i = 0; i < 1; i++) {
+			allGrass.add(house_6Surface.surface.get(i).line.get(0));
+		}
+
 		gameItems = allGrass;
 		for (GameItem obj : allFence) {
 			gameItems.add(obj);
 		}
 		for (GameItem obj : allHumansRoad) {
+			gameItems.add(obj);
+		}
+		for (GameItem obj : house_6) {
+			obj.setRotation(0.5f, 0, 0.5f);
 			gameItems.add(obj);
 		}
 
