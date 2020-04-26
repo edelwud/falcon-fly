@@ -63,6 +63,18 @@ public class FalconFly implements IGameLogic {
 		}
 	}
 
+	public void regeneration(int pos, int quantity, float dPosZ, float place) {
+		for (; pos < quantity; pos++) {
+			while (gameItems.get(pos).getPosition().z >= -2) {
+				float dif = gameItems.get(pos).getPosition().z + dPosZ;
+				gameItems.get(pos).setPosition(
+						gameItems.get(pos).getPosition().x,
+						gameItems.get(pos).getPosition().y,
+						place + dif);
+			}
+		}
+	}
+
 	public FalconFly() throws IOException {
 		cameraInc = new Vector3f();
 		renderer = new Renderer();
@@ -126,8 +138,8 @@ public class FalconFly implements IGameLogic {
 
 		ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
 		Vector3f lightColour = new Vector3f(1, 1, 1);
-		Vector3f lightPosition = new Vector3f(0, 20, -7);
-		float lightIntensity = 1000.0f;
+		Vector3f lightPosition = new Vector3f(-5, 20, 6);
+		float lightIntensity = 750.0f;
 		pointLight = new PointLight(lightColour, lightPosition, lightIntensity);
 		PointLight.Attenuation att = new PointLight.Attenuation(0.0f, 0.0f, 1.0f);
 		pointLight.setAttenuation(att);
@@ -192,12 +204,16 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void update(float interval, MouseInput mouseInput) {
 		// Update camera position
-//		camera.movePosition(0, 0, 0);
-		camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
+		camera.movePosition(0, 0, 0);
+		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
 
 		for (GameItem obj : gameItems) {
 			obj.setPosition(obj.getPosition().x, obj.getPosition().y, obj.getPosition().z + step);
 		}
+
+		regeneration(0, 128 * 4, 3, -384);
+		regeneration(128 * 4, 128 * 6, 2, -256);
+		regeneration(128 * 6, 128 * 8, 4, -512);
 
 		step += acceleration;
 
