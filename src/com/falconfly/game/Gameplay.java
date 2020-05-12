@@ -45,7 +45,7 @@ public class Gameplay {
             return enemyCoordinateZ;
         }
 
-        public void setEnemyCoordinateZ(int enemyPosition) {
+        public void setEnemyCoordinateZ(int enemyCoordinateZ) {
             this.enemyCoordinateZ = enemyCoordinateZ;
         }
 
@@ -58,6 +58,7 @@ public class Gameplay {
         playerPosition = MIDDLE;
         this.path = new LinkedList<Pair<Number, Number>>();
         this.enemyMovement = new LinkedList<Pair<Number, Number>>();
+        this.enemies = new LinkedList<Enemy>();
         this.ticks = 0;
     }
 
@@ -122,5 +123,13 @@ public class Gameplay {
             this.enemySpawnTime = FalconFlyRandom.getRandomNumber(80, 120);
         }
         this.enemySpawnTime--;
+    }
+
+    public List<Pair<Number, Number>> getPath() {
+        return this.path;
+    }
+
+    public List<Pair<Number, Number>> getEnemyMovement() {
+        return this.enemyMovement;
     }
 }

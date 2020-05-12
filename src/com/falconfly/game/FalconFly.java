@@ -1,11 +1,14 @@
 package com.falconfly.game;
 
+import com.falconfly.engine.Engine;
 import com.falconfly.engine.EngineWindow;
 import com.falconfly.engine.GameItem;
 import com.falconfly.engine.IGameLogic;
 import com.falconfly.engine.graph.*;
 import com.falconfly.engine.input.Keyboard;
 import com.falconfly.engine.input.MouseInput;
+import com.falconfly.menu.style.MainDeath;
+import javafx.stage.Stage;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -33,6 +36,7 @@ public class FalconFly implements IGameLogic {
 	private static float acceleration = 0.0001f;
 
 	private int skip = 0;
+	private boolean tempFlag = true;
 
 	private static class OLine {
 
@@ -234,11 +238,13 @@ public class FalconFly implements IGameLogic {
 	}
 
 	@Override
-	public void update(float interval, MouseInput mouseInput) {
+	public void update(float interval, MouseInput mouseInput, Engine engine) {
 		// Update camera position
 
-		if(this.gameplay.isCollisionWithEnemy()) {
-
+		if(tempFlag) { //this.gameplay.isCollisionWithEnemy()
+			MainDeath windowDeath  = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
+			windowDeath.display();
+			tempFlag = false;
 		}
 		camera.movePosition(0, 0, 0);
 		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
