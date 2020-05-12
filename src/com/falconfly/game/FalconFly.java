@@ -24,11 +24,15 @@ public class FalconFly implements IGameLogic {
 	private Camera camera;
 	private PointLight pointLight;
 
+	private Gameplay gameplay;
+
 	private final float CAMERA_POS_STEP = 0.01f;
 	private final float MOUSE_SENSITIVITY = 0.1f;
 
 	private float step = 0.05f;
-	private static float acceleration = 0.001f;
+	private static float acceleration = 0.0001f;
+
+	private int skip = 0;
 
 	private static class OLine {
 
@@ -80,6 +84,8 @@ public class FalconFly implements IGameLogic {
 		renderer = new Renderer();
 		camera = new Camera();
 		cameraInc = new Vector3f(0.0f, 0.0f, 0.0f);
+		this.gameplay = new Gameplay();
+		this.gameItems = new Vector<GameItem>();
 	}
 
 	@Override
@@ -137,7 +143,17 @@ public class FalconFly implements IGameLogic {
 			allGrass.add(house_6Surface.surface.get(i).line.get(0));
 		}
 
-		gameItems = allGrass;
+		Mesh birdMesh  = OBJLoader.loadMesh("models/house_2");
+		Texture birdTexture = new Texture("models/house_2");
+		Material birdMaterial = new Material(birdTexture, reflectance);
+		birdMesh.setMaterial(birdMaterial);
+		GameItem bird = new GameItem(birdMesh);
+		bird.setPosition(-2, -5, -5);
+
+		gameItems.add(bird);
+		for (GameItem obj : allGrass) {
+			gameItems.add(obj);
+		}
 		for (GameItem obj : allFence) {
 			gameItems.add(obj);
 		}
@@ -189,16 +205,19 @@ public class FalconFly implements IGameLogic {
 
 	@Override
 	public void input(EngineWindow window, MouseInput mouseInput) {
+
 		cameraInc.set(0, 0, 0);
 		if (Keyboard.keyPressed(GLFW_KEY_W)) {
 			cameraInc.z = -1;
 		} else if (Keyboard.keyPressed(GLFW_KEY_S)) {
 			cameraInc.z = 1;
 		}
-		if (Keyboard.keyPressed(GLFW_KEY_A)) {
-			cameraInc.x = -1;
-		} else if (Keyboard.keyPressed(GLFW_KEY_D)) {
-			cameraInc.x = 1;
+		if (Keyboard.keyPressed(GLFW_KEY_A) && this.skip == 0) {
+			this.gameplay.goToLeft();
+			this.skip = 5;
+		} else if (Keyboard.keyPressed(GLFW_KEY_D) && this.skip == 0) {
+			this.gameplay.goToRight();
+			this.skip = 5;
 		}
 		if (Keyboard.keyPressed(GLFW_KEY_Z)) {
 			cameraInc.y = -1;
@@ -217,17 +236,31 @@ public class FalconFly implements IGameLogic {
 	@Override
 	public void update(float interval, MouseInput mouseInput) {
 		// Update camera position
+
+		if(this.gameplay.isCollisionWithEnemy()) {
+
+		}
 		camera.movePosition(0, 0, 0);
 		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
 
+		boolean firstFlag = true;
 		for (GameItem obj : gameItems) {
+			if(firstFlag) {
+				firstFlag = false;
+				continue;
+			}
 			obj.setPosition(obj.getPosition().x, obj.getPosition().y, obj.getPosition().z + step);
 		}
 
-		regeneration(0, 128 * 4, 3, -384);
-		regeneration(128 * 4, 128 * 6, 2, -256);
-		regeneration(128 * 6, 128 * 8, 4, -512);
-
+		regeneration(0 + 1, 128 * 4, 3, -384);
+		regeneration(128 * 4 + 1, 128 * 6, 2, -256);
+		regeneration(128 * 6 + 1, 128 * 8, 4, -512);
+		if(gameplay.getPlayerPosition() == 1)
+			gameItems.get(0).setPosition(-4, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+		else if(gameplay.getPlayerPosition() == 2)
+			gameItems.get(0).setPosition(-2, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+		else
+			gameItems.get(0).setPosition(0, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
 		step += acceleration;
 
 		// Update camera based on mouse
@@ -235,6 +268,9 @@ public class FalconFly implements IGameLogic {
 			Vector2f rotVec = mouseInput.getDisplVec();
 			camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
 		}
+		if(this.skip != 0)
+			this.skip--;
+		//this.gameplay.update();
 	}
 
 	@Override
