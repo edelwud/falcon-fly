@@ -7,7 +7,7 @@ public interface IGameLogic {
 
 	void input(EngineWindow window, MouseInput mouseInput);
 
-	void update(float interval, MouseInput mouseInput, Engine engine);
+	void update(float interval, MouseInput mouseInput, Engine engine) throws Exception;
 
 	void render(EngineWindow window);
 

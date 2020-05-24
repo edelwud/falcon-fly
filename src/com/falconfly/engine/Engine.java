@@ -47,7 +47,7 @@ public class Engine implements Runnable {
 		gameLogic.init();
 	}
 
-	protected void gameLoop() {
+	protected void gameLoop() throws Exception {
 		float elapsedTime;
 		float accumulator = 0f;
 		float interval = 1f / TARGET_UPS;
@@ -94,7 +94,7 @@ public class Engine implements Runnable {
 		gameLogic.input(window, mouseInput);
 	}
 
-	protected void update(float interval) {
+	protected void update(float interval) throws Exception {
 		gameLogic.update(interval, mouseInput, this);
 	}
 

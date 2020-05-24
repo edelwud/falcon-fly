@@ -29,14 +29,21 @@ public class FalconFly implements IGameLogic {
 
 	private Gameplay gameplay;
 
+	private GameItem birdFrame_1;
+	private GameItem birdFrame_2;
+	private GameItem birdFrame_3;
+	private GameItem birdFrame_4;
+	private GameItem birdFrame_5;
+
 	private final float CAMERA_POS_STEP = 0.01f;
 	private final float MOUSE_SENSITIVITY = 0.1f;
 
 	private float step = 0.05f;
-	private static float acceleration = 0.0001f;
+	private static float acceleration = 0.0003f;
 
+	private int frameState = 10;
+	private int frameTime = 0;
 	private int skip = 0;
-	private boolean tempFlag = true;
 
 	private static class OLine {
 
@@ -83,13 +90,13 @@ public class FalconFly implements IGameLogic {
 		}
 	}
 
-	public FalconFly() throws IOException {
+	public FalconFly() throws Exception {
 		cameraInc = new Vector3f();
 		renderer = new Renderer();
 		camera = new Camera();
 		cameraInc = new Vector3f(0.0f, 0.0f, 0.0f);
-		this.gameplay = new Gameplay();
 		this.gameItems = new Vector<GameItem>();
+		this.gameplay = new Gameplay(this.gameItems);
 	}
 
 	@Override
@@ -147,14 +154,42 @@ public class FalconFly implements IGameLogic {
 			allGrass.add(house_6Surface.surface.get(i).line.get(0));
 		}
 
-		Mesh birdMesh  = OBJLoader.loadMesh("models/house_2");
-		Texture birdTexture = new Texture("models/house_2");
-		Material birdMaterial = new Material(birdTexture, reflectance);
-		birdMesh.setMaterial(birdMaterial);
-		GameItem bird = new GameItem(birdMesh);
-		bird.setPosition(-2, -5, -5);
+		Mesh birdMeshFrame_1  = OBJLoader.loadMesh("models/falcon/frame_1");
+		Texture birdTextureFrame_1 = new Texture("models/falcon/frame_1");
+		Material birdMaterialFrame_1 = new Material(birdTextureFrame_1, reflectance);
+		birdMeshFrame_1.setMaterial(birdMaterialFrame_1);
+		birdFrame_1 = new GameItem(birdMeshFrame_1);
+		birdFrame_1.setPosition(-3, -5, -5);
 
-		gameItems.add(bird);
+		Mesh birdMeshFrame_2  = OBJLoader.loadMesh("models/falcon/frame_2");
+		Texture birdTextureFrame_2 = new Texture("models/falcon/frame_2");
+		Material birdMaterialFrame_2 = new Material(birdTextureFrame_2, reflectance);
+		birdMeshFrame_2.setMaterial(birdMaterialFrame_2);
+		birdFrame_2 = new GameItem(birdMeshFrame_2);
+		birdFrame_2.setPosition(-3, -5, -5);
+
+		Mesh birdMeshFrame_3  = OBJLoader.loadMesh("models/falcon/frame_3");
+		Texture birdTextureFrame_3 = new Texture("models/falcon/frame_3");
+		Material birdMaterialFrame_3 = new Material(birdTextureFrame_3, reflectance);
+		birdMeshFrame_3.setMaterial(birdMaterialFrame_3);
+		birdFrame_3 = new GameItem(birdMeshFrame_3);
+		birdFrame_3.setPosition(-3, -5, -5);
+
+		Mesh birdMeshFrame_4  = OBJLoader.loadMesh("models/falcon/frame_4");
+		Texture birdTextureFrame_4 = new Texture("models/falcon/frame_4");
+		Material birdMaterialFrame_4 = new Material(birdTextureFrame_4, reflectance);
+		birdMeshFrame_4.setMaterial(birdMaterialFrame_4);
+		birdFrame_4 = new GameItem(birdMeshFrame_4);
+		birdFrame_4.setPosition(-3, -5, -5);
+
+		Mesh birdMeshFrame_5  = OBJLoader.loadMesh("models/falcon/frame_5");
+		Texture birdTextureFrame_5 = new Texture("models/falcon/frame_5");
+		Material birdMaterialFrame_5 = new Material(birdTextureFrame_5, reflectance);
+		birdMeshFrame_5.setMaterial(birdMaterialFrame_5);
+		birdFrame_5 = new GameItem(birdMeshFrame_5);
+		birdFrame_5.setPosition(-3, -5, -5);
+
+		gameItems.add(birdFrame_1);
 		for (GameItem obj : allGrass) {
 			gameItems.add(obj);
 		}
@@ -238,16 +273,15 @@ public class FalconFly implements IGameLogic {
 	}
 
 	@Override
-	public void update(float interval, MouseInput mouseInput, Engine engine) {
+	public void update(float interval, MouseInput mouseInput, Engine engine) throws Exception {
 		// Update camera position
 
-		if(tempFlag) { //this.gameplay.isCollisionWithEnemy()
-			MainDeath windowDeath  = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
-			windowDeath.display();
-			tempFlag = false;
+		if(this.gameplay.isCollisionWithEnemy()) {
+			//MainDeath windowDeath  = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
+			//windowDeath.display();
 		}
 		camera.movePosition(0, 0, 0);
-		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
+		camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
 
 		boolean firstFlag = true;
 		for (GameItem obj : gameItems) {
@@ -276,7 +310,47 @@ public class FalconFly implements IGameLogic {
 		}
 		if(this.skip != 0)
 			this.skip--;
-		//this.gameplay.update();
+		this.gameplay.update(step - acceleration);
+
+		if (frameState == 0) {
+			switch (frameTime) {
+				case 0:
+				case 5:
+					birdFrame_1.setPosition(gameItems.get(0).getPosition().x, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+					gameItems.remove(0);
+					gameItems.add(0, birdFrame_1);
+					break;
+				case 1:
+				case 4:
+					birdFrame_2.setPosition(gameItems.get(0).getPosition().x, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+					gameItems.remove(0);
+					gameItems.add(0, birdFrame_2);
+					break;
+				case 2:
+					birdFrame_3.setPosition(gameItems.get(0).getPosition().x, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+					gameItems.remove(0);
+					gameItems.add(0, birdFrame_3);
+					break;
+				case 3:
+					break;
+				case 6:
+				case 8:
+					birdFrame_4.setPosition(gameItems.get(0).getPosition().x, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+					gameItems.remove(0);
+					gameItems.add(0, birdFrame_4);
+					break;
+				case 7:
+					birdFrame_5.setPosition(gameItems.get(0).getPosition().x, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+					gameItems.remove(0);
+					gameItems.add(0, birdFrame_5);
+					break;
+			}
+			frameTime++;
+			if (frameTime == 9)
+				frameTime = 0;
+			frameState = 10;
+		}
+		frameState--;
 	}
 
 	@Override

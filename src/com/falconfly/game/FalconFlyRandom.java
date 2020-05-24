@@ -8,6 +8,6 @@ public class FalconFlyRandom {
     }
 
     public static int getRandomNumber(int begin, int end) {
-        return begin + (int)(Math.random() * end);
+        return begin + (int)(Math.random() * (end - begin));
     }
 }
