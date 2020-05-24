@@ -47,20 +47,47 @@ public class Gameplay {
 
             float reflectance = 1f;
 
-            grassMesh = OBJLoader.loadMesh("models/house_6");
-            grassTexture = new Texture("models/house_6");
-            grassMaterial = new Material(grassTexture, reflectance);
-            grassMesh.setMaterial(grassMaterial);
+            int randomEnemyModel = FalconFlyRandom.getRandomNumber(0, 4);
 
-            enemy = new GameItem(grassMesh);
+            switch (randomEnemyModel)
+            {
+                case 0:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_1");
+                    grassTexture = new Texture("models/enemies/enemy_1");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+                case 1:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_2");
+                    grassTexture = new Texture("models/enemies/enemy_2");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+                case 2:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_3");
+                    grassTexture = new Texture("models/enemies/enemy_3");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+                default:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_4");
+                    grassTexture = new Texture("models/enemies/enemy_4");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+            }
 
             float xCoordinate = -2f;
             if (enemyPosition == 1)
-                xCoordinate = -4f;
+                xCoordinate = -6.4f;
             else if (enemyPosition == 2)
-                xCoordinate = -2f;
+                xCoordinate = -2.4f;
             else if (enemyPosition == 3)
-                xCoordinate = 2f;
+                xCoordinate = 2.4f;
             enemy.setPosition(xCoordinate, -5, -240);
 
             gameItems.add(enemy);
@@ -73,20 +100,47 @@ public class Gameplay {
 
             float reflectance = 1f;
 
-            grassMesh = OBJLoader.loadMesh("models/house_6");
-            grassTexture = new Texture("models/house_6");
-            grassMaterial = new Material(grassTexture, reflectance);
-            grassMesh.setMaterial(grassMaterial);
+            int randomEnemyModel = FalconFlyRandom.getRandomNumber(0, 4);
 
-            enemy = new GameItem(grassMesh);
+            switch (randomEnemyModel)
+            {
+                case 0:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_1");
+                    grassTexture = new Texture("models/enemies/enemy_1");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+                case 1:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_2");
+                    grassTexture = new Texture("models/enemies/enemy_2");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+                case 2:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_3");
+                    grassTexture = new Texture("models/enemies/enemy_3");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+                default:
+                    grassMesh = OBJLoader.loadMesh("models/enemies/enemy_4");
+                    grassTexture = new Texture("models/enemies/enemy_4");
+                    grassMaterial = new Material(grassTexture, reflectance);
+                    grassMesh.setMaterial(grassMaterial);
+                    enemy = new GameItem(grassMesh);
+                    break;
+            }
 
             float xCoordinate = 0f;
             if (enemyPosition == 1)
-                xCoordinate = -4f;
+                xCoordinate = -6.4f;
             else if (enemyPosition == 2)
-                xCoordinate = -2f;
+                xCoordinate = -2.4f;
             else if (enemyPosition == 3)
-                xCoordinate = 2f;
+                xCoordinate = 2.4f;
             enemy.setPosition(xCoordinate, -5, pos);
 
             gameItems.add(enemy);

@@ -41,7 +41,7 @@ public class FalconFly implements IGameLogic {
 	private float step = 0.05f;
 	private static float acceleration = 0.0003f;
 
-	private int frameState = 10;
+	private int frameState = 4;
 	private int frameTime = 0;
 	private int skip = 0;
 
@@ -166,28 +166,24 @@ public class FalconFly implements IGameLogic {
 		Material birdMaterialFrame_2 = new Material(birdTextureFrame_2, reflectance);
 		birdMeshFrame_2.setMaterial(birdMaterialFrame_2);
 		birdFrame_2 = new GameItem(birdMeshFrame_2);
-		birdFrame_2.setPosition(-3, -5, -5);
 
 		Mesh birdMeshFrame_3  = OBJLoader.loadMesh("models/falcon/frame_3");
 		Texture birdTextureFrame_3 = new Texture("models/falcon/frame_3");
 		Material birdMaterialFrame_3 = new Material(birdTextureFrame_3, reflectance);
 		birdMeshFrame_3.setMaterial(birdMaterialFrame_3);
 		birdFrame_3 = new GameItem(birdMeshFrame_3);
-		birdFrame_3.setPosition(-3, -5, -5);
 
 		Mesh birdMeshFrame_4  = OBJLoader.loadMesh("models/falcon/frame_4");
 		Texture birdTextureFrame_4 = new Texture("models/falcon/frame_4");
 		Material birdMaterialFrame_4 = new Material(birdTextureFrame_4, reflectance);
 		birdMeshFrame_4.setMaterial(birdMaterialFrame_4);
 		birdFrame_4 = new GameItem(birdMeshFrame_4);
-		birdFrame_4.setPosition(-3, -5, -5);
 
 		Mesh birdMeshFrame_5  = OBJLoader.loadMesh("models/falcon/frame_5");
 		Texture birdTextureFrame_5 = new Texture("models/falcon/frame_5");
 		Material birdMaterialFrame_5 = new Material(birdTextureFrame_5, reflectance);
 		birdMeshFrame_5.setMaterial(birdMaterialFrame_5);
 		birdFrame_5 = new GameItem(birdMeshFrame_5);
-		birdFrame_5.setPosition(-3, -5, -5);
 
 		gameItems.add(birdFrame_1);
 		for (GameItem obj : allGrass) {
@@ -296,11 +292,11 @@ public class FalconFly implements IGameLogic {
 		regeneration(128 * 4 + 1, 128 * 6, 2, -256);
 		regeneration(128 * 6 + 1, 128 * 8, 4, -512);
 		if(gameplay.getPlayerPosition() == 1)
-			gameItems.get(0).setPosition(-4, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+			gameItems.get(0).setPosition(-7.55f, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
 		else if(gameplay.getPlayerPosition() == 2)
-			gameItems.get(0).setPosition(-2, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+			gameItems.get(0).setPosition(-2.55f, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
 		else
-			gameItems.get(0).setPosition(0, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+			gameItems.get(0).setPosition(2.45f, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
 		step += acceleration;
 
 		// Update camera based on mouse
@@ -348,7 +344,7 @@ public class FalconFly implements IGameLogic {
 			frameTime++;
 			if (frameTime == 9)
 				frameTime = 0;
-			frameState = 10;
+			frameState = 4;
 		}
 		frameState--;
 	}
