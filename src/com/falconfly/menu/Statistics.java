@@ -160,15 +160,36 @@ public class Statistics {
             st.play();
         });
 
+        BackgroundImage watchReplayBackground = new BackgroundImage(
+                new Image(storageLoader.Load("images/Statistics").get(6), MainGlobals.WIDTH / 12, MainGlobals.WIDTH / 12,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
         buttonWatchReplay = new Button();
         buttonWatchReplay.setOnAction((e)->{
 
         });
-        //buttonWatchReplay.setBackground(new Background(backButtonBackground)); // new image
-        buttonWatchReplay.setPrefSize(MainGlobals.WIDTH * 0.24,MainGlobals.HEIGHT * 0.14);
-        buttonWatchReplay.setMaxSize(MainGlobals.WIDTH * 0.24,MainGlobals.HEIGHT * 0.14);
-        buttonWatchReplay.setMinSize(MainGlobals.WIDTH * 0.24,MainGlobals.HEIGHT * 0.14);
+        buttonWatchReplay.setBackground(new Background(watchReplayBackground));
+        buttonWatchReplay.setPrefSize(MainGlobals.WIDTH * 0.14,MainGlobals.WIDTH * 0.14);
+        buttonWatchReplay.setMaxSize(MainGlobals.WIDTH * 0.14,MainGlobals.WIDTH * 0.14);
+        buttonWatchReplay.setMinSize(MainGlobals.WIDTH * 0.14,MainGlobals.WIDTH * 0.14);
         buttonWatchReplay.setDisable(true);
+
+        buttonWatchReplay.setOnMouseEntered(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), buttonWatchReplay);
+            st.setFromX(1);
+            st.setFromY(1);
+            st.setToX(1.1);
+            st.setToY(1.1);
+            st.play();
+        });
+
+        buttonWatchReplay.setOnMouseExited(event -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(150), buttonWatchReplay);
+            st.setToX(1);
+            st.setToY(1);
+            st.play();
+        });
 
         scores = FXCollections.observableArrayList(
                 new Person("Diman", 1024, 1),
@@ -244,7 +265,7 @@ public class Statistics {
                 borderUpRightTransparent, borderUpRight);
         root.setMargin(buttonStatisticsBack, new Insets(MainGlobals.HEIGHT * 0.82, 0, 0, MainGlobals.WIDTH * 0.66));
         root.getChildren().add(buttonStatisticsBack);
-        root.setMargin(buttonWatchReplay, new Insets(MainGlobals.HEIGHT * 0.82,MainGlobals.WIDTH * 0.66 , 0, 0));
+        root.setMargin(buttonWatchReplay, new Insets(MainGlobals.HEIGHT * 0.82,MainGlobals.WIDTH * 0.85 , 0, 0));
         root.getChildren().add(buttonWatchReplay);
         root.setMargin(tableScores, new Insets(-(MainGlobals.HEIGHT * 0.25), 0, 0, -(MainGlobals.WIDTH * 0.2)));
         root.getChildren().add(tableScores);

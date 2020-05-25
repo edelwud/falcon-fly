@@ -243,7 +243,7 @@ public class Gameplay {
         for(Enemy temp: enemies)
             temp.decEnemyCoordinateZ(step);
         for(Enemy temp: enemies) {
-            if(temp.getEnemyCoordinateZ() >= -2) {
+            if(temp.getEnemyCoordinateZ() >= 10) {
                 //gameItems.remove(temp.getGameItem());
                 //enemies.remove(0);
             }

@@ -80,7 +80,7 @@ public class FalconFly implements IGameLogic {
 
 	public void regeneration(int pos, int quantity, float dPosZ, float place) {
 		for (; pos < quantity; pos++) {
-			while (gameItems.get(pos).getPosition().z >= -2) {
+			while (gameItems.get(pos).getPosition().z >= 10) {
 				float dif = gameItems.get(pos).getPosition().z + dPosZ;
 				gameItems.get(pos).setPosition(
 						gameItems.get(pos).getPosition().x,
@@ -167,15 +167,189 @@ public class FalconFly implements IGameLogic {
 			road.add(roadSurface.surface.get(i).line.get(1));
 		}
 
-		Mesh house_6Mesh = OBJLoader.loadMesh("models/house_6");
-		Texture house_6Texture = new Texture("models/house_6");
-		Material house_6Material = new Material(house_6Texture, reflectance);
-		house_6Mesh.setMaterial(house_6Material);
+		Vector<GameItem> houses = new Vector<>();
 
-		OSurface house_6Surface = new OSurface(house_6Mesh, 1, 15, 16, -5, -3, 4);
-		Vector<GameItem> house_6 = new Vector<>();
-		for (int i = 0; i < 1; i++) {
-			house_6.add(house_6Surface.surface.get(i).line.get(0));
+		for (int i = 0; i < 128; i++)
+		{
+			int randomHouse = FalconFlyRandom.getRandomNumber(0, 6);
+
+			switch (randomHouse)
+			{
+				case 0: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_1");
+					Texture houseTexture = new Texture("models/house_1");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem leftHouse = new GameItem(houseMesh);
+					leftHouse.setPosition(-19, -5, -1);
+					leftHouse.setRotation(90, 90, 90);
+
+					houses.add(leftHouse);
+
+					break;
+				}
+				case 1: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_2");
+					Texture houseTexture = new Texture("models/house_2");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem leftHouse = new GameItem(houseMesh);
+					leftHouse.setPosition(-19, -5, -1);
+					leftHouse.setRotation(90, 90, 90);
+
+					houses.add(leftHouse);
+
+					break;
+				}
+				case 2: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_3");
+					Texture houseTexture = new Texture("models/house_3");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem leftHouse = new GameItem(houseMesh);
+					leftHouse.setPosition(-19, -5, -1);
+					leftHouse.setRotation(90, 90, 90);
+
+					houses.add(leftHouse);
+
+					break;
+				}
+				case 3: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_4");
+					Texture houseTexture = new Texture("models/house_4");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem leftHouse = new GameItem(houseMesh);
+					leftHouse.setPosition(-19, -5, -1);
+					leftHouse.setRotation(90, 90, 90);
+
+					houses.add(leftHouse);
+
+					break;
+				}
+				case 4: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_5");
+					Texture houseTexture = new Texture("models/house_5");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem leftHouse = new GameItem(houseMesh);
+					leftHouse.setPosition(-19, -5, -1);
+					leftHouse.setRotation(90, 90, 90);
+
+					houses.add(leftHouse);
+
+					break;
+				}
+				default: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_6");
+					Texture houseTexture = new Texture("models/house_6");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem leftHouse = new GameItem(houseMesh);
+					leftHouse.setPosition(-19, -5, -1);
+					leftHouse.setRotation(90, 90, 90);
+
+					houses.add(leftHouse);
+
+					break;
+				}
+			}
+
+			randomHouse = FalconFlyRandom.getRandomNumber(0, 6);
+
+			switch (randomHouse)
+			{
+				case 0: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_1");
+					Texture houseTexture = new Texture("models/house_1");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem rightHouse = new GameItem(houseMesh);
+					rightHouse.setPosition(19, -5, -1);
+					rightHouse.setRotation(-90, -90, 90);
+
+					houses.add(rightHouse);
+
+					break;
+				}
+				case 1: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_2");
+					Texture houseTexture = new Texture("models/house_2");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem rightHouse = new GameItem(houseMesh);
+					rightHouse.setPosition(19, -5, -1);
+					rightHouse.setRotation(-90, -90, 90);
+
+					houses.add(rightHouse);
+
+					break;
+				}
+				case 2: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_3");
+					Texture houseTexture = new Texture("models/house_3");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem rightHouse = new GameItem(houseMesh);
+					rightHouse.setPosition(19, -5, -1);
+					rightHouse.setRotation(-90, -90, 90);
+
+					houses.add(rightHouse);
+
+					break;
+				}
+				case 3: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_4");
+					Texture houseTexture = new Texture("models/house_4");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem rightHouse = new GameItem(houseMesh);
+					rightHouse.setPosition(19, -5, -1);
+					rightHouse.setRotation(-90, -90, 90);
+
+					houses.add(rightHouse);
+
+					break;
+				}
+				case 4: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_5");
+					Texture houseTexture = new Texture("models/house_5");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem rightHouse = new GameItem(houseMesh);
+					rightHouse.setPosition(19, -5, -1);
+					rightHouse.setRotation(-90, -90, 90);
+
+					houses.add(rightHouse);
+
+					break;
+				}
+				default: {
+					Mesh houseMesh = OBJLoader.loadMesh("models/house_6");
+					Texture houseTexture = new Texture("models/house_6");
+					Material houseMaterial = new Material(houseTexture, reflectance);
+					houseMesh.setMaterial(houseMaterial);
+
+					GameItem rightHouse = new GameItem(houseMesh);
+					rightHouse.setPosition(19, -5, -1);
+					rightHouse.setRotation(-90, -90, 90);
+
+					houses.add(rightHouse);
+
+					break;
+				}
+			}
 		}
 
 		Mesh birdMeshFrame_1  = OBJLoader.loadMesh("models/falcon/frame_1");
@@ -225,8 +399,19 @@ public class FalconFly implements IGameLogic {
 		for (GameItem obj : road) {
 			gameItems.add(obj);
 		}
-		for (GameItem obj : house_6) {
-			obj.setRotation(0.5f, 0, 0.5f);
+
+		boolean leftRight = true;
+		float dz = 10;
+		for (GameItem obj : houses) {
+			if (leftRight) {
+				obj.setPosition(obj.getPosition().x, obj.getPosition().y, obj.getPosition().z - dz);
+				leftRight = false;
+			}
+			else {
+				obj.setPosition(obj.getPosition().x, obj.getPosition().y, obj.getPosition().z - dz);
+				dz += 10;
+				leftRight = true;
+			}
 			gameItems.add(obj);
 		}
 
@@ -325,6 +510,7 @@ public class FalconFly implements IGameLogic {
 		regeneration(128 * 6 + 1, 128 * 8, 4, -512);
 		regeneration(128 * 8 + 1, 128 * 10, 4, -512);
 		regeneration(128 * 10 + 1, 128 * 12, 4, -512);
+		regeneration(128 * 12 + 1, 128 * 14, 10, -1280);
 		if(gameplay.getPlayerPosition() == 1)
 			gameItems.get(0).setPosition(-7.55f, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
 		else if(gameplay.getPlayerPosition() == 2)
