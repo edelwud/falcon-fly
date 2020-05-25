@@ -139,8 +139,32 @@ public class FalconFly implements IGameLogic {
 		OSurface humansRoadSurface = new OSurface(humansRoadMesh, 2, -10, 16, -5, -3, 4);
 		Vector<GameItem> allHumansRoad = new Vector<>();
 		for (int i = 0; i < humansRoadSurface.LENGTH; i++) {
-			allGrass.add(humansRoadSurface.surface.get(i).line.get(0));
-			allGrass.add(humansRoadSurface.surface.get(i).line.get(1));
+			allHumansRoad.add(humansRoadSurface.surface.get(i).line.get(0));
+			allHumansRoad.add(humansRoadSurface.surface.get(i).line.get(1));
+		}
+
+		Mesh borderMesh = OBJLoader.loadMesh("models/border");
+		Texture borderTexture = new Texture("models/border");
+		Material borderMaterial = new Material(borderTexture, reflectance);
+		borderMesh.setMaterial(borderMaterial);
+
+		OSurface borderSurface = new OSurface(borderMesh, 2, -10, 20, -5, -3, 4);
+		Vector<GameItem> border = new Vector<>();
+		for (int i = 0; i < borderSurface.LENGTH; i++) {
+			border.add(borderSurface.surface.get(i).line.get(0));
+			border.add(borderSurface.surface.get(i).line.get(1));
+		}
+
+		Mesh roadMesh = OBJLoader.loadMesh("models/road");
+		Texture roadTexture = new Texture("models/road");
+		Material roadMaterial = new Material(roadTexture, reflectance);
+		roadMesh.setMaterial(roadMaterial);
+
+		OSurface roadSurface = new OSurface(roadMesh, 2, -14, 24, -5, -3, 4);
+		Vector<GameItem> road = new Vector<>();
+		for (int i = 0; i < roadSurface.LENGTH; i++) {
+			road.add(roadSurface.surface.get(i).line.get(0));
+			road.add(roadSurface.surface.get(i).line.get(1));
 		}
 
 		Mesh house_6Mesh = OBJLoader.loadMesh("models/house_6");
@@ -151,7 +175,7 @@ public class FalconFly implements IGameLogic {
 		OSurface house_6Surface = new OSurface(house_6Mesh, 1, 15, 16, -5, -3, 4);
 		Vector<GameItem> house_6 = new Vector<>();
 		for (int i = 0; i < 1; i++) {
-			allGrass.add(house_6Surface.surface.get(i).line.get(0));
+			house_6.add(house_6Surface.surface.get(i).line.get(0));
 		}
 
 		Mesh birdMeshFrame_1  = OBJLoader.loadMesh("models/falcon/frame_1");
@@ -193,6 +217,12 @@ public class FalconFly implements IGameLogic {
 			gameItems.add(obj);
 		}
 		for (GameItem obj : allHumansRoad) {
+			gameItems.add(obj);
+		}
+		for (GameItem obj : border) {
+			gameItems.add(obj);
+		}
+		for (GameItem obj : road) {
 			gameItems.add(obj);
 		}
 		for (GameItem obj : house_6) {
@@ -250,9 +280,11 @@ public class FalconFly implements IGameLogic {
 		if (Keyboard.keyPressed(GLFW_KEY_A) && this.skip == 0) {
 			this.gameplay.goToLeft();
 			this.skip = 5;
+			//cameraInc.x = -1;
 		} else if (Keyboard.keyPressed(GLFW_KEY_D) && this.skip == 0) {
 			this.gameplay.goToRight();
 			this.skip = 5;
+			//cameraInc.x = 1;
 		}
 		if (Keyboard.keyPressed(GLFW_KEY_Z)) {
 			cameraInc.y = -1;
@@ -276,8 +308,8 @@ public class FalconFly implements IGameLogic {
 			//MainDeath windowDeath  = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
 			//windowDeath.display();
 		}
-		camera.movePosition(0, 0, 0);
-		camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
+		camera.setPosition(0, 4.3f, 6.2f);
+		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
 
 		boolean firstFlag = true;
 		for (GameItem obj : gameItems) {
@@ -291,6 +323,8 @@ public class FalconFly implements IGameLogic {
 		regeneration(0 + 1, 128 * 4, 3, -384);
 		regeneration(128 * 4 + 1, 128 * 6, 2, -256);
 		regeneration(128 * 6 + 1, 128 * 8, 4, -512);
+		regeneration(128 * 8 + 1, 128 * 10, 4, -512);
+		regeneration(128 * 10 + 1, 128 * 12, 4, -512);
 		if(gameplay.getPlayerPosition() == 1)
 			gameItems.get(0).setPosition(-7.55f, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
 		else if(gameplay.getPlayerPosition() == 2)
