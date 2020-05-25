@@ -1,31 +1,38 @@
 package com.falconfly.menu;
 
-import com.falconfly.config.MainFont;
-import com.falconfly.config.MainGlobals;
-import com.falconfly.config.MainLogger;
-import com.falconfly.config.MainMusic;
+import com.falconfly.config.*;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.util.logging.Logger;
 
 public class Statistics {
 
     MainFont fonts;
 
     Button buttonStatisticsBack;
+    Button buttonWatchReplay;
+
+    // создаем список объектов
+    ObservableList<Person> scores;
+    TableView<Person> tableScores;
+    TableColumn<Person, String> nameColumn;
+    TableColumn<Person, Integer> scoreColumn;
+    TableColumn<Person, Integer> idColumn;
 
     MenuStorageLoader storageLoader = new MenuStorageLoader();
 
@@ -153,11 +160,94 @@ public class Statistics {
             st.play();
         });
 
+        buttonWatchReplay = new Button();
+        buttonWatchReplay.setOnAction((e)->{
+
+        });
+        //buttonWatchReplay.setBackground(new Background(backButtonBackground)); // new image
+        buttonWatchReplay.setPrefSize(MainGlobals.WIDTH * 0.24,MainGlobals.HEIGHT * 0.14);
+        buttonWatchReplay.setMaxSize(MainGlobals.WIDTH * 0.24,MainGlobals.HEIGHT * 0.14);
+        buttonWatchReplay.setMinSize(MainGlobals.WIDTH * 0.24,MainGlobals.HEIGHT * 0.14);
+        buttonWatchReplay.setDisable(true);
+
+        scores = FXCollections.observableArrayList(
+                new Person("Diman", 1024, 1),
+                new Person("Timur", 1023, 2),
+                new Person("Vadim", 0, 3),
+                new Person("CXC", -10000, 4),
+                new Person("Diman", 1024, 1),
+                new Person("Timur", 1023, 2),
+                new Person("Vadim", 0, 3),
+                new Person("CXC", -10000, 4),
+                new Person("Diman", 1024, 1),
+                new Person("Timur", 1023, 2),
+                new Person("Vadim", 0, 3),
+                new Person("CXC", -10000, 4),
+                new Person("Diman", 1024, 1),
+                new Person("Timur", 1023, 2),
+                new Person("Vadim", 0, 3),
+                new Person("CXC", -10000, 4),
+                new Person("Diman", 1024, 1),
+                new Person("Timur", 1023, 2),
+                new Person("Vadim", 0, 3),
+                new Person("CXC", -10000, 4)
+        );
+
+        tableScores = new TableView<>(scores);
+        tableScores.setPrefSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.59);
+        tableScores.setMaxSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.59);
+        tableScores.setMinSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.59);
+        //tableScores.setStyle();
+//        try {
+//            //System.out.println(Files.readString(Paths.get(new MenuStorageLoader().Load("styles").get(1).substring(8))));
+//            //tableScores.setStyle(Files.readString(Paths.get(new MenuStorageLoader().Load("styles").get(1).substring(8))));
+//        }
+//        catch(IOException e) {
+//            e.fillInStackTrace();
+//        }
+
+        // столбец для вывода id
+        idColumn = new TableColumn<Person, Integer>("ID");
+        idColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.1);
+        idColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.1);
+        idColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.1);
+        idColumn.setCellValueFactory(new PropertyValueFactory<Person, Integer>("id"));
+        tableScores.getColumns().add(idColumn);
+
+        // столбец для вывода имени
+        nameColumn = new TableColumn<>("Name");
+        nameColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.45);
+        nameColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.45);
+        nameColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.45);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+        tableScores.getColumns().add(nameColumn);
+
+        // столбец для вывода счета
+        scoreColumn = new TableColumn<Person, Integer>("Score");
+        scoreColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.447);
+        scoreColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.447);
+        scoreColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.447);
+        scoreColumn.setCellValueFactory(new PropertyValueFactory<Person, Integer>("score"));
+        tableScores.getColumns().add(scoreColumn);
+
+        tableScores.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
+            @Override
+            public void changed(ObservableValue<? extends Person> observableValue, Person person, Person t1) {
+                if(t1 != null) {
+                    buttonWatchReplay.setDisable(false);
+                }
+            }
+        });
+
         StackPane root = new StackPane(mainBackground);
         root.getChildren().addAll(borderBottomRight, borderBottomLeft,
                 borderUpRightTransparent, borderUpRight);
         root.setMargin(buttonStatisticsBack, new Insets(MainGlobals.HEIGHT * 0.82, 0, 0, MainGlobals.WIDTH * 0.66));
         root.getChildren().add(buttonStatisticsBack);
+        root.setMargin(buttonWatchReplay, new Insets(MainGlobals.HEIGHT * 0.82,MainGlobals.WIDTH * 0.66 , 0, 0));
+        root.getChildren().add(buttonWatchReplay);
+        root.setMargin(tableScores, new Insets(-(MainGlobals.HEIGHT * 0.25), 0, 0, -(MainGlobals.WIDTH * 0.2)));
+        root.getChildren().add(tableScores);
 
         sceneStatistics = new Scene(root, MainGlobals.WIDTH, MainGlobals.HEIGHT);
         windowMain.setScene(sceneStatistics);

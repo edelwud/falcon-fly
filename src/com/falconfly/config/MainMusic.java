@@ -68,12 +68,12 @@ public class MainMusic {
            musicMedia = this.getGameplayRandomMedia();
 
         mediaPlayer = new MediaPlayer(musicMedia);
-        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play(); //AutoPlay
         mediaPlayer.setMute(!flag);
         mediaPlayer.setVolume(MainGlobals.MUSIC_VOLUME);
         mediaPlayer.setOnEndOfMedia(()-> {
             mediaPlayer.stop();
-            this.getRandomMediaPlayer(true);
+            this.getRandomMediaPlayer(flag); //true
         });
     }
     public static MainMusic getInstance() {

@@ -2,6 +2,7 @@ package com.falconfly.menu.style;
 
 import com.falconfly.config.MainGlobals;
 import com.falconfly.engine.Engine;
+import com.falconfly.engine.main.Main;
 import com.falconfly.game.Gameplay;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -56,7 +57,7 @@ public class MainDeath {
             this.buttonReplay.setOnAction(this::handleExit);
 
             StackPane root = new StackPane();
-            root.getChildren().addAll(buttonSave, buttonReplay, buttonExit);
+            root.getChildren().addAll(buttonSave, buttonExit, buttonReplay);
 
             this.sceneDeath = new Scene(root);
             this.windowDeath.setScene(this.sceneDeath);
@@ -74,10 +75,13 @@ public class MainDeath {
             }
         }
 
-        public void handleReplay(ActionEvent eventReply) {
+        public void handleReplay(ActionEvent eventReply) throws Exception {
 
             if(eventReply.getSource() == buttonReplay) {
-                //
+
+                //this.windowDeath.close();
+                //glfwDestroyWindow(this.engine.getWindow().id);
+                //new Main().main();
             }
         }
 
