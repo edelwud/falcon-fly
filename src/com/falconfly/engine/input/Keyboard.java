@@ -12,11 +12,19 @@ public class Keyboard {
     }
 
     public static boolean keyPressed(int keyId) {
-        return keyDown(keyId) && !keys[keyId];
+        if (!keys[keyId]) {
+            keys[keyId] = true;
+            return keyDown(keyId);
+        }
+        return false;
     }
 
     public static boolean keyReleased(int keyId) {
-        return !keyDown(keyId) && keys[keyId];
+        if (keys[keyId]) {
+            keys[keyId] = false;
+            return !keyDown(keyId);
+        }
+        return false;
     }
 
     public static void handleKeyboardInput() {

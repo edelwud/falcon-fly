@@ -1,18 +1,12 @@
 package com.falconfly.game;
 
-import com.falconfly.engine.Engine;
-import com.falconfly.engine.EngineWindow;
-import com.falconfly.engine.GameItem;
-import com.falconfly.engine.IGameLogic;
+import com.falconfly.engine.*;
 import com.falconfly.engine.graph.*;
 import com.falconfly.engine.input.Keyboard;
 import com.falconfly.engine.input.MouseInput;
-import com.falconfly.menu.style.MainDeath;
-import javafx.stage.Stage;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import java.io.IOException;
 import java.util.Vector;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -22,10 +16,13 @@ public class FalconFly implements IGameLogic {
 	private Vector3f cameraInc;
 	private Vector3f ambientLight;
 
-	private Vector<GameItem> gameItems;
 	private final Renderer renderer;
 	private Camera camera;
+	private Scene scene;
+
 	private PointLight pointLight;
+	private DirectionalLight directionalLight;
+	private float lightAngle;
 
 	private Gameplay gameplay;
 
@@ -79,6 +76,7 @@ public class FalconFly implements IGameLogic {
 	}
 
 	public void regeneration(int pos, int quantity, float dPosZ, float place) {
+		Vector<GameItem> gameItems = scene.getGameItems();
 		for (; pos < quantity; pos++) {
 			while (gameItems.get(pos).getPosition().z >= 10) {
 				float dif = gameItems.get(pos).getPosition().z + dPosZ;
@@ -95,13 +93,13 @@ public class FalconFly implements IGameLogic {
 		renderer = new Renderer();
 		camera = new Camera();
 		cameraInc = new Vector3f(0.0f, 0.0f, 0.0f);
-		this.gameItems = new Vector<GameItem>();
-		this.gameplay = new Gameplay(this.gameItems);
 	}
 
 	@Override
 	public void init() throws Exception {
 		renderer.init();
+
+		scene = new Scene();
 
 		float reflectance = 1f;
 
@@ -352,6 +350,7 @@ public class FalconFly implements IGameLogic {
 			}
 		}
 
+
 		Mesh birdMeshFrame_1  = OBJLoader.loadMesh("models/falcon/frame_1");
 		Texture birdTextureFrame_1 = new Texture("models/falcon/frame_1");
 		Material birdMaterialFrame_1 = new Material(birdTextureFrame_1, reflectance);
@@ -383,22 +382,13 @@ public class FalconFly implements IGameLogic {
 		birdMeshFrame_5.setMaterial(birdMaterialFrame_5);
 		birdFrame_5 = new GameItem(birdMeshFrame_5);
 
+		Vector<GameItem> gameItems = new Vector<>();
 		gameItems.add(birdFrame_1);
-		for (GameItem obj : allGrass) {
-			gameItems.add(obj);
-		}
-		for (GameItem obj : allFence) {
-			gameItems.add(obj);
-		}
-		for (GameItem obj : allHumansRoad) {
-			gameItems.add(obj);
-		}
-		for (GameItem obj : border) {
-			gameItems.add(obj);
-		}
-		for (GameItem obj : road) {
-			gameItems.add(obj);
-		}
+		gameItems.addAll(allGrass);
+		gameItems.addAll(allFence);
+		gameItems.addAll(allHumansRoad);
+		gameItems.addAll(border);
+		gameItems.addAll(road);
 
 		boolean leftRight = true;
 		float dz = 10;
@@ -415,13 +405,31 @@ public class FalconFly implements IGameLogic {
 			gameItems.add(obj);
 		}
 
-		ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
-		Vector3f lightColour = new Vector3f(1, 1, 1);
-		Vector3f lightPosition = new Vector3f(-5, 20, 6);
-		float lightIntensity = 750.0f;
-		pointLight = new PointLight(lightColour, lightPosition, lightIntensity);
-		PointLight.Attenuation att = new PointLight.Attenuation(0.0f, 0.0f, 1.0f);
-		pointLight.setAttenuation(att);
+		scene.setGameItems(gameItems);
+		gameplay = new Gameplay(scene.getGameItems());
+
+		float skyBoxScale = 300.0f;
+
+		// Setup  SkyBox
+		SkyBox skyBox = new SkyBox("models/skybox", "models/skybox");
+		skyBox.setScale(skyBoxScale);
+		skyBox.setPosition(0, 0 ,10);
+		scene.setSkyBox(skyBox);
+
+		setupLights();
+	}
+
+	private void setupLights() {
+		SceneLight sceneLight = new SceneLight();
+		scene.setSceneLight(sceneLight);
+
+		// Ambient Light
+		sceneLight.setAmbientLight(new Vector3f(1.0f, 1.0f, 1.0f));
+
+		// Directional Light
+		float lightIntensity = 1.0f;
+		Vector3f lightPosition = new Vector3f(0, 0, 0);
+		sceneLight.setDirectionalLight(new DirectionalLight(new Vector3f(1, 1, 1), lightPosition, lightIntensity));
 	}
 
 //	@Override
@@ -455,7 +463,6 @@ public class FalconFly implements IGameLogic {
 
 	@Override
 	public void input(EngineWindow window, MouseInput mouseInput) {
-
 		cameraInc.set(0, 0, 0);
 		if (Keyboard.keyPressed(GLFW_KEY_W)) {
 			cameraInc.z = -1;
@@ -477,12 +484,7 @@ public class FalconFly implements IGameLogic {
 			cameraInc.y = 1;
 		}
 
-		float lightPos = pointLight.getPosition().z;
-		if (Keyboard.keyPressed(GLFW_KEY_N)) {
-			this.pointLight.getPosition().z = lightPos + 0.1f;
-		} else if (Keyboard.keyPressed(GLFW_KEY_M)) {
-			this.pointLight.getPosition().z = lightPos - 0.1f;
-		}
+		Keyboard.handleKeyboardInput();
 	}
 
 	@Override
@@ -495,6 +497,8 @@ public class FalconFly implements IGameLogic {
 		}
 		camera.setPosition(0, 4.3f, 6.2f);
 		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
+
+		Vector<GameItem> gameItems = scene.getGameItems();
 
 		boolean firstFlag = true;
 		for (GameItem obj : gameItems) {
@@ -571,12 +575,13 @@ public class FalconFly implements IGameLogic {
 
 	@Override
 	public void render(EngineWindow window) {
-		renderer.render(window, gameItems, camera, ambientLight, pointLight);
+		renderer.render(window, camera, scene);
 	}
 
 	@Override
 	public void cleanup() {
 		renderer.cleanup();
+		Vector<GameItem> gameItems = scene.getGameItems();
 		for (GameItem gameItem : gameItems) {
 			gameItem.getMesh().cleanUp();
 		}

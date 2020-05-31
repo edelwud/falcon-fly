@@ -11,5 +11,6 @@
     <orderEntry type="library" name="joml-1.9.22" level="project" />
     <orderEntry type="library" name="javafx-swt1" level="project" />
     <orderEntry type="library" name="lwjgl-assimp-javadoc" level="project" />
+    <orderEntry type="library" name="obj-0.3.0" level="project" />
   </component>
 </module>

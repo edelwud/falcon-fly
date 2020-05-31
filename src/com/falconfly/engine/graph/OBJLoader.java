@@ -1,13 +1,18 @@
 package com.falconfly.engine.graph;
 
-import com.falconfly.engine.input.FileReader;
 import com.falconfly.menu.MenuStorageLoader;
+import de.javagl.obj.Obj;
+import de.javagl.obj.ObjData;
+import de.javagl.obj.ObjReader;
+import de.javagl.obj.ObjUtils;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.io.File;
-import java.nio.ByteBuffer;
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OBJLoader {
 
@@ -122,52 +127,18 @@ public class OBJLoader {
     }
 
     public static Mesh loadMesh(String fileName) throws Exception {
-        Scanner fileMash = new Scanner(new File(loader.Load(fileName).get(0).substring(8)));
-        List<String> lines = new LinkedList<>();
-        while(fileMash.hasNextLine())
-            lines.add(fileMash.nextLine());
-        fileMash.close();
+        InputStream inputStream = new FileInputStream(new File(loader.Load(fileName).get(0).substring(8)));
+        Obj obj = ObjUtils.convertToRenderable(ObjReader.read(inputStream));
 
-        List<Vector3f> vertices = new ArrayList<>();
-        List<Vector2f> textures = new ArrayList<>();
-        List<Vector3f> normals = new ArrayList<>();
-        List<Face> faces = new ArrayList<>();
-
-        for (String line : lines) {
-            String[] tokens = line.split("\\s+");
-            switch (tokens[0]) {
-                case "v":
-                    // Geometric vertex
-                    Vector3f vec3f = new Vector3f(
-                            Float.parseFloat(tokens[1]),
-                            Float.parseFloat(tokens[2]),
-                            Float.parseFloat(tokens[3]));
-                    vertices.add(vec3f);
-                    break;
-                case "vt":
-                    // Texture coordinate
-                    Vector2f vec2f = new Vector2f(
-                            Float.parseFloat(tokens[1]),
-                            Float.parseFloat(tokens[2]));
-                    textures.add(vec2f);
-                    break;
-                case "vn":
-                    // Vertex normal
-                    Vector3f vec3fNorm = new Vector3f(
-                            Float.parseFloat(tokens[1]),
-                            Float.parseFloat(tokens[2]),
-                            Float.parseFloat(tokens[3]));
-                    normals.add(vec3fNorm);
-                    break;
-                case "f":
-                    Face face = new Face(tokens[1], tokens[2], tokens[3]);
-                    faces.add(face);
-                    break;
-                default:
-                    // Ignore other lines
-                    break;
-            }
+        int[] indices = new int[1];
+        try {
+            indices = ObjData.getFaceNormalIndicesArray(obj);
+        } catch (Exception ignored) {
         }
-        return reorderLists(vertices, textures, normals, faces);
+        float[] vertices = ObjData.getVerticesArray(obj);
+        float[] texCoords = ObjData.getTexCoordsArray(obj, 2);
+        float[] normals = ObjData.getNormalsArray(obj);
+
+        return new Mesh(vertices, texCoords, normals, indices);
     }
 }
