@@ -4,6 +4,7 @@ import com.falconfly.engine.*;
 import com.falconfly.engine.graph.*;
 import com.falconfly.engine.input.Keyboard;
 import com.falconfly.engine.input.MouseInput;
+import com.falconfly.menu.style.MainDeath;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -36,7 +37,12 @@ public class FalconFly implements IGameLogic {
 	private final float MOUSE_SENSITIVITY = 0.1f;
 
 	private float step = 0.05f;
-	private static float acceleration = 0.0003f;
+
+	/* Acceleration states: */
+	/* 0.0003f - easy */
+	/* 0.0005f - normal */
+	/* 0.0007f - hard */
+	private static float acceleration;
 
 	private int frameState = 4;
 	private int frameTime = 0;
@@ -97,6 +103,14 @@ public class FalconFly implements IGameLogic {
 
 	@Override
 	public void init() throws Exception {
+		if (GameSetup.getDif() == 1) {
+			acceleration = 0.0003f;
+		} else if (GameSetup.getDif() == 2) {
+			acceleration = 0.0005f;
+		} else {
+			acceleration = 0.0007f;
+		}
+
 		renderer.init();
 
 		scene = new Scene();
@@ -492,8 +506,11 @@ public class FalconFly implements IGameLogic {
 		// Update camera position
 
 		if(this.gameplay.isCollisionWithEnemy()) {
-			//MainDeath windowDeath  = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
-			//windowDeath.display();
+			System.out.println("The collision!");
+			MainDeath windowDeath = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
+			windowDeath.display();
+			GameSetup.setIsLose(true);
+			return;
 		}
 		camera.setPosition(0, 4.3f, 6.2f);
 		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);

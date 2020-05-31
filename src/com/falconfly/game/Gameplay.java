@@ -24,7 +24,7 @@ public class Gameplay {
 
     private List<Pair<Number, Number>> path;
 
-    private List<Pair<Number, Number>> enemyMovement;
+    private List<Number> enemyMovement;
     private int ticks;
     private int staticTime;
     private int reachedCoordinate;
@@ -38,7 +38,6 @@ public class Gameplay {
         private Mesh grassMesh;
         private Texture grassTexture;
         private Material grassMaterial;
-        private GameItem enemy;
 
         public Enemy() throws Exception {
             enemyCoordinateZ = -240;
@@ -48,6 +47,8 @@ public class Gameplay {
             float reflectance = 1f;
 
             int randomEnemyModel = FalconFlyRandom.getRandomNumber(0, 4);
+
+            GameItem enemy;
 
             switch (randomEnemyModel)
             {
@@ -91,6 +92,8 @@ public class Gameplay {
             enemy.setPosition(xCoordinate, -5, -240);
 
             gameItems.add(enemy);
+
+            enemyMovement.add(enemyPosition);
         }
 
         public Enemy(int pos) throws Exception {
@@ -101,6 +104,8 @@ public class Gameplay {
             float reflectance = 1f;
 
             int randomEnemyModel = FalconFlyRandom.getRandomNumber(0, 4);
+
+            GameItem enemy;
 
             switch (randomEnemyModel)
             {
@@ -144,6 +149,8 @@ public class Gameplay {
             enemy.setPosition(xCoordinate, -5, pos);
 
             gameItems.add(enemy);
+
+            enemyMovement.add(enemyPosition);
         }
 
         public float getEnemyPosition() {
@@ -166,10 +173,6 @@ public class Gameplay {
             enemyCoordinateZ += step;
             //enemy.setPosition(enemy.getPosition().x, enemy.getPosition().y, enemy.getPosition().z + step);
         }
-
-        public GameItem getGameItem() {
-            return enemy;
-        }
     }
 
     public Gameplay(Vector<GameItem> objVector) throws Exception {
@@ -177,26 +180,26 @@ public class Gameplay {
 
         playerPosition = MIDDLE;
         this.path = new LinkedList<Pair<Number, Number>>();
-        this.enemyMovement = new LinkedList<Pair<Number, Number>>();
+        this.enemyMovement = new LinkedList<Number>();
         this.enemies = new LinkedList<Enemy>();
         this.ticks = 0;
         this.reachedCoordinate = -250;
     }
 
     public void goToLeft() {
-        this.path.add(new Pair(this.staticTime, this.playerPosition));
         if (playerPosition != LEFT) {
             playerPosition--;
             this.staticTime = 0;
         }
+        this.path.add(new Pair(this.staticTime, this.playerPosition));
     }
 
     public void goToRight() {
-        this.path.add(new Pair(this.staticTime, this.playerPosition));
         if (playerPosition != RIGTH) {
             playerPosition++;
             this.staticTime = 0;
         }
+        this.path.add(new Pair(this.staticTime, this.playerPosition));
     }
 
     public float getPlayerPosition() {
@@ -242,13 +245,12 @@ public class Gameplay {
         this.incStaticTime();
         for(Enemy temp: enemies)
             temp.decEnemyCoordinateZ(step);
-        for(Enemy temp: enemies) {
-            if(temp.getEnemyCoordinateZ() >= 10) {
-                //gameItems.remove(temp.getGameItem());
-                //enemies.remove(0);
+        for (int i = 0; i < enemies.size(); i++) {
+            if (enemies.get(i).getEnemyCoordinateZ() >= 10) {
+                gameItems.remove(128 * 14);
+                enemies.remove(0);
             }
         }
-        System.out.println(enemies.size());
 
         float isReached = 0f;
         for (Enemy temp : enemies) {
@@ -256,7 +258,8 @@ public class Gameplay {
         }
         if (isReached >= this.reachedCoordinate) {
             this.enemies.add(new Enemy());
-            this.reachedCoordinate = FalconFlyRandom.getRandomNumber(190, 210) * -1;
+            //this.reachedCoordinate = FalconFlyRandom.getRandomNumber(190, 210) * -1;
+            this.reachedCoordinate = -200;
         }
     }
 
@@ -264,7 +267,7 @@ public class Gameplay {
         return this.path;
     }
 
-    public List<Pair<Number, Number>> getEnemyMovement() {
+    public List<Number> getEnemyMovement() {
         return this.enemyMovement;
     }
 }

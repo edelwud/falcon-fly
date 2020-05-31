@@ -18,6 +18,7 @@ import javafx.util.Pair;
 import java.awt.*;
 
 import java.util.List;
+import java.util.Stack;
 
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
@@ -34,9 +35,9 @@ public class MainDeath {
         private Engine engine;
 
         List<Pair<Number, Number>> pathDeath;
-        List<Pair<Number, Number>> enemyPathDeath;
+        List<Number> enemyPathDeath;
 
-        public MainDeath(List<Pair<Number, Number>> path, List<Pair<Number, Number>> enemyPath, Engine engine) {
+        public MainDeath(List<Pair<Number, Number>> path, List<Number> enemyPath, Engine engine) {
             this.enemyPathDeath = enemyPath;
             this.pathDeath = path;
             this.engine = engine;
@@ -57,6 +58,9 @@ public class MainDeath {
             this.buttonReplay.setOnAction(this::handleExit);
 
             StackPane root = new StackPane();
+            StackPane.setMargin(buttonSave, new Insets(MainGlobals.HEIGHT * 0.03, 0, 0, MainGlobals.WIDTH * 0.01));
+            StackPane.setMargin(buttonExit, new Insets(MainGlobals.HEIGHT * 0.03, 0, 0, MainGlobals.WIDTH * 0.05));
+            StackPane.setMargin(buttonReplay, new Insets(MainGlobals.HEIGHT * 0.03, 0, 0, MainGlobals.WIDTH * 0.09));
             root.getChildren().addAll(buttonSave, buttonExit, buttonReplay);
 
             this.sceneDeath = new Scene(root);
@@ -90,7 +94,7 @@ public class MainDeath {
             if(eventExit.getSource() == buttonExit) {
 
                 this.windowDeath.close();
-                glfwDestroyWindow(this.engine.getWindow().id);
+                //glfwDestroyWindow(this.engine.getWindow().id);
             }
         }
 }

@@ -2,6 +2,7 @@ package com.falconfly.engine;
 
 import com.falconfly.config.MainLogger;
 import com.falconfly.engine.input.MouseInput;
+import com.falconfly.game.GameSetup;
 
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
@@ -62,6 +63,12 @@ public class Engine implements Runnable {
 			while (accumulator >= interval) {
 				update(interval);
 				accumulator -= interval;
+
+				// If was a collision
+				if (GameSetup.getIsLose()) {
+					GameSetup.setIsLose(false);
+					return;
+				}
 			}
 
 			render();
