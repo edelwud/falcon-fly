@@ -24,6 +24,8 @@ public class Statistics {
 
     MainFont fonts;
 
+    private double scale = 0;
+
     Button buttonStatisticsBack;
     Button buttonWatchReplay;
 
@@ -215,10 +217,10 @@ public class Statistics {
         );
 
         tableScores = new TableView<>(scores);
-        tableScores.setPrefSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.59);
-        tableScores.setMaxSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.59);
-        tableScores.setMinSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.59);
-        //tableScores.setStyle();
+        tableScores.setPrefSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.601);
+        tableScores.setMaxSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.601);
+        tableScores.setMinSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.601);
+        //tableScores.setStyle("-fx-background-color: rgb(20, 20, 20);");
 //        try {
 //            //System.out.println(Files.readString(Paths.get(new MenuStorageLoader().Load("styles").get(1).substring(8))));
 //            //tableScores.setStyle(Files.readString(Paths.get(new MenuStorageLoader().Load("styles").get(1).substring(8))));
@@ -232,22 +234,25 @@ public class Statistics {
         idColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.1);
         idColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.1);
         idColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.1);
+        //idColumn.setStyle("-fx-background-color: blue;");
         idColumn.setCellValueFactory(new PropertyValueFactory<Person, Integer>("id"));
         tableScores.getColumns().add(idColumn);
 
         // столбец для вывода имени
         nameColumn = new TableColumn<>("Name");
-        nameColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.45);
-        nameColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.45);
-        nameColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.45);
+        nameColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.44);
+        nameColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.44);
+        nameColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.44);
         nameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
         tableScores.getColumns().add(nameColumn);
 
         // столбец для вывода счета
         scoreColumn = new TableColumn<Person, Integer>("Score");
-        scoreColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.447);
-        scoreColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.447);
-        scoreColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.447);
+        if(scores.size() <= 18)  scale = 0.455;
+        else scale = 0.44;
+        scoreColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * scale);
+        scoreColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * scale);
+        scoreColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * scale);
         scoreColumn.setCellValueFactory(new PropertyValueFactory<Person, Integer>("score"));
         tableScores.getColumns().add(scoreColumn);
 
@@ -271,6 +276,7 @@ public class Statistics {
         root.getChildren().add(tableScores);
 
         sceneStatistics = new Scene(root, MainGlobals.WIDTH, MainGlobals.HEIGHT);
+        sceneStatistics.getStylesheets().add(Statistics.class.getResource("css/table.css").toExternalForm());
         windowMain.setScene(sceneStatistics);
         windowMain.setWidth(MainGlobals.WIDTH);
         windowMain.setHeight(MainGlobals.HEIGHT);

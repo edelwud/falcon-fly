@@ -125,7 +125,6 @@ public class OBJLoader {
             normArr[posIndex * 3 + 2] = vecNorm.z;
         }
     }
-
     public static Mesh loadMesh(String fileName) throws Exception {
         InputStream inputStream = new FileInputStream(new File(loader.Load(fileName).get(0).substring(8)));
         Obj obj = ObjUtils.convertToRenderable(ObjReader.read(inputStream));
