@@ -220,21 +220,12 @@ public class Statistics {
         tableScores.setPrefSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.601);
         tableScores.setMaxSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.601);
         tableScores.setMinSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.601);
-        //tableScores.setStyle("-fx-background-color: rgb(20, 20, 20);");
-//        try {
-//            //System.out.println(Files.readString(Paths.get(new MenuStorageLoader().Load("styles").get(1).substring(8))));
-//            //tableScores.setStyle(Files.readString(Paths.get(new MenuStorageLoader().Load("styles").get(1).substring(8))));
-//        }
-//        catch(IOException e) {
-//            e.fillInStackTrace();
-//        }
 
         // столбец для вывода id
         idColumn = new TableColumn<Person, Integer>("ID");
         idColumn.setPrefWidth(MainGlobals.WIDTH * 0.7 * 0.1);
         idColumn.setMaxWidth(MainGlobals.WIDTH * 0.7 * 0.1);
         idColumn.setMinWidth(MainGlobals.WIDTH * 0.7 * 0.1);
-        //idColumn.setStyle("-fx-background-color: blue;");
         idColumn.setCellValueFactory(new PropertyValueFactory<Person, Integer>("id"));
         tableScores.getColumns().add(idColumn);
 
