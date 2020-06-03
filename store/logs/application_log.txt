@@ -22,3 +22,9 @@ INFO: java.lang.NullPointerException
 INFO: java.lang.NullPointerException
 апр. 27, 2020 12:25:31 AM com.falconfly.config.MainMusic addMedia
 INFO: MediaException: MEDIA_UNSUPPORTED : Unrecognized file signature!
+июн. 02, 2020 6:24:13 PM com.falconfly.menu.MainEnvironmentLoader openEnvironment
+INFO: java.io.FileNotFoundException: D:\projects\4_sem\falcon-fly\store\css (Отказано в доступе)
+июн. 02, 2020 6:26:18 PM com.falconfly.menu.MainEnvironmentLoader openEnvironment
+INFO: java.io.FileNotFoundException: D:\projects\4_sem\falcon-fly\store\css (Отказано в доступе)
+июн. 02, 2020 8:30:13 PM com.falconfly.menu.MainEnvironmentLoader openEnvironment
+INFO: java.io.FileNotFoundException: D:\projects\4_sem\falcon-fly\store\css (Отказано в доступе)

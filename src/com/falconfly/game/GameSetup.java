@@ -1,5 +1,7 @@
 package com.falconfly.game;
 
+import javafx.stage.Stage;
+
 public class GameSetup {
 
     static private int dif = 2;
@@ -9,6 +11,7 @@ public class GameSetup {
     /* false - replay */
     static private boolean mode = true;
     static private boolean isLose = false;
+    static private boolean isReplay = false;
 
     static public int getDif() {
         return dif;
@@ -22,6 +25,8 @@ public class GameSetup {
         return isLose;
     }
 
+    static public boolean getIsReplay() { return isReplay; }
+
     static public void setDif(int var) {
         dif = var;
     }
@@ -33,4 +38,6 @@ public class GameSetup {
     static public void setIsLose(boolean var) {
         isLose = var;
     }
+
+    static public void setIsReplay(boolean var) { isReplay = var; }
 }

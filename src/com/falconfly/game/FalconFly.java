@@ -509,17 +509,24 @@ public class FalconFly implements IGameLogic {
 	public void update(float interval, MouseInput mouseInput, Engine engine) throws Exception {
 		// Update camera position
 
+		Vector<GameItem> gameItems = scene.getGameItems();
+
 		if(this.gameplay.isCollisionWithEnemy()) {
 			System.out.println("The collision!");
-			MainDeath windowDeath = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
+			MainDeath windowDeath = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), this.gameplay.getTicks(), engine);
 			windowDeath.display();
-			GameSetup.setIsLose(true);
-			return;
+			if (GameSetup.getIsReplay()) {
+				GameSetup.setIsReplay(false);
+				step = 0.05f;
+				this.gameplay.restart();
+				gameItems.get(0).setPosition(-2.55f, gameItems.get(0).getPosition().y, gameItems.get(0).getPosition().z);
+			} else {
+				GameSetup.setIsLose(true);
+				return;
+			}
 		}
 		camera.setPosition(0, 4.3f, 6.2f);
 		//camera.movePosition(0.1f * cameraInc.x, 0.1f * cameraInc.y, 0.1f * cameraInc.z);
-
-		Vector<GameItem> gameItems = scene.getGameItems();
 
 		boolean firstFlag = true;
 		for (GameItem obj : gameItems) {
