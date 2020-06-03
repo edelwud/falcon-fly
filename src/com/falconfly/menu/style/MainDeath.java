@@ -72,7 +72,7 @@ public class MainDeath {
             MenuStorageLoader loader = new MenuStorageLoader();
 
             BackgroundImage centerBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH, MainGlobals.HEIGHT,false,true),
+                    new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH / 1.1, MainGlobals.HEIGHT / 1.1,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
@@ -81,16 +81,16 @@ public class MainDeath {
             mainBackground.setBackground(new Background(centerBackground));
 
             BackgroundImage exitBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(0),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    new Image(loader.Load("images/MainDeath").get(0),MainGlobals.WIDTH * 0.05,MainGlobals.WIDTH * 0.05,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
             this.buttonExit = new Button();
             this.buttonExit.setBackground(new Background(exitBackground));
             this.buttonExit.setOnAction(this::handleExit);
-            buttonExit.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonExit.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonExit.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonExit.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonExit.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonExit.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
             buttonExit.setOnMouseEntered(event -> {
                 ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonExit);
@@ -109,16 +109,16 @@ public class MainDeath {
             });
 
             BackgroundImage saveBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(2),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    new Image(loader.Load("images/MainDeath").get(2),MainGlobals.WIDTH * 0.05,MainGlobals.WIDTH * 0.05,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
             this.buttonSave = new Button();
             this.buttonSave.setBackground(new Background(saveBackground));
             this.buttonSave.setOnAction(this::handleSave);
-            buttonSave.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonSave.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonSave.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonSave.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonSave.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonSave.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
             buttonSave.setOnMouseEntered(event -> {
                 ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonSave);
@@ -137,16 +137,16 @@ public class MainDeath {
             });
 
             BackgroundImage replayBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(1),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    new Image(loader.Load("images/MainDeath").get(1),MainGlobals.WIDTH * 0.05,MainGlobals.WIDTH * 0.05,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
             this.buttonReplay = new Button();
             this.buttonReplay.setBackground(new Background(replayBackground));
             this.buttonReplay.setOnAction(this::handleReplay);
-            buttonReplay.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonReplay.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonReplay.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonReplay.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonReplay.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonReplay.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
             buttonReplay.setOnMouseEntered(event -> {
                 ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonReplay);
@@ -165,11 +165,11 @@ public class MainDeath {
             });
 
             HBox horizontalBoxDeath = new HBox();
-            horizontalBoxDeath.setSpacing(10);
+            horizontalBoxDeath.setSpacing(35);
             horizontalBoxDeath.setAlignment(Pos.CENTER);
             horizontalBoxDeath.getChildren().addAll(buttonSave, buttonReplay, buttonExit);
 
-            this.labelScore = new Label("Score: 1024");
+            this.labelScore = new Label("Score: " + Long.toString(this.score));
             this.labelMessage = new Label("What you like to do?");
 
             VBox verticalBoxDeath = new VBox();
@@ -187,8 +187,8 @@ public class MainDeath {
             this.sceneDeath = new Scene(root);
             this.sceneDeath.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
             this.windowDeath.setScene(this.sceneDeath);
-            this.windowDeath.setWidth(MainGlobals.WIDTH);//
-            this.windowDeath.setHeight(MainGlobals.HEIGHT);//
+            this.windowDeath.setWidth(1280);//
+            this.windowDeath.setHeight(720);//
             //this.windowDeath.setFullScreen(true);
             //windowDeath.setFullScreenExitHint("");
             this.windowDeath.showAndWait();
@@ -200,7 +200,7 @@ public class MainDeath {
                 MenuStorageLoader loader = new MenuStorageLoader();
 
                 BackgroundImage centerBackground = new BackgroundImage(
-                        new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH, MainGlobals.HEIGHT,false,true),
+                        new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH / 1.1, MainGlobals.HEIGHT / 1.1,false,true),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT);
 
@@ -216,16 +216,16 @@ public class MainDeath {
                 this.textFieldName.setPromptText("Enter your name");
 
                 BackgroundImage buttonYesBackgroundRedImg = new BackgroundImage(
-                        new Image(loader.Load("images/MainDeath").get(5), MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04,false,true),
+                        new Image(loader.Load("images/MainDeath").get(5), MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05,false,true),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT);
 
                 this.buttonOK = new Button();
                 this.buttonOK.setOnAction(this::handleOK);
                 this.buttonOK.setBackground(new Background(buttonYesBackgroundRedImg));
-                buttonOK.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-                buttonOK.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-                buttonOK.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+                buttonOK.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+                buttonOK.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+                buttonOK.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
                 buttonOK.setOnMouseEntered(event -> {
                     ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonOK);
@@ -244,16 +244,16 @@ public class MainDeath {
                 });
 
                 BackgroundImage buttonNoBackgroundWhiteImg = new BackgroundImage(
-                        new Image(loader.Load("images/MainDeath").get(4), MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04,false,true),
+                        new Image(loader.Load("images/MainDeath").get(4), MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05,false,true),
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT);
 
                 this.buttonBack = new Button();
                 this.buttonBack.setOnAction(this::handleBack);
                 this.buttonBack.setBackground(new Background(buttonNoBackgroundWhiteImg));
-                buttonBack.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-                buttonBack.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-                buttonBack.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+                buttonBack.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+                buttonBack.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+                buttonBack.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
                 buttonBack.setOnMouseEntered(event -> {
                     ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonBack);
@@ -272,7 +272,7 @@ public class MainDeath {
                 });
 
                 HBox horizontalBoxDeathSave = new HBox();
-                horizontalBoxDeathSave.setSpacing(10);
+                horizontalBoxDeathSave.setSpacing(35);
                 horizontalBoxDeathSave.setAlignment(Pos.CENTER);
                 horizontalBoxDeathSave.getChildren().addAll(buttonOK, buttonBack);
 
@@ -291,10 +291,14 @@ public class MainDeath {
                 this.sceneSave = new Scene(root);
                 this.sceneSave.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
                 this.windowDeath.setScene(this.sceneSave);
+                this.windowDeath.setWidth(1279);//
+                this.windowDeath.setHeight(719);//
+                //this.windowDeath.setFullScreen(true);
+                //windowDeath.setFullScreenExitHint("");
             }
         }
 
-        public void handleReplay(ActionEvent eventReply){
+        public void handleReplay(ActionEvent eventReply) {
 
             if(eventReply.getSource() == buttonReplay) {
                 GameSetup.setIsReplay(true);
@@ -335,7 +339,7 @@ public class MainDeath {
             MenuStorageLoader loader = new MenuStorageLoader();
 
             BackgroundImage centerBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH, MainGlobals.HEIGHT,false,true),
+                    new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH / 1.1, MainGlobals.HEIGHT / 1.1,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
@@ -344,16 +348,16 @@ public class MainDeath {
             mainBackground.setBackground(new Background(centerBackground));
 
             BackgroundImage exitBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(0),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    new Image(loader.Load("images/MainDeath").get(0),MainGlobals.WIDTH * 0.05,MainGlobals.WIDTH * 0.05,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
             this.buttonExit = new Button();
             this.buttonExit.setBackground(new Background(exitBackground));
             this.buttonExit.setOnAction(this::handleExit);
-            buttonExit.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonExit.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonExit.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonExit.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonExit.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonExit.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
             buttonExit.setOnMouseEntered(event -> {
                 ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonExit);
@@ -372,16 +376,16 @@ public class MainDeath {
             });
 
             BackgroundImage saveBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(2),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    new Image(loader.Load("images/MainDeath").get(2),MainGlobals.WIDTH * 0.05,MainGlobals.WIDTH * 0.05,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
             this.buttonSave = new Button();
             this.buttonSave.setBackground(new Background(saveBackground));
             this.buttonSave.setOnAction(this::handleSave);
-            buttonSave.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonSave.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonSave.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonSave.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonSave.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonSave.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
             buttonSave.setOnMouseEntered(event -> {
                 ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonSave);
@@ -400,16 +404,16 @@ public class MainDeath {
             });
 
             BackgroundImage replayBackground = new BackgroundImage(
-                    new Image(loader.Load("images/MainDeath").get(1),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    new Image(loader.Load("images/MainDeath").get(1),MainGlobals.WIDTH * 0.05,MainGlobals.WIDTH * 0.05,false,true),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 
             this.buttonReplay = new Button();
             this.buttonReplay.setBackground(new Background(replayBackground));
             this.buttonReplay.setOnAction(this::handleReplay);
-            buttonReplay.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonReplay.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
-            buttonReplay.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonReplay.setPrefSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonReplay.setMaxSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
+            buttonReplay.setMinSize(MainGlobals.WIDTH * 0.05, MainGlobals.WIDTH * 0.05);
 
             buttonReplay.setOnMouseEntered(event -> {
                 ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonReplay);
@@ -428,11 +432,11 @@ public class MainDeath {
             });
 
             HBox horizontalBoxDeath = new HBox();
-            horizontalBoxDeath.setSpacing(10);
+            horizontalBoxDeath.setSpacing(35);
             horizontalBoxDeath.setAlignment(Pos.CENTER);
             horizontalBoxDeath.getChildren().addAll(buttonSave, buttonReplay, buttonExit);
 
-            this.labelScore = new Label("Score: 1024");
+            this.labelScore = new Label("Score: " + Long.toString(this.score));
             this.labelMessage = new Label("What you like to do?");
 
             VBox verticalBoxDeath = new VBox();
@@ -450,12 +454,10 @@ public class MainDeath {
             this.sceneDeath = new Scene(root);
             this.sceneDeath.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
             this.windowDeath.setScene(this.sceneDeath);
-            this.windowDeath.setWidth(MainGlobals.WIDTH);//
-            this.windowDeath.setHeight(MainGlobals.HEIGHT);//
+            this.windowDeath.setWidth(1280);//
+            this.windowDeath.setHeight(720);//
             //this.windowDeath.setFullScreen(true);
             //windowDeath.setFullScreenExitHint("");
-            this.windowDeath.showAndWait();
         }
     }
 }
-
