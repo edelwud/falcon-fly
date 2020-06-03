@@ -9,6 +9,8 @@ public class SceneLight {
 
     private Vector3f ambientLight;
 
+    private Vector3f skyBoxLight;
+
     private PointLight[] pointLightList;
 
     private SpotLight[] spotLightList;
@@ -45,6 +47,14 @@ public class SceneLight {
 
     public void setDirectionalLight(DirectionalLight directionalLight) {
         this.directionalLight = directionalLight;
+    }
+
+    public Vector3f getSkyBoxLight() {
+        return skyBoxLight;
+    }
+
+    public void setSkyBoxLight(Vector3f skyBoxLight) {
+        this.skyBoxLight = skyBoxLight;
     }
 
 }

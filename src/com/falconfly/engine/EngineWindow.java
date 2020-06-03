@@ -63,8 +63,12 @@ public class EngineWindow {
         }
 
         glfwDefaultWindowHints();
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
+        glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // the window will be resizable
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
         this.id = GLFW.glfwCreateWindow(this.width, this.height, this.title, 0, 0);
@@ -97,17 +101,23 @@ public class EngineWindow {
         GL11.glViewport(0, 0, this.bufferedWidth.get(0), this.bufferedHeight.get(0));
 
         // For text renderer
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
-        glMatrixMode(GL_MODELVIEW);
+//        glMatrixMode(GL_PROJECTION);
+//        glLoadIdentity();
+//        glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
+//        glMatrixMode(GL_MODELVIEW);
 
         // Enables depth
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glEnable(GL_DEPTH_TEST);
 
-        if (this.vSync)
-            glfwSwapInterval(1);
+        if (this.vSync) glfwSwapInterval(1);
         glfwShowWindow(id);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
     }
 
     public void setClearColor(float r, float g, float b, float alpha) {
