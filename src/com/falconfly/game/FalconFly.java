@@ -509,7 +509,7 @@ public class FalconFly implements IGameLogic {
 
 		if(this.gameplay.isCollisionWithEnemy()) {
 			System.out.println("The collision!");
-			MainDeath windowDeath = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), engine);
+			MainDeath windowDeath = new MainDeath(this.gameplay.getPath(), this.gameplay.getEnemyMovement(), this.gameplay.getTicks(), engine);
 			windowDeath.display();
 			if (GameSetup.getIsReplay()) {
 				GameSetup.setIsReplay(false);

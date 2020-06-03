@@ -5,13 +5,13 @@ import javafx.beans.property.*;
 public class Person{
 
     private SimpleStringProperty name;
-    private SimpleIntegerProperty score;
+    private SimpleLongProperty score;
     private SimpleIntegerProperty id;
 
-    public Person(String name, int score, int id) {
+    public Person(String name, long score, int id) {
 
         this.name = new SimpleStringProperty(name);
-        this.score = new SimpleIntegerProperty(score);
+        this.score = new SimpleLongProperty(score);
         this.id = new SimpleIntegerProperty(id);
     }
 
@@ -22,7 +22,7 @@ public class Person{
         name.set(value);
     }
 
-    public int getScore() {
+    public long getScore() {
         return score.get();
     }
     public void setScore(int value){

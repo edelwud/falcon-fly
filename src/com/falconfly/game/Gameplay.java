@@ -25,7 +25,7 @@ public class Gameplay {
     private List<Pair<Number, Number>> path;
 
     private List<Number> enemyMovement;
-    private int ticks;
+    private long ticks;
     private int staticTime;
     private int reachedCoordinate;
 
@@ -214,7 +214,7 @@ public class Gameplay {
         return false;
     }
 
-    public int getTicks() {
+    public long getTicks() {
         return this.ticks;
     }
 

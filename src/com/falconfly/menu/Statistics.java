@@ -20,6 +20,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.Comparator;
+
 public class Statistics {
 
     MainFont fonts;
@@ -193,28 +195,17 @@ public class Statistics {
             st.play();
         });
 
-        scores = FXCollections.observableArrayList(
-                new Person("Diman", 1024, 1),
-                new Person("Timur", 1023, 2),
-                new Person("Vadim", 0, 3),
-                new Person("CXC", -10000, 4),
-                new Person("Diman", 1024, 1),
-                new Person("Timur", 1023, 2),
-                new Person("Vadim", 0, 3),
-                new Person("CXC", -10000, 4),
-                new Person("Diman", 1024, 1),
-                new Person("Timur", 1023, 2),
-                new Person("Vadim", 0, 3),
-                new Person("CXC", -10000, 4),
-                new Person("Diman", 1024, 1),
-                new Person("Timur", 1023, 2),
-                new Person("Vadim", 0, 3),
-                new Person("CXC", -10000, 4),
-                new Person("Diman", 1024, 1),
-                new Person("Timur", 1023, 2),
-                new Person("Vadim", 0, 3),
-                new Person("CXC", -10000, 4)
-        );
+        scores = MainEnvironmentLoader.getPersons();
+        scores.sort(new Comparator<Person>() {
+            @Override
+            public int compare(Person person, Person t1) {
+                if(t1.getScore() < person.getScore()) return -1;
+                if(t1.getScore() > person.getScore()) return 1;
+                return 0;
+            }
+        });
+        for(int i = 0; i < scores.size(); i++)
+            scores.get(i).setId(i+1);
 
         tableScores = new TableView<>(scores);
         tableScores.setPrefSize(MainGlobals.WIDTH * 0.7,MainGlobals.HEIGHT * 0.601);

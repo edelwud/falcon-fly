@@ -6,6 +6,7 @@ import com.falconfly.engine.main.Main;
 import com.falconfly.game.GameSetup;
 import com.falconfly.game.Gameplay;
 import com.falconfly.menu.MenuStorageLoader;
+import com.falconfly.menu.Statistics;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -23,6 +24,9 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import java.awt.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Stack;
 
@@ -47,14 +51,17 @@ public class MainDeath {
         private Button buttonBack;
 
         private Engine engine;
+        private MenuStorageLoader storageLoader;
 
         List<Pair<Number, Number>> pathDeath;
         List<Number> enemyPathDeath;
+        private long score;
 
-        public MainDeath(List<Pair<Number, Number>> path, List<Number> enemyPath, Engine engine) {
+        public MainDeath(List<Pair<Number, Number>> path, List<Number> enemyPath, long score, Engine engine) {
             this.enemyPathDeath = enemyPath;
             this.pathDeath = path;
             this.engine = engine;
+            this.score = score;
         }
 
         public void display() {
@@ -178,6 +185,7 @@ public class MainDeath {
             root.getChildren().add(layout);
 
             this.sceneDeath = new Scene(root);
+            this.sceneDeath.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
             this.windowDeath.setScene(this.sceneDeath);
             this.windowDeath.setWidth(MainGlobals.WIDTH);//
             this.windowDeath.setHeight(MainGlobals.HEIGHT);//
@@ -200,13 +208,12 @@ public class MainDeath {
                 mainBackground.setMaxSize(MainGlobals.WIDTH, MainGlobals.HEIGHT);
                 mainBackground.setBackground(new Background(centerBackground));
 
-                this.labelScore = new Label("Score: 1024");
+                this.labelScore = new Label("Score: " + Long.toString(this.score));
                 this.textFieldName = new TextField();
                 this.textFieldName.setPrefSize(250, 25);
                 this.textFieldName.setMaxSize(250, 25);
                 this.textFieldName.setMinSize(250, 25);
                 this.textFieldName.setPromptText("Enter your name");
-                this.labelMessage.setVisible(false);
 
                 BackgroundImage buttonYesBackgroundRedImg = new BackgroundImage(
                         new Image(loader.Load("images/MainDeath").get(5), MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04,false,true),
@@ -282,6 +289,7 @@ public class MainDeath {
                 root.getChildren().add(layout);
 
                 this.sceneSave = new Scene(root);
+                this.sceneSave.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
                 this.windowDeath.setScene(this.sceneSave);
             }
         }
@@ -306,7 +314,17 @@ public class MainDeath {
 
         if(eventReply.getSource() == buttonOK) {
 
-            //do something
+            storageLoader = new MenuStorageLoader();
+            File environmentFile = new File(storageLoader.Load("persons").get(0).substring(7));
+            try {
+                PrintWriter writerEnvironment = new PrintWriter(new FileWriter(environmentFile, true));
+                writerEnvironment.print(this.textFieldName.getText() + " ");
+                writerEnvironment.println(this.score);
+                writerEnvironment.close();
+            }
+            catch (Exception ex) {
+                MainGlobals.LOGGER.logger.info(ex.toString());
+            }
             this.windowDeath.close();
         }
     }
@@ -430,6 +448,7 @@ public class MainDeath {
             root.getChildren().add(layout);
 
             this.sceneDeath = new Scene(root);
+            this.sceneDeath.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
             this.windowDeath.setScene(this.sceneDeath);
             this.windowDeath.setWidth(MainGlobals.WIDTH);//
             this.windowDeath.setHeight(MainGlobals.HEIGHT);//

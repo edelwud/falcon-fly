@@ -5,6 +5,7 @@ import com.falconfly.config.MainGlobals;
 import com.falconfly.config.MainLogger;
 import com.falconfly.config.MainMusic;
 import com.falconfly.engine.main.Main;
+import com.falconfly.game.GameSetup;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -629,6 +630,7 @@ public class Settings {
             catch (Exception ex) {
                 MainGlobals.LOGGER.logger.info(ex.toString());
             }
+            GameSetup.setDif(MainGlobals.DIFFICULTY);
             this.invoke(this.scene, this.stage);
         }
     }
