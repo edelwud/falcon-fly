@@ -1,8 +1,5 @@
 package com.falconfly.config;
 
-import com.falconfly.menu.MainEnvironmentLoader;
-import com.falconfly.menu.MainMenu;
-import com.falconfly.menu.MenuStorageLoader;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -11,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MainMusic {
 
@@ -31,6 +26,7 @@ public class MainMusic {
             music.put(musicPath, tempMusic);
         } catch (Exception ex) {
             MainGlobals.LOGGER.logger.info(ex.toString());
+            return;
         }
     }
     public void addGameplayMedia(String musicPath) throws IOException {

@@ -370,7 +370,7 @@ public class FalconFly implements IGameLogic {
 		Material birdMaterialFrame_1 = new Material(birdTextureFrame_1, reflectance);
 		birdMeshFrame_1.setMaterial(birdMaterialFrame_1);
 		birdFrame_1 = new GameItem(birdMeshFrame_1);
-		birdFrame_1.setPosition(-3, -5, -5);
+		birdFrame_1.setPosition(-3, -5, -7);
 
 		Mesh birdMeshFrame_2  = OBJLoader.loadMesh("models/falcon/frame_2");
 		Texture birdTextureFrame_2 = new Texture("models/falcon/frame_2");
@@ -422,12 +422,12 @@ public class FalconFly implements IGameLogic {
 		scene.setGameItems(gameItems);
 		gameplay = new Gameplay(scene.getGameItems());
 
-		float skyBoxScale = 300.0f;
+		float skyBoxScale = 500.0f;
 
 		// Setup  SkyBox
 		SkyBox skyBox = new SkyBox("models/skybox", "models/skybox");
 		skyBox.setScale(skyBoxScale);
-		skyBox.setPosition(0, 0 ,10);
+		skyBox.setPosition(0, 0 ,100);
 		scene.setSkyBox(skyBox);
 
 		setupLights();
@@ -439,11 +439,15 @@ public class FalconFly implements IGameLogic {
 
 		// Ambient Light
 		sceneLight.setAmbientLight(new Vector3f(1.0f, 1.0f, 1.0f));
+		sceneLight.setSkyBoxLight(new Vector3f(1.0f, 1.0f, 1.0f));
 
 		// Directional Light
-		float lightIntensity = 1.0f;
-		Vector3f lightPosition = new Vector3f(0, 0, 0);
-		sceneLight.setDirectionalLight(new DirectionalLight(new Vector3f(1, 1, 1), lightPosition, lightIntensity));
+		float lightIntensity = 0.3f;
+		Vector3f lightDirection = new Vector3f(0, 1, 1);
+		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1, 1, 1), lightDirection, lightIntensity);
+		directionalLight.setShadowPosMult(2);
+		directionalLight.setOrthoCords(-10.0f, 10.0f, -10.0f, 10.0f, -1.0f, 200.0f);
+		sceneLight.setDirectionalLight(directionalLight);
 	}
 
 //	@Override

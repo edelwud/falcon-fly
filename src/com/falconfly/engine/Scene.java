@@ -3,12 +3,15 @@ package com.falconfly.engine;
 import java.util.Vector;
 
 public class Scene {
-
     private Vector<GameItem> gameItems;
 
     private SkyBox skyBox;
 
     private SceneLight sceneLight;
+
+    public Scene() {
+        gameItems = new Vector<>();
+    }
 
     public Vector<GameItem> getGameItems() {
         return gameItems;
@@ -16,6 +19,9 @@ public class Scene {
 
     public void setGameItems(Vector<GameItem> gameItems) {
         this.gameItems = gameItems;
+    }
+
+    public void cleanup() {
     }
 
     public SkyBox getSkyBox() {
@@ -33,5 +39,4 @@ public class Scene {
     public void setSceneLight(SceneLight sceneLight) {
         this.sceneLight = sceneLight;
     }
-
 }
