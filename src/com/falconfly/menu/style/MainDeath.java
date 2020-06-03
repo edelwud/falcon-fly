@@ -3,7 +3,10 @@ package com.falconfly.menu.style;
 import com.falconfly.config.MainGlobals;
 import com.falconfly.engine.Engine;
 import com.falconfly.engine.main.Main;
+import com.falconfly.game.GameSetup;
 import com.falconfly.game.Gameplay;
+import com.falconfly.menu.MenuStorageLoader;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -12,12 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import java.awt.*;
 
@@ -60,14 +62,100 @@ public class MainDeath {
             this.windowDeath = new Stage(); // always in MainMenu
             this.windowDeath.initModality(Modality.APPLICATION_MODAL);
 
-            this.buttonExit = new Button("Exit");
+            MenuStorageLoader loader = new MenuStorageLoader();
+
+            BackgroundImage centerBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH, MainGlobals.HEIGHT,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            Label mainBackground = new Label();
+            mainBackground.setMaxSize(MainGlobals.WIDTH, MainGlobals.HEIGHT);
+            mainBackground.setBackground(new Background(centerBackground));
+
+            BackgroundImage exitBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(0),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            this.buttonExit = new Button();
+            this.buttonExit.setBackground(new Background(exitBackground));
             this.buttonExit.setOnAction(this::handleExit);
+            buttonExit.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonExit.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonExit.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
 
-            this.buttonSave = new Button("Save");
+            buttonExit.setOnMouseEntered(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonExit);
+                st.setFromX(1);
+                st.setFromY(1);
+                st.setToX(1.2);
+                st.setToY(1.2);
+                st.play();
+            });
+
+            buttonExit.setOnMouseExited(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonExit);
+                st.setToX(1);
+                st.setToY(1);
+                st.play();
+            });
+
+            BackgroundImage saveBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(2),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            this.buttonSave = new Button();
+            this.buttonSave.setBackground(new Background(saveBackground));
             this.buttonSave.setOnAction(this::handleSave);
+            buttonSave.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonSave.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonSave.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
 
-            this.buttonReplay = new Button("Replay");
-            this.buttonReplay.setOnAction(this::handleExit);
+            buttonSave.setOnMouseEntered(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonSave);
+                st.setFromX(1);
+                st.setFromY(1);
+                st.setToX(1.2);
+                st.setToY(1.2);
+                st.play();
+            });
+
+            buttonSave.setOnMouseExited(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonSave);
+                st.setToX(1);
+                st.setToY(1);
+                st.play();
+            });
+
+            BackgroundImage replayBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(1),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            this.buttonReplay = new Button();
+            this.buttonReplay.setBackground(new Background(replayBackground));
+            this.buttonReplay.setOnAction(this::handleReplay);
+            buttonReplay.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonReplay.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonReplay.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+
+            buttonReplay.setOnMouseEntered(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonReplay);
+                st.setFromX(1);
+                st.setFromY(1);
+                st.setToX(1.2);
+                st.setToY(1.2);
+                st.play();
+            });
+
+            buttonReplay.setOnMouseExited(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonReplay);
+                st.setToX(1);
+                st.setToY(1);
+                st.play();
+            });
 
             HBox horizontalBoxDeath = new HBox();
             horizontalBoxDeath.setSpacing(10);
@@ -86,21 +174,31 @@ public class MainDeath {
             layout.setCenter(verticalBoxDeath);
             BorderPane.setAlignment(verticalBoxDeath, Pos.BOTTOM_CENTER);
 
-            StackPane root = new StackPane();
+            StackPane root = new StackPane(mainBackground);
             root.getChildren().add(layout);
 
             this.sceneDeath = new Scene(root);
             this.windowDeath.setScene(this.sceneDeath);
-            this.windowDeath.setWidth(450);//
-            this.windowDeath.setHeight(550);//
+            this.windowDeath.setWidth(MainGlobals.WIDTH);//
+            this.windowDeath.setHeight(MainGlobals.HEIGHT);//
+            //this.windowDeath.setFullScreen(true);
+            //windowDeath.setFullScreenExitHint("");
             this.windowDeath.showAndWait();
-
         }
 
         public void handleSave(ActionEvent eventSave) {
 
             if(eventSave.getSource() == buttonSave) {
+                MenuStorageLoader loader = new MenuStorageLoader();
 
+                BackgroundImage centerBackground = new BackgroundImage(
+                        new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH, MainGlobals.HEIGHT,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+
+                Label mainBackground = new Label();
+                mainBackground.setMaxSize(MainGlobals.WIDTH, MainGlobals.HEIGHT);
+                mainBackground.setBackground(new Background(centerBackground));
 
                 this.labelScore = new Label("Score: 1024");
                 this.textFieldName = new TextField();
@@ -110,11 +208,61 @@ public class MainDeath {
                 this.textFieldName.setPromptText("Enter your name");
                 this.labelMessage.setVisible(false);
 
-                this.buttonOK = new Button("OK");
-                this.buttonOK.setOnAction(this::handleOK);
+                BackgroundImage buttonYesBackgroundRedImg = new BackgroundImage(
+                        new Image(loader.Load("images/MainDeath").get(5), MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
 
-                this.buttonBack = new Button("Back");
+                this.buttonOK = new Button();
+                this.buttonOK.setOnAction(this::handleOK);
+                this.buttonOK.setBackground(new Background(buttonYesBackgroundRedImg));
+                buttonOK.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+                buttonOK.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+                buttonOK.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+
+                buttonOK.setOnMouseEntered(event -> {
+                    ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonOK);
+                    st.setFromX(1);
+                    st.setFromY(1);
+                    st.setToX(1.2);
+                    st.setToY(1.2);
+                    st.play();
+                });
+
+                buttonOK.setOnMouseExited(event -> {
+                    ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonOK);
+                    st.setToX(1);
+                    st.setToY(1);
+                    st.play();
+                });
+
+                BackgroundImage buttonNoBackgroundWhiteImg = new BackgroundImage(
+                        new Image(loader.Load("images/MainDeath").get(4), MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04,false,true),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT);
+
+                this.buttonBack = new Button();
                 this.buttonBack.setOnAction(this::handleBack);
+                this.buttonBack.setBackground(new Background(buttonNoBackgroundWhiteImg));
+                buttonBack.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+                buttonBack.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+                buttonBack.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+
+                buttonBack.setOnMouseEntered(event -> {
+                    ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonBack);
+                    st.setFromX(1);
+                    st.setFromY(1);
+                    st.setToX(1.2);
+                    st.setToY(1.2);
+                    st.play();
+                });
+
+                buttonBack.setOnMouseExited(event -> {
+                    ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonBack);
+                    st.setToX(1);
+                    st.setToY(1);
+                    st.play();
+                });
 
                 HBox horizontalBoxDeathSave = new HBox();
                 horizontalBoxDeathSave.setSpacing(10);
@@ -128,9 +276,9 @@ public class MainDeath {
 
                 BorderPane layout = new BorderPane();
                 layout.setCenter(verticalBoxDeathSave);
-                BorderPane.setAlignment(verticalBoxDeathSave, Pos.BOTTOM_CENTER);
+                BorderPane.setAlignment(verticalBoxDeathSave, Pos.CENTER);
 
-                StackPane root = new StackPane();
+                StackPane root = new StackPane(mainBackground);
                 root.getChildren().add(layout);
 
                 this.sceneSave = new Scene(root);
@@ -138,13 +286,11 @@ public class MainDeath {
             }
         }
 
-        public void handleReplay(ActionEvent eventReply) throws Exception{
+        public void handleReplay(ActionEvent eventReply){
 
             if(eventReply.getSource() == buttonReplay) {
-
-                //this.windowDeath.close();
-                //glfwDestroyWindow(this.engine.getWindow().id);
-                //new Main().main();
+                GameSetup.setIsReplay(true);
+                this.windowDeath.close();
             }
         }
 
@@ -153,7 +299,6 @@ public class MainDeath {
             if(eventExit.getSource() == buttonExit) {
 
                 this.windowDeath.close();
-                //glfwDestroyWindow(this.engine.getWindow().id);
             }
         }
 
@@ -169,38 +314,128 @@ public class MainDeath {
     public void handleBack(ActionEvent eventReply) {
 
         if(eventReply.getSource() == buttonBack) {
+            MenuStorageLoader loader = new MenuStorageLoader();
 
-            this.buttonExit = new Button("Exit");
+            BackgroundImage centerBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(3), MainGlobals.WIDTH, MainGlobals.HEIGHT,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            Label mainBackground = new Label();
+            mainBackground.setMaxSize(MainGlobals.WIDTH, MainGlobals.HEIGHT);
+            mainBackground.setBackground(new Background(centerBackground));
+
+            BackgroundImage exitBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(0),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            this.buttonExit = new Button();
+            this.buttonExit.setBackground(new Background(exitBackground));
             this.buttonExit.setOnAction(this::handleExit);
+            buttonExit.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonExit.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonExit.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
 
-            this.buttonSave = new Button("Save");
+            buttonExit.setOnMouseEntered(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonExit);
+                st.setFromX(1);
+                st.setFromY(1);
+                st.setToX(1.2);
+                st.setToY(1.2);
+                st.play();
+            });
+
+            buttonExit.setOnMouseExited(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonExit);
+                st.setToX(1);
+                st.setToY(1);
+                st.play();
+            });
+
+            BackgroundImage saveBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(2),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            this.buttonSave = new Button();
+            this.buttonSave.setBackground(new Background(saveBackground));
             this.buttonSave.setOnAction(this::handleSave);
+            buttonSave.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonSave.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonSave.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
 
-            this.buttonReplay = new Button("Replay");
-            this.buttonReplay.setOnAction(this::handleExit);
+            buttonSave.setOnMouseEntered(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonSave);
+                st.setFromX(1);
+                st.setFromY(1);
+                st.setToX(1.2);
+                st.setToY(1.2);
+                st.play();
+            });
 
-            HBox horizontalBoxDeathBack = new HBox();
-            horizontalBoxDeathBack.setSpacing(10);
-            horizontalBoxDeathBack.setAlignment(Pos.CENTER);
-            horizontalBoxDeathBack.getChildren().addAll(buttonSave, buttonReplay, buttonExit);
+            buttonSave.setOnMouseExited(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonSave);
+                st.setToX(1);
+                st.setToY(1);
+                st.play();
+            });
+
+            BackgroundImage replayBackground = new BackgroundImage(
+                    new Image(loader.Load("images/MainDeath").get(1),MainGlobals.WIDTH * 0.04,MainGlobals.WIDTH * 0.04,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+
+            this.buttonReplay = new Button();
+            this.buttonReplay.setBackground(new Background(replayBackground));
+            this.buttonReplay.setOnAction(this::handleReplay);
+            buttonReplay.setPrefSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonReplay.setMaxSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+            buttonReplay.setMinSize(MainGlobals.WIDTH * 0.04, MainGlobals.WIDTH * 0.04);
+
+            buttonReplay.setOnMouseEntered(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonReplay);
+                st.setFromX(1);
+                st.setFromY(1);
+                st.setToX(1.2);
+                st.setToY(1.2);
+                st.play();
+            });
+
+            buttonReplay.setOnMouseExited(event -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), buttonReplay);
+                st.setToX(1);
+                st.setToY(1);
+                st.play();
+            });
+
+            HBox horizontalBoxDeath = new HBox();
+            horizontalBoxDeath.setSpacing(10);
+            horizontalBoxDeath.setAlignment(Pos.CENTER);
+            horizontalBoxDeath.getChildren().addAll(buttonSave, buttonReplay, buttonExit);
 
             this.labelScore = new Label("Score: 1024");
             this.labelMessage = new Label("What you like to do?");
 
-            VBox verticalBoxDeathBack = new VBox();
-            verticalBoxDeathBack.setSpacing(30);
-            verticalBoxDeathBack.setAlignment(Pos.CENTER);
-            verticalBoxDeathBack.getChildren().addAll(this.labelScore, this.labelMessage, horizontalBoxDeathBack);
+            VBox verticalBoxDeath = new VBox();
+            verticalBoxDeath.setSpacing(30);
+            verticalBoxDeath.setAlignment(Pos.CENTER);
+            verticalBoxDeath.getChildren().addAll(this.labelScore, this.labelMessage, horizontalBoxDeath);
 
             BorderPane layout = new BorderPane();
-            layout.setCenter(verticalBoxDeathBack);
-            BorderPane.setAlignment(verticalBoxDeathBack, Pos.BOTTOM_CENTER);
+            layout.setCenter(verticalBoxDeath);
+            BorderPane.setAlignment(verticalBoxDeath, Pos.CENTER);
 
-            StackPane root = new StackPane();
+            StackPane root = new StackPane(mainBackground);
             root.getChildren().add(layout);
 
             this.sceneDeath = new Scene(root);
             this.windowDeath.setScene(this.sceneDeath);
+            this.windowDeath.setWidth(MainGlobals.WIDTH);//
+            this.windowDeath.setHeight(MainGlobals.HEIGHT);//
+            //this.windowDeath.setFullScreen(true);
+            //windowDeath.setFullScreenExitHint("");
+            this.windowDeath.showAndWait();
         }
     }
 }

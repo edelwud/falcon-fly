@@ -270,4 +270,20 @@ public class Gameplay {
     public List<Number> getEnemyMovement() {
         return this.enemyMovement;
     }
+
+    public void restart() throws Exception {
+        this.ticks = 0;
+        this.staticTime = 0;
+        this.playerPosition = 2;
+        this.path.clear();
+        this.enemyMovement.clear();
+
+        this.enemies.clear();
+
+        for (int i = 128 * 14; i + 1 < gameItems.size();) {
+            gameItems.remove(i);
+        }
+
+        kastil = true;
+    }
 }
