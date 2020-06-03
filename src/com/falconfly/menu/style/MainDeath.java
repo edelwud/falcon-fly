@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -38,6 +39,7 @@ public class MainDeath {
         private Stage windowDeath;
         private Scene sceneDeath;
         private Scene sceneSave;
+        private Scene sceneBack;
 
         private Button buttonReplay;
         private Button buttonSave;
@@ -169,8 +171,20 @@ public class MainDeath {
             horizontalBoxDeath.setAlignment(Pos.CENTER);
             horizontalBoxDeath.getChildren().addAll(buttonSave, buttonReplay, buttonExit);
 
-            this.labelScore = new Label("Score: 1024");
-            this.labelMessage = new Label("What you like to do?");
+            this.labelScore = new Label("Score: " + Long.toString(this.score));
+            this.labelScore.setPrefWidth(200);
+            this.labelScore.setMaxWidth(200);
+            this.labelScore.setMinWidth(200);
+            AnchorPane.setLeftAnchor(this.labelScore, 0.0);
+            AnchorPane.setRightAnchor(this.labelScore, 0.0);
+            this.labelScore.setAlignment(Pos.CENTER);
+            this.labelMessage = new Label("What would you like to do?");
+            AnchorPane.setLeftAnchor(this.labelMessage, 0.0);
+            AnchorPane.setRightAnchor(this.labelMessage, 0.0);
+            this.labelMessage.setAlignment(Pos.CENTER);
+            this.labelMessage.setPrefWidth(430);
+            this.labelMessage.setMaxWidth(430);
+            this.labelMessage.setMinWidth(430);
 
             VBox verticalBoxDeath = new VBox();
             verticalBoxDeath.setSpacing(30);
@@ -209,10 +223,16 @@ public class MainDeath {
                 mainBackground.setBackground(new Background(centerBackground));
 
                 this.labelScore = new Label("Score: " + Long.toString(this.score));
+                this.labelScore.setPrefWidth(200);
+                this.labelScore.setMaxWidth(200);
+                this.labelScore.setMinWidth(200);
+                AnchorPane.setLeftAnchor(this.labelScore, 0.0);
+                AnchorPane.setRightAnchor(this.labelScore, 0.0);
+                this.labelScore.setAlignment(Pos.CENTER);
                 this.textFieldName = new TextField();
-                this.textFieldName.setPrefSize(250, 25);
-                this.textFieldName.setMaxSize(250, 25);
-                this.textFieldName.setMinSize(250, 25);
+                this.textFieldName.setPrefSize(350, 40);
+                this.textFieldName.setMaxSize(350, 40);
+                this.textFieldName.setMinSize(350, 40);
                 this.textFieldName.setPromptText("Enter your name");
 
                 BackgroundImage buttonYesBackgroundRedImg = new BackgroundImage(
@@ -432,8 +452,20 @@ public class MainDeath {
             horizontalBoxDeath.setAlignment(Pos.CENTER);
             horizontalBoxDeath.getChildren().addAll(buttonSave, buttonReplay, buttonExit);
 
-            this.labelScore = new Label("Score: 1024");
-            this.labelMessage = new Label("What you like to do?");
+            this.labelScore = new Label("Score: " + Long.toString(this.score));
+            this.labelScore.setPrefWidth(200);
+            this.labelScore.setMaxWidth(200);
+            this.labelScore.setMinWidth(200);
+            AnchorPane.setLeftAnchor(this.labelScore, 0.0);
+            AnchorPane.setRightAnchor(this.labelScore, 0.0);
+            this.labelScore.setAlignment(Pos.CENTER);
+            this.labelMessage = new Label("What would you like to do?");
+            this.labelMessage.setPrefWidth(430);
+            this.labelMessage.setMaxWidth(430);
+            this.labelMessage.setMinWidth(430);
+            AnchorPane.setLeftAnchor(this.labelMessage, 0.0);
+            AnchorPane.setRightAnchor(this.labelMessage, 0.0);
+            this.labelMessage.setAlignment(Pos.CENTER);
 
             VBox verticalBoxDeath = new VBox();
             verticalBoxDeath.setSpacing(30);
@@ -447,14 +479,13 @@ public class MainDeath {
             StackPane root = new StackPane(mainBackground);
             root.getChildren().add(layout);
 
-            this.sceneDeath = new Scene(root);
-            this.sceneDeath.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
-            this.windowDeath.setScene(this.sceneDeath);
+            this.sceneBack = new Scene(root);
+            this.sceneBack.getStylesheets().add(MainDeath.class.getResource("line.css").toExternalForm());
+            this.windowDeath.setScene(this.sceneBack);
             this.windowDeath.setWidth(MainGlobals.WIDTH);//
             this.windowDeath.setHeight(MainGlobals.HEIGHT);//
             //this.windowDeath.setFullScreen(true);
             //windowDeath.setFullScreenExitHint("");
-            this.windowDeath.showAndWait();
         }
     }
 }
